@@ -188,17 +188,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## [1] 0.5</code></pre>
 <p>多くの要素を持つベクトルの場合、例えば正規乱数を12個生成した結果のベクトルは以下のように表示されます。</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">rnorm</span>(<span class="dv">12</span>)</span></code></pre></div>
-<pre><code>##  [1] -0.4590945  0.5649832 -0.3762090 -1.1048818  1.1514104  0.1384616
-##  [7]  0.6276677 -0.5004653  1.5047220 -1.5418166 -0.7608006  0.7586360</code></pre>
+<pre><code>##  [1] -2.42344464  0.76095345 -0.80497125  1.65315570 -0.21244858 -0.99601454
+##  [7] -1.91828486 -1.88520359  0.09589082 -0.91216800  0.11151886 -0.08809821</code></pre>
 <div id="オブジェクトと変数" class="section level3">
 <h3><span class="header-section-number">1.1.1</span> オブジェクトと変数</h3>
 <p>Rのコンソールにコマンドを入力すると、Rは何らかの結果をベクトルなどの形で出力してくれます。これらを総称して<strong>オブジェクト</strong>と呼びます。上のようなコマンドでは出力された結果のオブジェクトは再利用できませんが、<strong>変数</strong>に代入することで、再利用することができます。例えば、</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">12</span>)</span></code></pre></div>
 <p>とすると、実行結果には何も表示されませんが、変数<code>x</code>の中に実行結果が格納されます。<code>&lt;-</code>（代入演算子と呼びます）は、左辺の変数に右辺の実行結果を代入しなさいという意味になります。つまり、<code>x</code>に<code>rnorm(12)</code>の結果のオブジェクトが格納されたということになります。<code>x</code>の中に何が入っているかを知りたい場合は、コンソールに<code>x</code>と入力します。</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>x</span></code></pre></div>
-<pre><code>##  [1] -0.476676350  0.212201588  0.123718426  0.830144366 -2.626298853
-##  [6]  0.859387130 -0.215670696 -0.309840737 -0.431612164 -0.671743775
-## [11] -1.968524589 -0.006465899</code></pre>
+<pre><code>##  [1]  0.4090181  1.5624873 -1.1791317 -0.3237231  0.1620864  1.7581746
+##  [7]  0.3114148 -0.6011370  0.5666451 -1.0467106  0.4610108 -0.6650775</code></pre>
 <p>変数名には、文字、数字、ピリオドなどの記号が利用できますが先頭に数字がつくものは使えません。また、<strong>大文字と小文字を区別します</strong>ので、注意しましょう。実際に分析するときは、分析者にとって分かりやすく、また複数の分析者で分析する場合は他の人が見てもある程度推測できるような変数名にするとよいです。</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>student_id &lt;-<span class="st"> </span><span class="dv">1200</span></span></code></pre></div>
 <p>任意のベクトルを作成する場合は、<code>c()</code>関数<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>を用います。</p>
