@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Rによるデータ解析入門</title>
-  <meta name="description" content="Rによるデータ解析入門" />
+  <title>ch:1 Rの基礎（データ構造とデータ型） | r4es.utf8</title>
+  <meta name="description" content="" />
   <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Rによるデータ解析入門" />
+  <meta property="og:title" content="ch:1 Rの基礎（データ構造とデータ型） | r4es.utf8" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Rによるデータ解析入門" />
+  <meta name="twitter:title" content="ch:1 Rの基礎（データ構造とデータ型） | r4es.utf8" />
   
   
   
@@ -128,10 +128,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path=""><a href="#rの基礎"><i class="fa fa-check"></i><b>1</b> Rの基礎</a><ul>
-<li class="chapter" data-level="1.1" data-path=""><a href="#rのデータ構造"><i class="fa fa-check"></i><b>1.1</b> Rのデータ構造</a><ul>
-<li class="chapter" data-level="1.1.1" data-path=""><a href="#ベクトル"><i class="fa fa-check"></i><b>1.1.1</b> ベクトル</a></li>
+<li class="chapter" data-level="1" data-path="01_data_structure.html"><a href="#rの基礎データ構造とデータ型"><i class="fa fa-check"></i><b>1</b> Rの基礎（データ構造とデータ型）</a><ul>
+<li class="chapter" data-level="1.1" data-path="01_data_structure.html"><a href="#ベクトル"><i class="fa fa-check"></i><b>1.1</b> ベクトル</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="01_data_structure.html"><a href="#オブジェクトと変数"><i class="fa fa-check"></i><b>1.1.1</b> オブジェクトと変数</a></li>
+<li class="chapter" data-level="1.1.2" data-path="01_data_structure.html"><a href="#便利なベクトル作成法"><i class="fa fa-check"></i><b>1.1.2</b> 便利なベクトル作成法</a></li>
+<li class="chapter" data-level="1.1.3" data-path="01_data_structure.html"><a href="#ベクトルの演算"><i class="fa fa-check"></i><b>1.1.3</b> ベクトルの演算</a></li>
+<li class="chapter" data-level="1.1.4" data-path="01_data_structure.html"><a href="#ベクトルの要素の参照"><i class="fa fa-check"></i><b>1.1.4</b> ベクトルの要素の参照</a></li>
+<li class="chapter" data-level="1.1.5" data-path="01_data_structure.html"><a href="#ベクトルに対する便利な関数"><i class="fa fa-check"></i><b>1.1.5</b> ベクトルに対する便利な関数</a></li>
+<li class="chapter" data-level="1.1.6" data-path="01_data_structure.html"><a href="#数値型と文字型"><i class="fa fa-check"></i><b>1.1.6</b> 数値型と文字型</a></li>
 </ul></li>
+<li class="chapter" data-level="1.2" data-path="01_data_structure.html"><a href="#配列と行列"><i class="fa fa-check"></i><b>1.2</b> 配列と行列</a></li>
 </ul></li>
 </ul>
 
@@ -142,7 +148,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Rによるデータ解析入門</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
           </h1>
         </div>
 
@@ -150,11 +156,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Rによるデータ解析入門</h1>
-</div>
-<div id="rの基礎" class="section level1">
-<h1><span class="header-section-number">1</span> Rの基礎</h1>
+<!--bookdown:title:end-->
+<!--bookdown:title:start-->
+<div id="rの基礎データ構造とデータ型" class="section level1">
+<h1><span class="header-section-number">ch:1</span> Rの基礎（データ構造とデータ型）</h1>
 <p>ここでは、データは数値や文字の集まりであると考えます。Rで標準的に利用できるデータの格納方法（データ構造）は以下の4つです。</p>
 <ul>
 <li><strong>ベクトル</strong>（vector）</li>
@@ -169,10 +174,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><strong>因子型</strong>（factor）</li>
 </ul>
 <p>特に、因子型は他のプログラミング言語にはないデータ型で、統計解析環境であるRならではのデータ型となっています。</p>
-<div id="rのデータ構造" class="section level2">
-<h2><span class="header-section-number">1.1</span> Rのデータ構造</h2>
-<div id="ベクトル" class="section level3">
-<h3><span class="header-section-number">1.1.1</span> ベクトル</h3>
+<div id="ベクトル" class="section level2">
+<h2><span class="header-section-number">1.1</span> ベクトル</h2>
 <p>Rにおける最もシンプルなデータ構造が<strong>ベクトル</strong>です。Rにおいては、単一の数値であっても、大きさ1のベクトルとして扱われます。例えば、以下のような演算を実行した結果の数値も大きさ1のベクトルです。結果に表示される<code>[1]</code>はそのすぐ右にある数値がベクトルの1番目の要素であることを示しています。</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="dv">3</span><span class="op">+</span><span class="dv">4</span></span></code></pre></div>
 <pre><code>## [1] 7</code></pre>
@@ -182,18 +185,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## [1] 0.5</code></pre>
 <p>多くの要素を持つベクトルの場合、例えば正規乱数を12個生成した結果のベクトルは以下のように表示されます。</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">rnorm</span>(<span class="dv">12</span>)</span></code></pre></div>
-<pre><code>##  [1]  0.1341281 -0.5107822  1.5006278 -0.1267802 -0.1576394 -0.6806487
-##  [7]  0.1960780 -0.4113370 -0.7537834  0.5871111  0.4210748  0.9801773</code></pre>
-<div id="オブジェクトと変数" class="section level4">
-<h4><span class="header-section-number">1.1.1.1</span> オブジェクトと変数</h4>
+<pre><code>##  [1]  1.00905998 -0.33614614  1.13985364  0.02282003 -0.36492918 -0.31843610 -0.75618717 -0.22509541  0.83171349
+## [10] -0.49981491 -0.81547402 -0.39501866</code></pre>
+<div id="オブジェクトと変数" class="section level3">
+<h3><span class="header-section-number">1.1.1</span> オブジェクトと変数</h3>
 <p>Rのコンソールにコマンドを入力すると、Rは何らかの結果をベクトルなどの形で出力してくれます。これらを総称して<strong>オブジェクト</strong>と呼びます。上のようなコマンドでは出力された結果のオブジェクトは再利用できませんが、<strong>変数</strong>に代入することで、再利用することができます。例えば、</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">12</span>)</span></code></pre></div>
 <p>とすると、実行結果には何も表示されませんが、変数<code>x</code>の中に実行結果が格納されます。<code>&lt;-</code>（代入演算子と呼びます）は、左辺の変数に右辺の実行結果を代入しなさいという意味になります。つまり、<code>x</code>に<code>rnorm(12)</code>の結果のオブジェクトが格納されたということになります。<code>x</code>の中に何が入っているかを知りたい場合は、コンソールに<code>x</code>と入力します。</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>x</span></code></pre></div>
-<pre><code>##  [1] -0.391129437  1.243023410  0.072234050  1.604028314  0.001837759
-##  [6]  0.292493970  1.537523222 -0.289934286  1.118993553 -1.334108356
-## [11] -2.015751972 -0.552589172</code></pre>
-<p>変数名には、文字、数字、ピリオドなどの記号が利用できますが先頭に数字がつくものは使えません。また、大文字と小文字を区別しますので、注意しましょう。実際に分析するときは、分析者にとって分かりやすく、また複数の分析者で分析する場合は他の人が見てもある程度推測できるような変数名にするとよいです。</p>
+<pre><code>##  [1] -0.25173542 -0.65738462 -0.01561416 -1.70451019 -0.99989826  1.11488964 -0.08552209  0.63689035  1.06675506
+## [10]  0.47965319 -1.45051879 -0.60025233</code></pre>
+<p>変数名には、文字、数字、ピリオドなどの記号が利用できますが先頭に数字がつくものは使えません。また、<strong>大文字と小文字を区別します</strong>ので、注意しましょう。実際に分析するときは、分析者にとって分かりやすく、また複数の分析者で分析する場合は他の人が見てもある程度推測できるような変数名にするとよいです。</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>student_id &lt;-<span class="st"> </span><span class="dv">1200</span></span></code></pre></div>
 <p>任意のベクトルを作成する場合は、<code>c()</code>関数<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>を用います。</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">10</span>)</span>
@@ -203,8 +205,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb15-2"><a href="#cb15-2"></a>y</span></code></pre></div>
 <pre><code>## [1] 0.5 3.0</code></pre>
 </div>
-<div id="便利なベクトル作成法" class="section level4">
-<h4><span class="header-section-number">1.1.1.2</span> 便利なベクトル作成法</h4>
+<div id="便利なベクトル作成法" class="section level3">
+<h3><span class="header-section-number">1.1.2</span> 便利なベクトル作成法</h3>
 <p>規則的に並んだ数値を要素とするベクトルを作成するには、いくつかの便利な方法があります。</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># 1ずつ増加する数列</span></span>
 <span id="cb17-2"><a href="#cb17-2"></a><span class="dv">1</span><span class="op">:</span><span class="dv">10</span></span></code></pre></div>
@@ -216,8 +218,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb21-2"><a href="#cb21-2"></a><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="fl">0.1</span>)</span></code></pre></div>
 <pre><code>##  [1] 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0</code></pre>
 </div>
-<div id="ベクトルの演算" class="section level4">
-<h4><span class="header-section-number">1.1.1.3</span> ベクトルの演算</h4>
+<div id="ベクトルの演算" class="section level3">
+<h3><span class="header-section-number">1.1.3</span> ベクトルの演算</h3>
 <p>ベクトル同士の演算は、2つのベクトルの大きさが同じ場合には要素同士の演算結果がベクトルとして返されます。</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">10</span>)</span>
 <span id="cb23-2"><a href="#cb23-2"></a>y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">5</span>)</span>
@@ -235,21 +237,102 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>以下のように、大きい方のベクトルの大きさが、小さい方の大きさの定数倍でない場合には警告が出力されます。</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>z &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)</span>
 <span id="cb33-2"><a href="#cb33-2"></a>x <span class="op">*</span><span class="st"> </span>z</span></code></pre></div>
-<pre><code>## Warning in x * z: 長いオブジェクトの長さが短いオブジェクトの長さの倍数になってい
-## ません</code></pre>
+<pre><code>## Warning in x * z: 長いオブジェクトの長さが短いオブジェクトの長さの倍数になっていません</code></pre>
 <pre><code>## [1]  3 12 10</code></pre>
 </div>
-<div id="ベクトルの要素の参照" class="section level4">
-<h4><span class="header-section-number">1.1.1.4</span> ベクトルの要素の参照</h4>
+<div id="ベクトルの要素の参照" class="section level3">
+<h3><span class="header-section-number">1.1.4</span> ベクトルの要素の参照</h3>
 <p>ベクトルの要素を参照する場合は、<code>[]</code>を以下のように使います。</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>x[<span class="dv">2</span>]</span></code></pre></div>
 <pre><code>## [1] 6</code></pre>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>x[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</span></code></pre></div>
-<pre><code>## [1]  3  6 10</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>x[<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]</span></code></pre></div>
+<pre><code>## [1]  6 10</code></pre>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>x[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</span></code></pre></div>
 <pre><code>## [1]  3 10</code></pre>
 </div>
+<div id="ベクトルに対する便利な関数" class="section level3">
+<h3><span class="header-section-number">1.1.5</span> ベクトルに対する便利な関数</h3>
+<p>複数の処理をまとめたものを<strong>関数</strong>（function）といいます。関数にはRに元々組み込まれているものもありますし、自分で関数を作ることもできます。関数は <code>関数名()</code> の形式で呼び出すことができ、<code>()</code>内にオブジェクトを記述することで、関数はそのオブジェクトに対して定められた処理を実行します。<code>()</code>内に記述するオブジェクトを<strong>引数</strong>（ひきすう）と呼びます。</p>
+<p>ベクトルに対しては、以下のような関数がよく用いられます。</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="co"># ベクトルの大きさ（要素数）を出力する</span></span>
+<span id="cb42-2"><a href="#cb42-2"></a><span class="kw">length</span>(x)</span></code></pre></div>
+<pre><code>## [1] 3</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="co"># 数値ベクトルの合計を出力する</span></span>
+<span id="cb44-2"><a href="#cb44-2"></a><span class="kw">sum</span>(x)</span></code></pre></div>
+<pre><code>## [1] 19</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="co"># 数値ベクトルの平均を出力する</span></span>
+<span id="cb46-2"><a href="#cb46-2"></a><span class="kw">mean</span>(x)</span></code></pre></div>
+<pre><code>## [1] 6.333333</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="co"># 数値ベクトルの標準偏差（standard deviation）を出力する</span></span>
+<span id="cb48-2"><a href="#cb48-2"></a><span class="kw">sd</span>(x)</span></code></pre></div>
+<pre><code>## [1] 3.511885</code></pre>
 </div>
+<div id="数値型と文字型" class="section level3">
+<h3><span class="header-section-number">1.1.6</span> 数値型と文字型</h3>
+<p>これまで扱ってきたベクトルに格納しているデータはすべて<strong>数値型</strong>（numeric）でした。Rでは文字列もデータとして扱うことができ、<strong>文字型</strong>（character）のデータと呼びます。文字型のデータはダブルクォート<code>"</code>で囲むことによって表現します。</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>s &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Kasumi&quot;</span>, <span class="st">&quot;Nadeshiko&quot;</span>, <span class="st">&quot;Kashii&quot;</span>)</span>
+<span id="cb50-2"><a href="#cb50-2"></a>s</span></code></pre></div>
+<pre><code>## [1] &quot;Kasumi&quot;    &quot;Nadeshiko&quot; &quot;Kashii&quot;</code></pre>
+<p><strong>ベクトルは、異なるデータ型を混在させることはできません。</strong>数値型と文字型が混在したベクトルを作成しようとすると、数値型が文字型に強制変換されます。</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a><span class="kw">c</span>(<span class="st">&quot;Happy&quot;</span>, <span class="st">&quot;New&quot;</span>, <span class="st">&quot;Year&quot;</span>, <span class="dv">2021</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;Happy&quot; &quot;New&quot;   &quot;Year&quot;  &quot;2021&quot;</code></pre>
+<p><code>class()</code>関数によってオブジェクトの型を確認することができます。</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a><span class="kw">class</span>(x)</span></code></pre></div>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a><span class="kw">class</span>(s)</span></code></pre></div>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+</div>
+</div>
+<div id="配列と行列" class="section level2">
+<h2><span class="header-section-number">1.2</span> 配列と行列</h2>
+<p>ベクトルに次元属性を与えることにより、配列として扱えるようになります。</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a>x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">9</span></span>
+<span id="cb58-2"><a href="#cb58-2"></a>x</span></code></pre></div>
+<pre><code>## [1] 1 2 3 4 5 6 7 8 9</code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a><span class="co"># xを3x3の2次元配列（行列）として扱う</span></span>
+<span id="cb60-2"><a href="#cb60-2"></a><span class="kw">dim</span>(x) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">3</span>)</span>
+<span id="cb60-3"><a href="#cb60-3"></a>x</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    4    7
+## [2,]    2    5    8
+## [3,]    3    6    9</code></pre>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a>x3 &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">27</span></span>
+<span id="cb62-2"><a href="#cb62-2"></a><span class="co"># x3を3x3x3の3次元配列として扱う</span></span>
+<span id="cb62-3"><a href="#cb62-3"></a><span class="kw">dim</span>(x3) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>)</span>
+<span id="cb62-4"><a href="#cb62-4"></a>x3</span></code></pre></div>
+<pre><code>## , , 1
+## 
+##      [,1] [,2] [,3]
+## [1,]    1    4    7
+## [2,]    2    5    8
+## [3,]    3    6    9
+## 
+## , , 2
+## 
+##      [,1] [,2] [,3]
+## [1,]   10   13   16
+## [2,]   11   14   17
+## [3,]   12   15   18
+## 
+## , , 3
+## 
+##      [,1] [,2] [,3]
+## [1,]   19   22   25
+## [2,]   20   23   26
+## [3,]   21   24   27</code></pre>
+<p><code>dim()</code>関数により次元属性が与えられ、引数には各次元の要素数を指定します。配列の各要素は、各次元の要素番号を指定しても、ベクトルとしての要素番号を指定しても参照できます。</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a>x3[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>]</span></code></pre></div>
+<pre><code>## [1] 4</code></pre>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a>x3[<span class="dv">4</span>]</span></code></pre></div>
+<pre><code>## [1] 4</code></pre>
+<p>特に2次元配列である行列を作成する場合には、<code>matrix()</code>関数を使うことができます。</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">15</span>, <span class="dt">ncol=</span><span class="dv">5</span>, <span class="dt">byrow=</span><span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    2    3    4    5
+## [2,]    6    7    8    9   10
+## [3,]   11   12   13   14   15</code></pre>
+<p>最初の引数でベクトルを指定します<code>ncol</code>は行列の列数、<code>byrow</code>は行方向にベクトルの要素を並べるかどうかを<code>TRUE</code>か<code>FALSE</code>で指定します（デフォルトは<code>FALSE</code>）。</p>
+
 </div>
 </div>
 
@@ -315,8 +398,7 @@ gitbook.start({
 "download": null,
 "toc": {
 "collapse": "subsection"
-},
-"search": false
+}
 });
 });
 </script>

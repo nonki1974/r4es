@@ -1,10 +1,10 @@
 ---
 title: "Rによるデータ解析入門"
-author: "Tomokazu Fujino (`@nonki1974`)"
-site: bookdown::bookdown_site
+author: "Tomokazu FUJINO (@nonki1974)"
 output:
   bookdown::gitbook: default
 ---
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
