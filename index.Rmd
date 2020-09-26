@@ -1,0 +1,11 @@
+---
+title: "Rによるデータ解析入門"
+site: bookdown::bookdown_site
+output:
+	bookdown::gitbook: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
