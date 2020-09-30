@@ -140,6 +140,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2" data-path="datatype.html"><a href="datatype.html"><i class="fa fa-check"></i><b>1.2</b> データ型</a><ul>
 <li class="chapter" data-level="1.2.1" data-path="datatype.html"><a href="datatype.html#numeric_and_char"><i class="fa fa-check"></i><b>1.2.1</b> 数値型と文字型</a></li>
 <li class="chapter" data-level="1.2.2" data-path="datatype.html"><a href="datatype.html#factor"><i class="fa fa-check"></i><b>1.2.2</b> 因子型</a></li>
+<li class="chapter" data-level="1.2.3" data-path="datatype.html"><a href="datatype.html#論理型"><i class="fa fa-check"></i><b>1.2.3</b> 論理型</a></li>
+<li class="chapter" data-level="1.2.4" data-path="datatype.html"><a href="datatype.html#欠損値の表現について"><i class="fa fa-check"></i><b>1.2.4</b> 欠損値の表現について</a></li>
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="arrayandmatrix.html"><a href="arrayandmatrix.html"><i class="fa fa-check"></i><b>1.3</b> データ構造（2）配列と行列</a></li>
 </ul></li>
@@ -163,20 +165,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="arrayandmatrix" class="section level2">
 <h2><span class="header-section-number">1.3</span> データ構造（2）配列と行列</h2>
 <p>ベクトルに次元属性を与えることにより、配列として扱えるようになります。</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="arrayandmatrix.html#cb72-1"></a>x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">9</span></span>
-<span id="cb72-2"><a href="arrayandmatrix.html#cb72-2"></a>x</span></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="arrayandmatrix.html#cb88-1"></a>x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">9</span></span>
+<span id="cb88-2"><a href="arrayandmatrix.html#cb88-2"></a>x</span></code></pre></div>
 <pre><code>## [1] 1 2 3 4 5 6 7 8 9</code></pre>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="arrayandmatrix.html#cb74-1"></a><span class="co"># xを3x3の2次元配列（行列）として扱う</span></span>
-<span id="cb74-2"><a href="arrayandmatrix.html#cb74-2"></a><span class="kw">dim</span>(x) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">3</span>)</span>
-<span id="cb74-3"><a href="arrayandmatrix.html#cb74-3"></a>x</span></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="arrayandmatrix.html#cb90-1"></a><span class="co"># xを3x3の2次元配列（行列）として扱う</span></span>
+<span id="cb90-2"><a href="arrayandmatrix.html#cb90-2"></a><span class="kw">dim</span>(x) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">3</span>)</span>
+<span id="cb90-3"><a href="arrayandmatrix.html#cb90-3"></a>x</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]    1    4    7
 ## [2,]    2    5    8
 ## [3,]    3    6    9</code></pre>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="arrayandmatrix.html#cb76-1"></a>x3 &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">27</span></span>
-<span id="cb76-2"><a href="arrayandmatrix.html#cb76-2"></a><span class="co"># x3を3x3x3の3次元配列として扱う</span></span>
-<span id="cb76-3"><a href="arrayandmatrix.html#cb76-3"></a><span class="kw">dim</span>(x3) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>)</span>
-<span id="cb76-4"><a href="arrayandmatrix.html#cb76-4"></a>x3</span></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="arrayandmatrix.html#cb92-1"></a>x3 &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">27</span></span>
+<span id="cb92-2"><a href="arrayandmatrix.html#cb92-2"></a><span class="co"># x3を3x3x3の3次元配列として扱う</span></span>
+<span id="cb92-3"><a href="arrayandmatrix.html#cb92-3"></a><span class="kw">dim</span>(x3) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>)</span>
+<span id="cb92-4"><a href="arrayandmatrix.html#cb92-4"></a>x3</span></code></pre></div>
 <pre><code>## , , 1
 ## 
 ##      [,1] [,2] [,3]
@@ -198,12 +200,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [2,]   20   23   26
 ## [3,]   21   24   27</code></pre>
 <p><code>dim()</code>関数により次元属性が与えられ、引数には各次元の要素数を指定します。配列の各要素は、各次元の要素番号を指定しても、ベクトルとしての要素番号を指定しても参照できます。</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="arrayandmatrix.html#cb78-1"></a>x3[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="arrayandmatrix.html#cb94-1"></a>x3[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>]</span></code></pre></div>
 <pre><code>## [1] 4</code></pre>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="arrayandmatrix.html#cb80-1"></a>x3[<span class="dv">4</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="arrayandmatrix.html#cb96-1"></a>x3[<span class="dv">4</span>]</span></code></pre></div>
 <pre><code>## [1] 4</code></pre>
 <p>特に2次元配列である行列を作成する場合には、<code>matrix()</code>関数を使うことができます。</p>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="arrayandmatrix.html#cb82-1"></a><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">15</span>, <span class="dt">ncol =</span> <span class="dv">5</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="arrayandmatrix.html#cb98-1"></a><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">15</span>, <span class="dt">ncol =</span> <span class="dv">5</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5]
 ## [1,]    1    2    3    4    5
 ## [2,]    6    7    8    9   10
@@ -212,6 +214,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </div>
 <!-- </div> -->
+
 
 
 

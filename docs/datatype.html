@@ -140,6 +140,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2" data-path="datatype.html"><a href="datatype.html"><i class="fa fa-check"></i><b>1.2</b> データ型</a><ul>
 <li class="chapter" data-level="1.2.1" data-path="datatype.html"><a href="datatype.html#numeric_and_char"><i class="fa fa-check"></i><b>1.2.1</b> 数値型と文字型</a></li>
 <li class="chapter" data-level="1.2.2" data-path="datatype.html"><a href="datatype.html#factor"><i class="fa fa-check"></i><b>1.2.2</b> 因子型</a></li>
+<li class="chapter" data-level="1.2.3" data-path="datatype.html"><a href="datatype.html#論理型"><i class="fa fa-check"></i><b>1.2.3</b> 論理型</a></li>
+<li class="chapter" data-level="1.2.4" data-path="datatype.html"><a href="datatype.html#欠損値の表現について"><i class="fa fa-check"></i><b>1.2.4</b> 欠損値の表現について</a></li>
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="arrayandmatrix.html"><a href="arrayandmatrix.html"><i class="fa fa-check"></i><b>1.3</b> データ構造（2）配列と行列</a></li>
 </ul></li>
@@ -214,6 +216,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## [1] 天ぷら   もつ鍋   ラーメン ごまさば ラーメン
 ## Levels: ごまさば もつ鍋 ラーメン 天ぷら</code></pre>
 </div>
+<div id="論理型" class="section level3">
+<h3><span class="header-section-number">1.2.3</span> 論理型</h3>
+<p><code>TRUE</code>と<code>FALSE</code>あるいはそれらの省略形として<code>T</code>と<code>F</code>は、<strong>論理型（logical）</strong>と呼ばれるデータ型の値であり、それぞれ真（True）と偽（False）を表現するために用いられます<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>。</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="datatype.html#cb72-1"></a>logical_sample &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, T, T, F, F)</span>
+<span id="cb72-2"><a href="datatype.html#cb72-2"></a>logical_sample</span></code></pre></div>
+<pre><code>## [1]  TRUE FALSE  TRUE  TRUE FALSE FALSE</code></pre>
+</div>
+<div id="欠損値の表現について" class="section level3">
+<h3><span class="header-section-number">1.2.4</span> 欠損値の表現について</h3>
+<p>実際に統計データを扱う際には、何らかの理由で一部のデータが観測されなかったり、個人情報保護の目的で一部のデータが提供されていなかったりすることがあります。このようなデータを表現するために、Rでは欠損値を意味する値<code>NA</code>が用いられます。</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="datatype.html#cb74-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="ot">NA</span>, <span class="dv">3</span>, <span class="dv">2</span>)</span>
+<span id="cb74-2"><a href="datatype.html#cb74-2"></a>x</span></code></pre></div>
+<pre><code>## [1]  2  5 10 NA  3  2</code></pre>
+<p><code>NA</code>を含んだベクトルに対して演算や集計をした場合は次のようになります。</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="datatype.html#cb76-1"></a>y &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">6</span></span>
+<span id="cb76-2"><a href="datatype.html#cb76-2"></a>x <span class="op">+</span><span class="st"> </span>y</span></code></pre></div>
+<pre><code>## [1]  3  7 13 NA  8  8</code></pre>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="datatype.html#cb78-1"></a><span class="kw">sum</span>(x)</span></code></pre></div>
+<pre><code>## [1] NA</code></pre>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="datatype.html#cb80-1"></a><span class="kw">mean</span>(x)</span></code></pre></div>
+<pre><code>## [1] NA</code></pre>
+<p><code>sum()</code>関数や<code>mean()</code>関数で欠損値を無視して計算したい場合には、引数で<code>na.rm = TRUE</code>を指定します。</p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="datatype.html#cb82-1"></a><span class="kw">sum</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] 22</code></pre>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="datatype.html#cb84-1"></a><span class="kw">mean</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] 4.4</code></pre>
+<p>因子型ベクトルを作成するとき、数値型のベクトルに水準集合に含まれない要素がある場合には、因子型ベクトルの中では欠損値として扱われます。</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="datatype.html#cb86-1"></a><span class="kw">factor</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">2</span>), <span class="dt">levels =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)</span></code></pre></div>
+<pre><code>## [1] 2    3    &lt;NA&gt; 2   
+## Levels: 1 2 3 4</code></pre>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="2">
+<li id="fn2"><p>ダブルクォートがついていないので文字型ではないことに注意<a href="datatype.html#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 
