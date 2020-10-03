@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Rによるデータ解析入門</title>
-  <meta name="description" content="Rによるデータ解析入門" />
+  <title>1.4 データ構造（3）リスト | Rによるデータ解析入門</title>
+  <meta name="description" content="1.4 データ構造（3）リスト | Rによるデータ解析入門" />
   <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Rによるデータ解析入門" />
+  <meta property="og:title" content="1.4 データ構造（3）リスト | Rによるデータ解析入門" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Rによるデータ解析入門" />
+  <meta name="twitter:title" content="1.4 データ構造（3）リスト | Rによるデータ解析入門" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="vector.html"/>
+<link rel="prev" href="arrayandmatrix.html"/>
+<link rel="next" href="dataframe.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -166,34 +166,53 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Rによるデータ解析入門</h1>
-<p class="author"><em>Tomokazu FUJINO (<span class="citation">@nonki1974</span>)</em></p>
-</div>
-<div id="Rbasics" class="section level1">
-<h1><span class="header-section-number">1</span> Rの基礎（データ構造とデータ型）</h1>
-<p>ここでは、データは数値や文字の集まりであると考えます。Rで標準的に利用できるデータの格納方法（データ構造）は以下の4つです。</p>
-<ul>
-<li><strong>ベクトル</strong>（vector）</li>
-<li><strong>配列・行列</strong>（array, matrix）</li>
-<li><strong>リスト</strong>（list）</li>
-<li><strong>データフレーム</strong>（data frame）</li>
-</ul>
-<p>一方、個々のデータそのものの種類をデータ型と呼び、Rでは主に以下の3つを利用します。</p>
-<ul>
-<li><strong>数値型</strong>（numeric）</li>
-<li><strong>文字型</strong>（charater）</li>
-<li><strong>因子型</strong>（factor）</li>
-</ul>
-<p>特に、因子型は他のプログラミング言語にはないデータ型で、統計解析環境であるRならではのデータ型となっています。</p>
+<div id="list" class="section level2">
+<h2><span class="header-section-number">1.4</span> データ構造（3）リスト</h2>
+<p>ベクトルは単一のデータ型しか保持できませんが、異なるデータ型のベクトルの集まりを1つのオブジェクトとして扱えるデータ構造を<strong>リスト</strong>といいます。リストは、ベクトルだけでなく、別のリストも要素として持つことができます。</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="list.html#cb100-1"></a>season &lt;-<span class="st"> </span><span class="dv">2013</span></span>
+<span id="cb100-2"><a href="list.html#cb100-2"></a>pacific &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;楽天&quot;</span>, <span class="st">&quot;西武&quot;</span>, <span class="st">&quot;ロッテ&quot;</span>, <span class="st">&quot;ソフトバンク&quot;</span>, <span class="st">&quot;オリックス&quot;</span>, <span class="st">&quot;日本ハム&quot;</span>)</span>
+<span id="cb100-3"><a href="list.html#cb100-3"></a>central &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;巨人&quot;</span>, <span class="st">&quot;阪神&quot;</span>, <span class="st">&quot;広島&quot;</span>, <span class="st">&quot;中日&quot;</span>, <span class="st">&quot;DeNA&quot;</span>, <span class="st">&quot;ヤクルト&quot;</span>)</span>
+<span id="cb100-4"><a href="list.html#cb100-4"></a>npb &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">pacific =</span> pacific, <span class="dt">central =</span> central, <span class="dt">season =</span> season)</span>
+<span id="cb100-5"><a href="list.html#cb100-5"></a>npb</span></code></pre></div>
+<pre><code>## $pacific
+## [1] &quot;楽天&quot;         &quot;西武&quot;         &quot;ロッテ&quot;       &quot;ソフトバンク&quot; &quot;オリックス&quot;  
+## [6] &quot;日本ハム&quot;    
+## 
+## $central
+## [1] &quot;巨人&quot;     &quot;阪神&quot;     &quot;広島&quot;     &quot;中日&quot;     &quot;DeNA&quot;     &quot;ヤクルト&quot;
+## 
+## $season
+## [1] 2013</code></pre>
+<p>リストを新たに作成するには<code>list()</code>関数を用います。引数は、<code>要素の参照名 = オブジェクト</code>をカンマ区切りで列挙します。リストのオブジェクト名の後に<code>$要素の参照名</code>をつけて実行すると、指定したリストの要素を直接参照できます。例えば、</p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="list.html#cb102-1"></a>npb<span class="op">$</span>pacific</span></code></pre></div>
+<pre><code>## [1] &quot;楽天&quot;         &quot;西武&quot;         &quot;ロッテ&quot;       &quot;ソフトバンク&quot; &quot;オリックス&quot;  
+## [6] &quot;日本ハム&quot;</code></pre>
+<p>また、<code>npb[[1]]</code>のようにすれば、要素番号でリストの要素を参照することもできます。</p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="list.html#cb104-1"></a>npb[[<span class="dv">2</span>]]</span></code></pre></div>
+<pre><code>## [1] &quot;巨人&quot;     &quot;阪神&quot;     &quot;広島&quot;     &quot;中日&quot;     &quot;DeNA&quot;     &quot;ヤクルト&quot;</code></pre>
+<p>以下のようにして、文字列として参照名を指定することもできますが、この場合の結果はリストとなります。</p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="list.html#cb106-1"></a>npb[<span class="st">&quot;central&quot;</span>]</span></code></pre></div>
+<pre><code>## $central
+## [1] &quot;巨人&quot;     &quot;阪神&quot;     &quot;広島&quot;     &quot;中日&quot;     &quot;DeNA&quot;     &quot;ヤクルト&quot;</code></pre>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="list.html#cb108-1"></a><span class="kw">class</span>(npb[<span class="st">&quot;central&quot;</span>])</span></code></pre></div>
+<pre><code>## [1] &quot;list&quot;</code></pre>
+<p>統計計算などを行うRの関数の多くは、その結果をリストの形式で返します。リストの要素の参照名の一覧を見るには<code>names()</code>関数を用います。</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="list.html#cb110-1"></a><span class="kw">names</span>(npb)</span></code></pre></div>
+<pre><code>## [1] &quot;pacific&quot; &quot;central&quot; &quot;season&quot;</code></pre>
+<p>また、リストの構造を見たい場合は、<code>str()</code>関数を用います。</p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="list.html#cb112-1"></a><span class="kw">str</span>(npb)</span></code></pre></div>
+<pre><code>## List of 3
+##  $ pacific: chr [1:6] &quot;楽天&quot; &quot;西武&quot; &quot;ロッテ&quot; &quot;ソフトバンク&quot; ...
+##  $ central: chr [1:6] &quot;巨人&quot; &quot;阪神&quot; &quot;広島&quot; &quot;中日&quot; ...
+##  $ season : num 2013</code></pre>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="vector.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="arrayandmatrix.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="dataframe.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

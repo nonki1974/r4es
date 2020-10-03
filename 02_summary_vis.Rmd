@@ -1,0 +1,25 @@
+# データの簡単な要約と可視化{#datavis_summary}
+
+まず、機械学習関連の情報やサンプルデータを提供している、[UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/)から、ある[卸売業者の顧客データ](http://archive.ics.uci.edu/ml/datasets/Wholesale+customers)をダウンロードしてみましょう。ページを開いたら「Data Folder」のリンクをたどると、CSVファイルへのリンクがあるので、これをダウンロードしてください。ダウンロードしたファイルは作業ディレクトリ（プロジェクトフォルダの場所）に「data」というフォルダを作成して、その中に保存しておいてください。
+
+CSVファイルをデータフレームとしてインポートするには、`read.csv()`関数を用います。
+
+```{r}
+ws_customer <- read.csv("./data/Wholesale customers data.csv")
+head(ws_customer)
+```
+
+[卸売業者の顧客データ](http://archive.ics.uci.edu/ml/datasets/Wholesale+customers)のページにおけるAttribute Informationの項目を見てみると、`Channel`は`1`がホテル、レストランやカフェ、`2`が小売の販売チャンネルを意味しています。また、`Region`は`1`がリスボン、`2`がオポルト、`3`がその他の地域を表しているようです。これらは名義尺度の変数ですが、
+
+```{r}
+str(ws_customer)
+```
+
+で分かるように、数値型として取り込まれています。これを名義尺度として扱うために、因子型に変換しておきます。
+
+```{r}
+ws_customer$Channel <- factor(ws_customer$Channel, labels = c("Horeca", "Retail"))
+ws_customer$Region <- factor(ws_customer$Region,
+                             labels = c("Lisbon", "Oporto", "Other Region"))
+str(ws_customer)
+```
