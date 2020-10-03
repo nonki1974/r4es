@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Rによるデータ解析入門</title>
-  <meta name="description" content="Rによるデータ解析入門" />
+  <title>2.1 データの簡単な要約 | Rによるデータ解析入門</title>
+  <meta name="description" content="2.1 データの簡単な要約 | Rによるデータ解析入門" />
   <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Rによるデータ解析入門" />
+  <meta property="og:title" content="2.1 データの簡単な要約 | Rによるデータ解析入門" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Rによるデータ解析入門" />
+  <meta name="twitter:title" content="2.1 データの簡単な要約 | Rによるデータ解析入門" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="vector.html"/>
+<link rel="prev" href="datavis-summary.html"/>
+<link rel="next" href="datavis-base.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -176,34 +176,59 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Rによるデータ解析入門</h1>
-<p class="author"><em>Tomokazu FUJINO (<span class="citation">@nonki1974</span>)</em></p>
-</div>
-<div id="Rbasics" class="section level1">
-<h1><span class="header-section-number">1</span> Rの基礎（データ構造とデータ型）</h1>
-<p>ここでは、データは数値や文字の集まりであると考えます。Rで標準的に利用できるデータの格納方法（データ構造）は以下の4つです。</p>
-<ul>
-<li><strong>ベクトル</strong>（vector）</li>
-<li><strong>配列・行列</strong>（array, matrix）</li>
-<li><strong>リスト</strong>（list）</li>
-<li><strong>データフレーム</strong>（data frame）</li>
-</ul>
-<p>一方、個々のデータそのものの種類をデータ型と呼び、Rでは主に以下の3つを利用します。</p>
-<ul>
-<li><strong>数値型</strong>（numeric）</li>
-<li><strong>文字型</strong>（charater）</li>
-<li><strong>因子型</strong>（factor）</li>
-</ul>
-<p>特に、因子型は他のプログラミング言語にはないデータ型で、統計解析環境であるRならではのデータ型となっています。</p>
+<div id="simple_summary" class="section level2">
+<h2><span class="header-section-number">2.1</span> データの簡単な要約</h2>
+<p>前の章で読み込んだ<code>fukuoka2015</code>を用いて、Rにおける基本的なデータの要約と可視化の方法を確認します。要約する際には、各列のデータ型が適切なものになっているか確認しましょう。前に述べたように、<code>city_code</code>や<code>地域</code>の列は因子型に変換すべきでしょう。</p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="simple-summary.html#cb140-1"></a>fukuoka2015<span class="op">$</span>area_code &lt;-<span class="st"> </span><span class="kw">factor</span>(fukuoka2015<span class="op">$</span>area_code)</span>
+<span id="cb140-2"><a href="simple-summary.html#cb140-2"></a>fukuoka2015<span class="op">$</span>地域 &lt;-<span class="st"> </span><span class="kw">factor</span>(fukuoka2015<span class="op">$</span>地域)</span></code></pre></div>
+<p>データフレームの各列についての要約を見たい場合は、<code>summary()</code>関数を使うと便利です。</p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="simple-summary.html#cb141-1"></a><span class="kw">summary</span>(fukuoka2015)</span></code></pre></div>
+<pre><code>##    area_code        地域        総面積         人口総数         昼間人口     
+##  40101  : 1   うきは市: 1   Min.   :  572   Min.   :  2174   Min.   :  1946  
+##  40103  : 1   みやこ町: 1   1st Qu.: 2165   1st Qu.: 18805   1st Qu.: 17175  
+##  40105  : 1   みやま市: 1   Median : 4192   Median : 40270   Median : 37514  
+##  40106  : 1   芦屋町  : 1   Mean   : 6068   Mean   : 70901   Mean   : 71486  
+##  40107  : 1   鞍手町  : 1   3rd Qu.: 7822   3rd Qu.: 87014   3rd Qu.: 83004  
+##  40108  : 1   宇美町  : 1   Max.   :24671   Max.   :306015   Max.   :381926  
+##  (Other):62   (Other) :62                                                    
+##      世帯数      
+##  Min.   :   742  
+##  1st Qu.:  7264  
+##  Median : 16508  
+##  Mean   : 30830  
+##  3rd Qu.: 35107  
+##  Max.   :141682  
+## </code></pre>
+<p>データフレームを引数として<code>summary()</code>関数を実行すると、変数が数値型の場合、5数要約（最小値、最大値、第1四分位数、中央値、第3四分位数）と平均値が、因子型の場合、各水準ごとのデータの個数の集計値が出力されます。</p>
+<p>ベクトルに対して利用した代表値（平均値や中央値）、ばらつきの指標（分散、標準偏差）などは、データフレームの列に対して適用できます。</p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="simple-summary.html#cb143-1"></a><span class="kw">mean</span>(fukuoka2015<span class="op">$</span>人口総数)</span></code></pre></div>
+<pre><code>## [1] 70901.26</code></pre>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="simple-summary.html#cb145-1"></a><span class="kw">median</span>(fukuoka2015<span class="op">$</span>人口総数)</span></code></pre></div>
+<pre><code>## [1] 40269.5</code></pre>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="simple-summary.html#cb147-1"></a><span class="kw">var</span>(fukuoka2015<span class="op">$</span>人口総数)</span></code></pre></div>
+<pre><code>## [1] 5978006833</code></pre>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="simple-summary.html#cb149-1"></a><span class="kw">sd</span>(fukuoka2015<span class="op">$</span>人口総数)</span></code></pre></div>
+<pre><code>## [1] 77317.57</code></pre>
+<p>数値型の変数の組に対しては、<strong>相関係数</strong>を<code>cor()</code>関数で計算することができます。</p>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="simple-summary.html#cb151-1"></a><span class="co"># 2つのベクトルを指定</span></span>
+<span id="cb151-2"><a href="simple-summary.html#cb151-2"></a><span class="kw">cor</span>(fukuoka2015<span class="op">$</span>人口総数, fukuoka2015<span class="op">$</span>昼間人口)</span></code></pre></div>
+<pre><code>## [1] 0.9584306</code></pre>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="simple-summary.html#cb153-1"></a><span class="co"># 複数列における変数の各組の相関係数を計算</span></span>
+<span id="cb153-2"><a href="simple-summary.html#cb153-2"></a><span class="kw">cor</span>(fukuoka2015[, <span class="dv">3</span><span class="op">:</span><span class="dv">6</span>])</span></code></pre></div>
+<pre><code>##             総面積  人口総数  昼間人口    世帯数
+## 総面積   1.0000000 0.2802705 0.2234106 0.2081516
+## 人口総数 0.2802705 1.0000000 0.9584306 0.9840105
+## 昼間人口 0.2234106 0.9584306 1.0000000 0.9876913
+## 世帯数   0.2081516 0.9840105 0.9876913 1.0000000</code></pre>
+<p>複数の変数の各組の相関係数を行列形式で表示したものを<strong>相関行列</strong>（Correlation Matrix）と呼びます。</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="vector.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="datavis-summary.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="datavis-base.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

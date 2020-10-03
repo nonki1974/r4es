@@ -1,8 +1,52 @@
 # データの簡単な要約と可視化{#datavis_summary}
 
-まず、機械学習関連の情報やサンプルデータを提供している、[UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/)から、ある[卸売業者の顧客データ](http://archive.ics.uci.edu/ml/datasets/Wholesale+customers)をダウンロードしてみましょう。ページを開いたら「Data Folder」のリンクをたどると、CSVファイルへのリンクがあるので、これをダウンロードしてください。ダウンロードしたファイルは作業ディレクトリ（プロジェクトフォルダの場所）に「data」というフォルダを作成して、その中に保存しておいてください。
+## データの簡単な要約 {#simple_summary}
 
-CSVファイルをデータフレームとしてインポートするには、`read.csv()`関数を用います。
+前の章で読み込んだ`fukuoka2015`を用いて、Rにおける基本的なデータの要約と可視化の方法を確認します。要約する際には、各列のデータ型が適切なものになっているか確認しましょう。前に述べたように、`city_code`や`地域`の列は因子型に変換すべきでしょう。
+
+```{r, include=FALSE}
+fukuoka2015 <- read.csv("./data/fukuoka2015.csv", encoding = "UTF-8")
+```
+
+
+```{r}
+fukuoka2015$area_code <- factor(fukuoka2015$area_code)
+fukuoka2015$地域 <- factor(fukuoka2015$地域)
+```
+
+データフレームの各列についての要約を見たい場合は、`summary()`関数を使うと便利です。
+
+```{r}
+summary(fukuoka2015)
+```
+
+データフレームを引数として`summary()`関数を実行すると、変数が数値型の場合、5数要約（最小値、最大値、第1四分位数、中央値、第3四分位数）と平均値が、因子型の場合、各水準ごとのデータの個数の集計値が出力されます。
+
+ベクトルに対して利用した代表値（平均値や中央値）、ばらつきの指標（分散、標準偏差）などは、データフレームの列に対して適用できます。
+
+```{r}
+mean(fukuoka2015$人口総数)
+median(fukuoka2015$人口総数)
+var(fukuoka2015$人口総数)
+sd(fukuoka2015$人口総数)
+```
+
+数値型の変数の組に対しては、**相関係数**を`cor()`関数で計算することができます。
+
+```{r}
+# 2つのベクトルを指定
+cor(fukuoka2015$人口総数, fukuoka2015$昼間人口)
+# 複数列における変数の各組の相関係数を計算
+cor(fukuoka2015[, 3:6])
+```
+
+複数の変数の各組の相関係数を行列形式で表示したものを**相関行列**（Correlation Matrix）と呼びます。
+
+## データの簡単な可視化 {#datavis_base}
+
+まず、機械学習関連の情報やサンプルデータを提供している、[UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/)から、ある[卸売業者の顧客データ](http://archive.ics.uci.edu/ml/datasets/Wholesale+customers)をダウンロードしてみましょう。ページを開いたら「Data Folder」のリンクをたどると、CSVファイルへのリンクがあるので、これをダウンロードしてください。ダウンロードしたファイルは作業ディレクトリ（プロジェクトフォルダの場所）に作成した「data」フォルダに保存しておいてください。
+
+CSVファイルを`read.csv()`関数でRにインポートします。
 
 ```{r}
 ws_customer <- read.csv("./data/Wholesale customers data.csv")
@@ -23,3 +67,70 @@ ws_customer$Region <- factor(ws_customer$Region,
                              labels = c("Lisbon", "Oporto", "Other Region"))
 str(ws_customer)
 ```
+
+`summary()`関数を適用すると以下のようになります。
+
+```{r}
+summary(ws_customer)
+```
+
+### 棒グラフ {#barplot}
+
+棒グラフは名義尺度と比例尺度の組からなるデータを可視化するツールですが、ここでは、`Channel`（名義尺度）ごとの度数（比例尺度）を棒グラフにしてみます。
+
+```{r}
+channel_count <- table(ws_customer$Channel)
+channel_count
+barplot(channel_count, ylim = c(0, 300), ylab = "度数")
+
+```
+
+### ヒストグラム {#histogram}
+
+量的変数の値の分布をみるには**ヒストグラム**を用います。ヒストグラムは、量的変数の範囲をいくつかの区間に分割し、区間ごとに描かれた棒の面積がその区間に含まれる値の個数に比例するようにしたものです。例えば、`Milk`のヒストグラムを描くには次のように`hist()`関数を用います。
+
+```{r}
+hist(ws_customer$Milk, breaks = 20,
+     xlim = c(0, 80000), ylim = c(0, 300),
+     xlab = "Milk", ylab = "度数", main = "")
+```
+
+`break`引数は分割する区間の数を指定します。
+
+### 箱ひげ図 {#boxplot}
+
+量的変数の値の分布を質的変数の水準ごとに比較する場合には**箱ひげ図**を用います。例えば、`Channel`ごとに`Milk`の分布を比較したい場合には、次のように`boxplot()`関数を用います。
+
+```{r}
+boxplot(Milk ~ Channel, data = ws_customer, ylim = c(0, 80000))
+```
+
+箱ひげ図は、箱の3本の水平線が下から順に第1四分位数、第2四分位数（中央値）、第3四分位数となっています。ひげ（箱の中央から延びる垂直な線）の下限と上限はそれぞれ、第1 四分位数-1.5$\times$四分位範囲から第3分位点+1.5$\times$四分位範囲内のデータの最小値および最大値となっています。その範囲外のデータは**外れ値**としてプロットされています。箱ひげ図は外れ値をチェックするツールとしても有効です。
+
+### 散布図 {#scatterplot}
+
+2つの量的変数の値の組を座標平面上の点としてプロットしたものが**散布図**です。散布図を作成することで、2つの量的変数の関連性を見ることができます。例えば、`Grocery`（食料品）と`Detergents_Paper`（洗剤や紙製品）の散布図を描くには次のように`plot()`関数を用います。
+
+```{r}
+plot(ws_customer$Grocery, ws_customer$Detergents_Paper,
+     xlab = "Grocery", ylab = "Detergents_Paper")
+```
+
+同じデータフレーム内の変数で散布図を描画する場合は、以下のように記述することもできます。
+
+```{r eval=FALSE}
+plot(Grocery, Detergents_Paper, data = ws_customer,
+     xlab = "Grocery", ylab = "Detergents_Paper")
+```
+
+
+### 総称的関数
+
+Rにおける関数のうち、**総称関数**（generic function）と呼ばれる関数は、引数の種類に応じて挙動が変わる性質を持ちます。例えば、`plot()`関数は、上のように2つのベクトルを引数として指定すれば、散布図を描画し、次のように、1つのベクトルを引数と指定すれば**インデックスプロット**と呼ばれる、横軸にベクトルの要素番号、縦軸にベクトルの要素の値をプロットしたものが出力される。
+
+```{r}
+plot(ws_customer$Grocery, ylab = "Grocery")
+```
+
+`summary()`関数も総称関数であり、データフレームを引数として指定した場合は、各変数の要約を出力しますが、分析結果のオブジェクトを引数として指定した場合には、分析結果の要約を出力します（これは後述）。
+

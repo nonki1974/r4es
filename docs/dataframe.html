@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="list.html"/>
-
+<link rel="next" href="datavis-summary.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -149,6 +149,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.5.1" data-path="dataframe.html"><a href="dataframe.html#readcsv"><i class="fa fa-check"></i><b>1.5.1</b> 外部データのデータフレームへのインポート</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="2" data-path="datavis-summary.html"><a href="datavis-summary.html"><i class="fa fa-check"></i><b>2</b> データの簡単な要約と可視化</a><ul>
+<li class="chapter" data-level="2.1" data-path="simple-summary.html"><a href="simple-summary.html"><i class="fa fa-check"></i><b>2.1</b> データの簡単な要約</a></li>
+<li class="chapter" data-level="2.2" data-path="datavis-base.html"><a href="datavis-base.html"><i class="fa fa-check"></i><b>2.2</b> データの簡単な可視化</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="datavis-base.html"><a href="datavis-base.html#barplot"><i class="fa fa-check"></i><b>2.2.1</b> 棒グラフ</a></li>
+<li class="chapter" data-level="2.2.2" data-path="datavis-base.html"><a href="datavis-base.html#histogram"><i class="fa fa-check"></i><b>2.2.2</b> ヒストグラム</a></li>
+<li class="chapter" data-level="2.2.3" data-path="datavis-base.html"><a href="datavis-base.html#boxplot"><i class="fa fa-check"></i><b>2.2.3</b> 箱ひげ図</a></li>
+<li class="chapter" data-level="2.2.4" data-path="datavis-base.html"><a href="datavis-base.html#scatterplot"><i class="fa fa-check"></i><b>2.2.4</b> 散布図</a></li>
+<li class="chapter" data-level="2.2.5" data-path="datavis-base.html"><a href="datavis-base.html#総称的関数"><i class="fa fa-check"></i><b>2.2.5</b> 総称的関数</a></li>
+</ul></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -202,62 +212,70 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="dataframe.html#cb124-1"></a><span class="co"># 列の参照</span></span>
 <span id="cb124-2"><a href="dataframe.html#cb124-2"></a>pacific_seiseki[, <span class="dv">3</span>]</span></code></pre></div>
 <pre><code>## [1] 59 66 68 69 73 78</code></pre>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="dataframe.html#cb126-1"></a><span class="co"># 複数列の参照: 2列目から3列目</span></span>
+<span id="cb126-2"><a href="dataframe.html#cb126-2"></a>pacific_seiseki[, <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]</span></code></pre></div>
+<pre><code>##   win lose
+## 1  82   59
+## 2  74   66
+## 3  74   68
+## 4  73   69
+## 5  66   73
+## 6  64   78</code></pre>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="dataframe.html#cb128-1"></a><span class="co"># 複数列の参照: 1列目と3列目</span></span>
+<span id="cb128-2"><a href="dataframe.html#cb128-2"></a>pacific_seiseki[, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</span></code></pre></div>
+<pre><code>##        pacific lose
+## 1         楽天   59
+## 2         西武   66
+## 3       ロッテ   68
+## 4 ソフトバンク   69
+## 5   オリックス   73
+## 6     日本ハム   78</code></pre>
+<p>データフレームの行数と列数は以下のようにして確認することができます。</p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="dataframe.html#cb130-1"></a><span class="co"># 行数</span></span>
+<span id="cb130-2"><a href="dataframe.html#cb130-2"></a><span class="kw">nrow</span>(pacific_seiseki)</span></code></pre></div>
+<pre><code>## [1] 6</code></pre>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="dataframe.html#cb132-1"></a><span class="co"># 列数</span></span>
+<span id="cb132-2"><a href="dataframe.html#cb132-2"></a><span class="kw">ncol</span>(pacific_seiseki)</span></code></pre></div>
+<pre><code>## [1] 3</code></pre>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="dataframe.html#cb134-1"></a><span class="co"># 同時に</span></span>
+<span id="cb134-2"><a href="dataframe.html#cb134-2"></a><span class="kw">dim</span>(pacific_seiseki)</span></code></pre></div>
+<pre><code>## [1] 6 3</code></pre>
+<p>RStudioを利用している場合、Environment Paneにオブジェクトの一覧が表示されますが、その中でデータフレームのオブジェクトをクリックすると、スプレッドシートの形式で、データのプレビューが表示され、簡易的なデータの検索やソートができます。</p>
 <div id="readcsv" class="section level3">
 <h3><span class="header-section-number">1.5.1</span> 外部データのデータフレームへのインポート</h3>
-<p>これまでは、Rの基本的な説明のために、ベクトルやデータフレームのオブジェクトをコマンドで作成する方法を示してきましたが、実際の分析では既存の外部データをRにインポートすることが多いです。ここでは、CSVファイルをインポートする方法を紹介します。まず、機械学習関連の情報やサンプルデータを提供している、<a href="http://archive.ics.uci.edu/ml/">UCI Machine Learning Repository</a>から、ある<a href="http://archive.ics.uci.edu/ml/datasets/Wholesale+customers">卸売業者の顧客データ</a>をダウンロードしてみましょう。ページを開いたら「Data Folder」のリンクをたどると、CSVファイルへのリンクがあるので、これをダウンロードしてください。ダウンロードしたファイルは作業ディレクトリ（プロジェクトフォルダの場所）に「data」というフォルダを作成して、その中に保存しておいてください。</p>
-<p>CSVファイルをデータフレームとしてインポートするには、<code>read.csv()</code>関数を用います。</p>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="dataframe.html#cb126-1"></a>ws_customer &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;./data/Wholesale customers data.csv&quot;</span>)</span>
-<span id="cb126-2"><a href="dataframe.html#cb126-2"></a><span class="kw">head</span>(ws_customer)</span></code></pre></div>
-<pre><code>##   Channel Region Fresh Milk Grocery Frozen Detergents_Paper Delicassen
-## 1       2      3 12669 9656    7561    214             2674       1338
-## 2       2      3  7057 9810    9568   1762             3293       1776
-## 3       2      3  6353 8808    7684   2405             3516       7844
-## 4       1      3 13265 1196    4221   6404              507       1788
-## 5       2      3 22615 5410    7198   3915             1777       5185
-## 6       2      3  9413 8259    5126    666             1795       1451</code></pre>
-<p><a href="http://archive.ics.uci.edu/ml/datasets/Wholesale+customers">卸売業者の顧客データ</a>のページにおけるAttribute Informationの項目を見てみると、<code>Channel</code>は<code>1</code>がホテル、レストランやカフェ、<code>2</code>が小売の販売チャンネルを意味しています。また、<code>Region</code>は<code>1</code>がリスボン、<code>2</code>がオポルト、<code>3</code>がその他の地域を表しているようです。これらは名義尺度の変数ですが、</p>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="dataframe.html#cb128-1"></a><span class="kw">str</span>(ws_customer)</span></code></pre></div>
-<pre><code>## &#39;data.frame&#39;:    440 obs. of  8 variables:
-##  $ Channel         : int  2 2 2 1 2 2 2 2 1 2 ...
-##  $ Region          : int  3 3 3 3 3 3 3 3 3 3 ...
-##  $ Fresh           : int  12669 7057 6353 13265 22615 9413 12126 7579 5963 6006 ...
-##  $ Milk            : int  9656 9810 8808 1196 5410 8259 3199 4956 3648 11093 ...
-##  $ Grocery         : int  7561 9568 7684 4221 7198 5126 6975 9426 6192 18881 ...
-##  $ Frozen          : int  214 1762 2405 6404 3915 666 480 1669 425 1159 ...
-##  $ Detergents_Paper: int  2674 3293 3516 507 1777 1795 3140 3321 1716 7425 ...
-##  $ Delicassen      : int  1338 1776 7844 1788 5185 1451 545 2566 750 2098 ...</code></pre>
-<p>で分かるように、数値型として取り込まれています。これを名義尺度として扱うために、因子型に変換しておきます。</p>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="dataframe.html#cb130-1"></a>ws_customer<span class="op">$</span>Channel &lt;-<span class="st"> </span><span class="kw">factor</span>(ws_customer<span class="op">$</span>Channel, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Horeca&quot;</span>, <span class="st">&quot;Retail&quot;</span>))</span>
-<span id="cb130-2"><a href="dataframe.html#cb130-2"></a>ws_customer<span class="op">$</span>Region &lt;-<span class="st"> </span><span class="kw">factor</span>(ws_customer<span class="op">$</span>Region,</span>
-<span id="cb130-3"><a href="dataframe.html#cb130-3"></a>                             <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Lisbon&quot;</span>, <span class="st">&quot;Oporto&quot;</span>, <span class="st">&quot;Other Region&quot;</span>))</span>
-<span id="cb130-4"><a href="dataframe.html#cb130-4"></a><span class="kw">str</span>(ws_customer)</span></code></pre></div>
-<pre><code>## &#39;data.frame&#39;:    440 obs. of  8 variables:
-##  $ Channel         : Factor w/ 2 levels &quot;Horeca&quot;,&quot;Retail&quot;: 2 2 2 1 2 2 2 2 1 2 ...
-##  $ Region          : Factor w/ 3 levels &quot;Lisbon&quot;,&quot;Oporto&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
-##  $ Fresh           : int  12669 7057 6353 13265 22615 9413 12126 7579 5963 6006 ...
-##  $ Milk            : int  9656 9810 8808 1196 5410 8259 3199 4956 3648 11093 ...
-##  $ Grocery         : int  7561 9568 7684 4221 7198 5126 6975 9426 6192 18881 ...
-##  $ Frozen          : int  214 1762 2405 6404 3915 666 480 1669 425 1159 ...
-##  $ Detergents_Paper: int  2674 3293 3516 507 1777 1795 3140 3321 1716 7425 ...
-##  $ Delicassen      : int  1338 1776 7844 1788 5185 1451 545 2566 750 2098 ...</code></pre>
+<p>これまでは、Rの基本的な説明のために、ベクトルやデータフレームのオブジェクトをコマンドで作成する方法を示してきましたが、実際の分析では既存の外部データをRにインポートすることが多いです。ここでは、CSVファイルをインポートする方法を紹介します。</p>
+<p><a href="https://raw.githubusercontent.com/nonki1974/r4es/master/data/fukuoka2015.csv"><code>fukuoka2015.csv</code></a>は2015年の福岡県内市区町村の人口および世帯数のデータです。リンクをクリックするととブラウザでファイルの中身が表示されるので、作業ディレクトリ（プロジェクトフォルダの場所）に「data」というフォルダを作成して、その中に保存しておいてください（右クリック-&gt;「名前を付けて保存」）。CSVファイルをデータフレームとしてインポートするには、<code>read.csv()</code>関数を用います。</p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="dataframe.html#cb136-1"></a>fukuoka2015 &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;./data/fukuoka2015.csv&quot;</span>, <span class="dt">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
+<span id="cb136-2"><a href="dataframe.html#cb136-2"></a><span class="co"># データフレームの最初の6行を表示</span></span>
+<span id="cb136-3"><a href="dataframe.html#cb136-3"></a><span class="kw">head</span>(fukuoka2015)</span></code></pre></div>
+<pre><code>##   area_code     地域 総面積 人口総数 昼間人口 世帯数
+## 1     40101   門司区   7367    99637    97946  43082
+## 2     40103   若松区   7131    82844    82591  33692
+## 3     40105   戸畑区   1661    59116    70519  27797
+## 4     40106 小倉北区   3923   181878   224589  91253
+## 5     40107 小倉南区  17174   212850   190913  88497
+## 6     40108 八幡東区   3626    68844    73391  31442</code></pre>
+<p><code>encoding</code>引数に、読み込むファイルの文字コード（このファイルの場合<code>UTF-8</code>）を指定します。この引数を指定しない場合、システム標準の文字コード（Windowsの場合<code>SHIFT-JIS</code>、Macの場合<code>UTF-8</code>）で読み込まれます。ファイルの文字コードと読み込もうとする文字コードに相違がある場合、文字化けが発生します。<code>UTF-8</code>のファイルを読み込む場合、Macの環境では、<code>encoding</code>引数の指定は必要ありません。</p>
+<p>特に引数を指定しない場合、csvファイルの中で、数値のみからなるの列は数値型、それ以外は文字型として読み込まれます。<code>fukuoka2015</code>の場合、<code>area_code</code>はコード番号を表すので名義尺度ですが、数値型として読み込まれるので、必要に応じて因子型に変換します。また、<code>地域</code>は文字型として読み込まれるので、こちらも必要に応じて因子型に変換します（後述）。</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="dataframe.html#cb138-1"></a><span class="kw">str</span>(fukuoka2015)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:	68 obs. of  6 variables:
+##  $ area_code: int  40101 40103 40105 40106 40107 40108 40109 40131 40132 40133 ...
+##  $ 地域     : chr  &quot;門司区&quot; &quot;若松区&quot; &quot;戸畑区&quot; &quot;小倉北区&quot; ...
+##  $ 総面積   : int  7367 7131 1661 3923 17174 3626 8313 6936 3163 1540 ...
+##  $ 人口総数 : int  99637 82844 59116 181878 212850 68844 256117 306015 228441 192688 ...
+##  $ 昼間人口 : int  97946 82591 70519 224589 190913 73391 243568 303352 381926 296992 ...
+##  $ 世帯数   : int  43082 33692 27797 91253 88497 31442 110562 141682 138832 116186 ...</code></pre>
 
 </div>
 </div>
 <!-- </div> -->
-
-
-
-
-
-
-
             </section>
 
           </div>
         </div>
       </div>
-<a href="list.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="list.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="datavis-summary.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -307,6 +325,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

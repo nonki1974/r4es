@@ -149,6 +149,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.5.1" data-path="dataframe.html"><a href="dataframe.html#readcsv"><i class="fa fa-check"></i><b>1.5.1</b> 外部データのデータフレームへのインポート</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="2" data-path="datavis-summary.html"><a href="datavis-summary.html"><i class="fa fa-check"></i><b>2</b> データの簡単な要約と可視化</a><ul>
+<li class="chapter" data-level="2.1" data-path="simple-summary.html"><a href="simple-summary.html"><i class="fa fa-check"></i><b>2.1</b> データの簡単な要約</a></li>
+<li class="chapter" data-level="2.2" data-path="datavis-base.html"><a href="datavis-base.html"><i class="fa fa-check"></i><b>2.2</b> データの簡単な可視化</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="datavis-base.html"><a href="datavis-base.html#barplot"><i class="fa fa-check"></i><b>2.2.1</b> 棒グラフ</a></li>
+<li class="chapter" data-level="2.2.2" data-path="datavis-base.html"><a href="datavis-base.html#histogram"><i class="fa fa-check"></i><b>2.2.2</b> ヒストグラム</a></li>
+<li class="chapter" data-level="2.2.3" data-path="datavis-base.html"><a href="datavis-base.html#boxplot"><i class="fa fa-check"></i><b>2.2.3</b> 箱ひげ図</a></li>
+<li class="chapter" data-level="2.2.4" data-path="datavis-base.html"><a href="datavis-base.html#scatterplot"><i class="fa fa-check"></i><b>2.2.4</b> 散布図</a></li>
+<li class="chapter" data-level="2.2.5" data-path="datavis-base.html"><a href="datavis-base.html#総称的関数"><i class="fa fa-check"></i><b>2.2.5</b> 総称的関数</a></li>
+</ul></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -262,6 +272,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
