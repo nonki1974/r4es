@@ -78,18 +78,17 @@ summary(ws_customer)
 
 棒グラフは名義尺度と比例尺度の組からなるデータを可視化するツールですが、ここでは、`Channel`（名義尺度）ごとの度数（比例尺度）を棒グラフにしてみます。
 
-```{r}
+```{r barplot}
 channel_count <- table(ws_customer$Channel)
 channel_count
 barplot(channel_count, ylim = c(0, 300), ylab = "度数")
-
 ```
 
 ### ヒストグラム {#histogram}
 
 量的変数の値の分布をみるには**ヒストグラム**を用います。ヒストグラムは、量的変数の範囲をいくつかの区間に分割し、区間ごとに描かれた棒の面積がその区間に含まれる値の個数に比例するようにしたものです。例えば、`Milk`のヒストグラムを描くには次のように`hist()`関数を用います。
 
-```{r}
+```{r hist}
 hist(ws_customer$Milk, breaks = 20,
      xlim = c(0, 80000), ylim = c(0, 300),
      xlab = "Milk", ylab = "度数", main = "")
@@ -101,7 +100,7 @@ hist(ws_customer$Milk, breaks = 20,
 
 量的変数の値の分布を質的変数の水準ごとに比較する場合には**箱ひげ図**を用います。例えば、`Channel`ごとに`Milk`の分布を比較したい場合には、次のように`boxplot()`関数を用います。
 
-```{r}
+```{r boxplot}
 boxplot(Milk ~ Channel, data = ws_customer, ylim = c(0, 80000))
 ```
 
@@ -111,7 +110,7 @@ boxplot(Milk ~ Channel, data = ws_customer, ylim = c(0, 80000))
 
 2つの量的変数の値の組を座標平面上の点としてプロットしたものが**散布図**です。散布図を作成することで、2つの量的変数の関連性を見ることができます。例えば、`Grocery`（食料品）と`Detergents_Paper`（洗剤や紙製品）の散布図を描くには次のように`plot()`関数を用います。
 
-```{r}
+```{r scat}
 plot(ws_customer$Grocery, ws_customer$Detergents_Paper,
      xlab = "Grocery", ylab = "Detergents_Paper")
 ```
@@ -128,7 +127,7 @@ plot(Grocery, Detergents_Paper, data = ws_customer,
 
 Rにおける関数のうち、**総称関数**（generic function）と呼ばれる関数は、引数の種類に応じて挙動が変わる性質を持ちます。例えば、`plot()`関数は、上のように2つのベクトルを引数として指定すれば、散布図を描画し、次のように、1つのベクトルを引数と指定すれば**インデックスプロット**と呼ばれる、横軸にベクトルの要素番号、縦軸にベクトルの要素の値をプロットしたものが出力される。
 
-```{r}
+```{r indexplot}
 plot(ws_customer$Grocery, ylab = "Grocery")
 ```
 
