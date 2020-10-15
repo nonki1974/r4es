@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3.4 1つのテーブルに対するverb | Rによるデータ解析入門</title>
+  <meta name="description" content="3.4 1つのテーブルに対するverb | Rによるデータ解析入門" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3.4 1つのテーブルに対するverb | Rによるデータ解析入門" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3.4 1つのテーブルに対するverb | Rによるデータ解析入門" />
+  
+  
+  
+
+<meta name="author" content="Tomokazu FUJINO (@nonki1974)" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="nycflights13.html"/>
+<link rel="next" href="pipe.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Rの基礎（データ構造とデータ型）</a><ul>
+<li class="chapter" data-level="1.1" data-path="vector.html"><a href="vector.html"><i class="fa fa-check"></i><b>1.1</b> データ構造（1）ベクトル</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="vector.html"><a href="vector.html#object_and_var"><i class="fa fa-check"></i><b>1.1.1</b> オブジェクトと変数</a></li>
+<li class="chapter" data-level="1.1.2" data-path="vector.html"><a href="vector.html#usefulfunctionforgeneratingvec"><i class="fa fa-check"></i><b>1.1.2</b> 便利なベクトル作成法</a></li>
+<li class="chapter" data-level="1.1.3" data-path="vector.html"><a href="vector.html#operator_for_vec"><i class="fa fa-check"></i><b>1.1.3</b> ベクトルの演算</a></li>
+<li class="chapter" data-level="1.1.4" data-path="vector.html"><a href="vector.html#reference_for_element"><i class="fa fa-check"></i><b>1.1.4</b> ベクトルの要素の参照</a></li>
+<li class="chapter" data-level="1.1.5" data-path="vector.html"><a href="vector.html#useful_function_for_vec"><i class="fa fa-check"></i><b>1.1.5</b> ベクトルに対する便利な関数</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="datatype.html"><a href="datatype.html"><i class="fa fa-check"></i><b>1.2</b> データ型</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="datatype.html"><a href="datatype.html#numeric_and_char"><i class="fa fa-check"></i><b>1.2.1</b> 数値型と文字型</a></li>
+<li class="chapter" data-level="1.2.2" data-path="datatype.html"><a href="datatype.html#factor"><i class="fa fa-check"></i><b>1.2.2</b> 因子型</a></li>
+<li class="chapter" data-level="1.2.3" data-path="datatype.html"><a href="datatype.html#論理型"><i class="fa fa-check"></i><b>1.2.3</b> 論理型</a></li>
+<li class="chapter" data-level="1.2.4" data-path="datatype.html"><a href="datatype.html#欠損値の表現について"><i class="fa fa-check"></i><b>1.2.4</b> 欠損値の表現について</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="arrayandmatrix.html"><a href="arrayandmatrix.html"><i class="fa fa-check"></i><b>1.3</b> データ構造（2）配列と行列</a></li>
+<li class="chapter" data-level="1.4" data-path="list.html"><a href="list.html"><i class="fa fa-check"></i><b>1.4</b> データ構造（3）リスト</a></li>
+<li class="chapter" data-level="1.5" data-path="dataframe.html"><a href="dataframe.html"><i class="fa fa-check"></i><b>1.5</b> データ構造（4）データフレーム</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="dataframe.html"><a href="dataframe.html#readcsv"><i class="fa fa-check"></i><b>1.5.1</b> 外部データのデータフレームへのインポート</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="datavis-summary.html"><a href="datavis-summary.html"><i class="fa fa-check"></i><b>2</b> データの簡単な要約と可視化</a><ul>
+<li class="chapter" data-level="2.1" data-path="simple-summary.html"><a href="simple-summary.html"><i class="fa fa-check"></i><b>2.1</b> データの簡単な要約</a></li>
+<li class="chapter" data-level="2.2" data-path="datavis-base.html"><a href="datavis-base.html"><i class="fa fa-check"></i><b>2.2</b> データの簡単な可視化</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="datavis-base.html"><a href="datavis-base.html#barplot"><i class="fa fa-check"></i><b>2.2.1</b> 棒グラフ</a></li>
+<li class="chapter" data-level="2.2.2" data-path="datavis-base.html"><a href="datavis-base.html#histogram"><i class="fa fa-check"></i><b>2.2.2</b> ヒストグラム</a></li>
+<li class="chapter" data-level="2.2.3" data-path="datavis-base.html"><a href="datavis-base.html#boxplot"><i class="fa fa-check"></i><b>2.2.3</b> 箱ひげ図</a></li>
+<li class="chapter" data-level="2.2.4" data-path="datavis-base.html"><a href="datavis-base.html#scatterplot"><i class="fa fa-check"></i><b>2.2.4</b> 散布図</a></li>
+<li class="chapter" data-level="2.2.5" data-path="datavis-base.html"><a href="datavis-base.html#総称的関数"><i class="fa fa-check"></i><b>2.2.5</b> 総称的関数</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="dplyr-tidyr-01.html"><a href="dplyr-tidyr-01.html"><i class="fa fa-check"></i><b>3</b> dplyr/tidyrを用いたデータの整理と変換(1)</a><ul>
+<li class="chapter" data-level="3.1" data-path="package.html"><a href="package.html"><i class="fa fa-check"></i><b>3.1</b> パッケージによる機能拡張</a></li>
+<li class="chapter" data-level="3.2" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>3.2</b> tidyverse</a></li>
+<li class="chapter" data-level="3.3" data-path="nycflights13.html"><a href="nycflights13.html"><i class="fa fa-check"></i><b>3.3</b> nycflights13</a></li>
+<li class="chapter" data-level="3.4" data-path="onetable-verbs.html"><a href="onetable-verbs.html"><i class="fa fa-check"></i><b>3.4</b> 1つのテーブルに対するverb</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="onetable-verbs.html"><a href="onetable-verbs.html#filter"><i class="fa fa-check"></i><b>3.4.1</b> 値の条件による抽出：<code>filter()</code></a></li>
+<li class="chapter" data-level="3.4.2" data-path="onetable-verbs.html"><a href="onetable-verbs.html#指定した列の抽出select-select"><i class="fa fa-check"></i><b>3.4.2</b> 指定した列の抽出：<code>select()</code> #{select}</a></li>
+<li class="chapter" data-level="3.4.3" data-path="onetable-verbs.html"><a href="onetable-verbs.html#指定した列を昇順でソートarrange-arrange"><i class="fa fa-check"></i><b>3.4.3</b> 指定した列を昇順でソート：<code>arrange()</code> #{arrange}</a></li>
+<li class="chapter" data-level="3.4.4" data-path="onetable-verbs.html"><a href="onetable-verbs.html#mutate"><i class="fa fa-check"></i><b>3.4.4</b> 新しい列の作成：<code>mutate()</code></a></li>
+<li class="chapter" data-level="3.4.5" data-path="onetable-verbs.html"><a href="onetable-verbs.html#summarise"><i class="fa fa-check"></i><b>3.4.5</b> グループごとの要約：<code>group_by()</code>と<code>summarise()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="pipe.html"><a href="pipe.html"><i class="fa fa-check"></i><b>3.5</b> パイプ</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Rによるデータ解析入門</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="onetable_verbs" class="section level2">
+<h2><span class="header-section-number">3.4</span> 1つのテーブルに対するverb</h2>
+<p><strong>dplyr</strong>パッケージはデータの操作に関する一貫した文法を持つ関数を提供しています。このパッケージにおいて、テーブル（データフレームやtibbleなど）に対して何らかの処理を行う関数のことを<strong>verb</strong>と呼びます。verbは以下のようなルールで用いられます。</p>
+<ul>
+<li>最初の引数は処理対象となるテーブル</li>
+<li>2番目以降の引数で、verbに関連するオプションを指定</li>
+<li>帰ってくる値は常にテーブル</li>
+</ul>
+<p>verbの説明のために、以下のように簡単なデータフレームを作成しておきます。</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="onetable-verbs.html#cb8-1"></a>df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</span>
+<span id="cb8-2"><a href="onetable-verbs.html#cb8-2"></a>  <span class="dt">color =</span> <span class="kw">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;black&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;black&quot;</span>),</span>
+<span id="cb8-3"><a href="onetable-verbs.html#cb8-3"></a>  <span class="dt">value =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span></span>
+<span id="cb8-4"><a href="onetable-verbs.html#cb8-4"></a>)</span>
+<span id="cb8-5"><a href="onetable-verbs.html#cb8-5"></a>df</span></code></pre></div>
+<pre><code>##   color value
+## 1  blue     1
+## 2 black     2
+## 3  blue     3
+## 4  blue     4
+## 5 black     5</code></pre>
+<div id="filter" class="section level3">
+<h3><span class="header-section-number">3.4.1</span> 値の条件による抽出：<code>filter()</code></h3>
+<p><code>filter()</code>関数は第2引数以降で指定した条件に合致する行のみを抽出するためのverbです。以下のようにすると、変数<code>color</code>が<code>"blue"</code>である行のみが抽出されます。</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="onetable-verbs.html#cb10-1"></a><span class="kw">filter</span>(df, color <span class="op">==</span><span class="st"> &quot;blue&quot;</span>)</span></code></pre></div>
+<pre><code>##   color value
+## 1  blue     1
+## 2  blue     3
+## 3  blue     4</code></pre>
+<p>「等しい」という表現は、<code>==</code>となることに注意してください。変数<code>value</code>が1もしくは4の行のみ抽出する場合は</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="onetable-verbs.html#cb12-1"></a><span class="kw">filter</span>(df, value <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">4</span>))</span></code></pre></div>
+<pre><code>##   color value
+## 1  blue     1
+## 2  blue     4</code></pre>
+<p>のようにします。条件部には以下のような、条件演算子を用いた条件式を記述します。</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">演算子</th>
+<th align="left">機能</th>
+<th align="left">演算子</th>
+<th align="left">機能</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>x &gt; 1</code></td>
+<td align="left">1より大きい</td>
+<td align="left"><code>x != 1</code></td>
+<td align="left">1と等しくない</td>
+</tr>
+<tr class="even">
+<td align="left"><code>x &gt;= 1</code></td>
+<td align="left">1以上</td>
+<td align="left"><code>x == 1</code></td>
+<td align="left">1と等しい</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>x &lt; 1</code></td>
+<td align="left">1より小さい</td>
+<td align="left"><code>x %in% c(1, 2)</code></td>
+<td align="left">1か2のいずれか</td>
+</tr>
+<tr class="even">
+<td align="left"><code>x &lt;= 1</code></td>
+<td align="left">1以下</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+<p>また、複数の条件を用いる場合は、以下のような論理演算子を用います。</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">式</th>
+<th align="left">機能</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>a | b</code></td>
+<td align="left">条件aと条件bのいずれかを満たす（論理和）</td>
+</tr>
+<tr class="even">
+<td align="left"><code>a &amp; b</code></td>
+<td align="left">条件aと条件bの両方を満たす（論理積）</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>!a</code></td>
+<td align="left">条件aを満たさない（否定）</td>
+</tr>
+<tr class="even">
+<td align="left"><code>xor(a, b)</code></td>
+<td align="left">条件aと条件bの排他的論理和</td>
+</tr>
+</tbody>
+</table>
+<p><code>color</code>が<code>"blue"</code>で<code>value</code>が3未満の行のみを抽出するには以下のようにします。</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="onetable-verbs.html#cb14-1"></a><span class="kw">filter</span>(df, color <span class="op">==</span><span class="st"> &quot;blue&quot;</span> <span class="op">&amp;</span><span class="st"> </span>value <span class="op">&lt;=</span><span class="st"> </span><span class="dv">3</span>)</span></code></pre></div>
+<pre><code>##   color value
+## 1  blue     1
+## 2  blue     3</code></pre>
+</div>
+<div id="指定した列の抽出select-select" class="section level3">
+<h3><span class="header-section-number">3.4.2</span> 指定した列の抽出：<code>select()</code> #{select}</h3>
+<p><code>select()</code>関数は第2引数以降で指定した列を抽出するためのverbです。<code>df</code>から変数<code>color</code>のみ、もしくは<code>color</code>以外の変数を抽出するには次のようにします。</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="onetable-verbs.html#cb16-1"></a><span class="kw">select</span>(df, color)</span></code></pre></div>
+<pre><code>##   color
+## 1  blue
+## 2 black
+## 3  blue
+## 4  blue
+## 5 black</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="onetable-verbs.html#cb18-1"></a><span class="kw">select</span>(df, <span class="op">-</span>color)</span></code></pre></div>
+<pre><code>##   value
+## 1     1
+## 2     2
+## 3     3
+## 4     4
+## 5     5</code></pre>
+</div>
+<div id="指定した列を昇順でソートarrange-arrange" class="section level3">
+<h3><span class="header-section-number">3.4.3</span> 指定した列を昇順でソート：<code>arrange()</code> #{arrange}</h3>
+<p><code>arrange()</code>は、第2引数以降で指定した列について、昇順でソートするためのverbです。<code>color</code>の列について、昇順でソートするには</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="onetable-verbs.html#cb20-1"></a><span class="kw">arrange</span>(df, color)</span></code></pre></div>
+<pre><code>##   color value
+## 1 black     2
+## 2 black     5
+## 3  blue     1
+## 4  blue     3
+## 5  blue     4</code></pre>
+<p>とします。<code>color</code>の列は文字列であるため、アルファベット順に並びます。<code>value</code>の列を降順にソートするためには<code>desc()</code>関数を用いて</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="onetable-verbs.html#cb22-1"></a><span class="kw">arrange</span>(df, <span class="kw">desc</span>(value))</span></code></pre></div>
+<pre><code>##   color value
+## 1 black     5
+## 2  blue     4
+## 3  blue     3
+## 4 black     2
+## 5  blue     1</code></pre>
+<p>とします。</p>
+</div>
+<div id="mutate" class="section level3">
+<h3><span class="header-section-number">3.4.4</span> 新しい列の作成：<code>mutate()</code></h3>
+<p>新しい列を作成して、他の列に対する演算結果等を格納する場合には、<code>mutate()</code>を用います。<code>df</code>の<code>value</code>列の各値を2倍した結果を新たに作成した<code>double</code>列に格納するには、以下のようにします。</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="onetable-verbs.html#cb24-1"></a><span class="kw">mutate</span>(df, <span class="dt">double =</span> <span class="dv">2</span><span class="op">*</span>value)</span></code></pre></div>
+<pre><code>##   color value double
+## 1  blue     1      2
+## 2 black     2      4
+## 3  blue     3      6
+## 4  blue     4      8
+## 5 black     5     10</code></pre>
+<p>第2引数で定義した変数を、第3引数以降での演算に利用できます。</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="onetable-verbs.html#cb26-1"></a><span class="kw">mutate</span>(df, <span class="dt">double =</span> <span class="dv">2</span><span class="op">*</span>value, <span class="dt">quadruple =</span> <span class="dv">2</span><span class="op">*</span>double)</span></code></pre></div>
+<pre><code>##   color value double quadruple
+## 1  blue     1      2         4
+## 2 black     2      4         8
+## 3  blue     3      6        12
+## 4  blue     4      8        16
+## 5 black     5     10        20</code></pre>
+</div>
+<div id="summarise" class="section level3">
+<h3><span class="header-section-number">3.4.5</span> グループごとの要約：<code>group_by()</code>と<code>summarise()</code></h3>
+<p>グループごとに平均値や中央値などの要約を計算したい場合には、<code>group_by()</code>と<code>summarise()</code>を組み合わせて用います。全体の要約を行う場合には、<code>summarise()</code>のみを用いることもあります。例えば、<code>df</code>の<code>value</code>の合計を求めるには以下のようにします。</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="onetable-verbs.html#cb28-1"></a><span class="kw">summarise</span>(df, <span class="dt">total =</span> <span class="kw">sum</span>(value), <span class="dt">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span></code></pre></div>
+<pre><code>##   total
+## 1    15</code></pre>
+<p>第3引数の<code>.groups = "drop"</code>は、要約後にグループ化の情報を残すかどうかの設定となります。特に必要が無ければ<code>"drop"</code>を指定しておくとよいでしょう。</p>
+<p><code>color</code>ごとに合計を求めるには、<code>group_by()</code>でグループ化を行ってから、<code>summarise()</code>で要約を行います。<code>group_by()</code>を実行することで、テーブルにグループ化された変数についての情報が付加されます。</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="onetable-verbs.html#cb30-1"></a>by_color &lt;-<span class="st"> </span><span class="kw">group_by</span>(df, color)</span>
+<span id="cb30-2"><a href="onetable-verbs.html#cb30-2"></a>by_color</span></code></pre></div>
+<pre><code>## # A tibble: 5 x 2
+## # Groups:   color [2]
+##   color value
+##   &lt;chr&gt; &lt;int&gt;
+## 1 blue      1
+## 2 black     2
+## 3 blue      3
+## 4 blue      4
+## 5 black     5</code></pre>
+<p>この出力は、<code>color</code>列に2つのグループが設定されていることを示しています。この結果に対して<code>summarise()</code>を適用すれば、グループごとの要約ができます。</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="onetable-verbs.html#cb32-1"></a><span class="kw">summarise</span>(by_color, <span class="dt">total =</span> <span class="kw">sum</span>(value), <span class="dt">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 2
+##   color total
+##   &lt;chr&gt; &lt;int&gt;
+## 1 black     7
+## 2 blue      8</code></pre>
+<p>複数の列の値の組み合わせでグループ分けを行う場合には、それらの列名を<code>group_by()</code>の第2引数以降に並べます。</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="onetable-verbs.html#cb34-1"></a>by_date &lt;-<span class="st"> </span><span class="kw">group_by</span>(flights, year, month, day)</span>
+<span id="cb34-2"><a href="onetable-verbs.html#cb34-2"></a>by_date</span></code></pre></div>
+<pre><code>## # A tibble: 336,776 x 19
+## # Groups:   year, month, day [365]
+##     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
+##  1  2013     1     1      517            515         2      830            819
+##  2  2013     1     1      533            529         4      850            830
+##  3  2013     1     1      542            540         2      923            850
+##  4  2013     1     1      544            545        -1     1004           1022
+##  5  2013     1     1      554            600        -6      812            837
+##  6  2013     1     1      554            558        -4      740            728
+##  7  2013     1     1      555            600        -5      913            854
+##  8  2013     1     1      557            600        -3      709            723
+##  9  2013     1     1      557            600        -3      838            846
+## 10  2013     1     1      558            600        -2      753            745
+## # ... with 336,766 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,
+## #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,
+## #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<p>要約のための関数には以下のようなものがあります。</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">関数</th>
+<th align="left">説明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>min(x)</code>, <code>max(x)</code></td>
+<td align="left"><code>x</code>の最大値、最小値</td>
+</tr>
+<tr class="even">
+<td align="left"><code>median(x)</code></td>
+<td align="left"><code>x</code>の中央値</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>n()</code></td>
+<td align="left">グループごとの件数</td>
+</tr>
+<tr class="even">
+<td align="left"><code>n_distinct()</code></td>
+<td align="left">グループごとのユニークな行数</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>sum(x)</code>, <code>mean(x)</code></td>
+<td align="left"><code>x</code>の合計、平均値</td>
+</tr>
+<tr class="even">
+<td align="left"><code>sum(x &gt; 10)</code></td>
+<td align="left"><code>x &gt; 10</code>を満たす行数</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>mean(x &gt; 10)</code></td>
+<td align="left"><code>x &gt; 10</code>を満たす比率</td>
+</tr>
+<tr class="even">
+<td align="left"><code>sd(x)</code>, <code>var(x)</code></td>
+<td align="left"><code>x</code>の標準偏差、分散</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="nycflights13.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="pipe.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
