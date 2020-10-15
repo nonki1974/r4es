@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>2.2 データの簡単な可視化 | Rによるデータ解析入門</title>
   <meta name="description" content="2.2 データの簡単な可視化 | Rによるデータ解析入門" />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="2.2 データの簡単な可視化 | Rによるデータ解析入門" />
   <meta property="og:type" content="book" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="simple-summary.html"/>
-
+<link rel="next" href="dplyr-tidyr-01.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -159,6 +159,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2.5" data-path="datavis-base.html"><a href="datavis-base.html#総称的関数"><i class="fa fa-check"></i><b>2.2.5</b> 総称的関数</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="3" data-path="dplyr-tidyr-01.html"><a href="dplyr-tidyr-01.html"><i class="fa fa-check"></i><b>3</b> dplyr/tidyrを用いたデータの整理と変換(1)</a><ul>
+<li class="chapter" data-level="3.1" data-path="package.html"><a href="package.html"><i class="fa fa-check"></i><b>3.1</b> パッケージによる機能拡張</a></li>
+<li class="chapter" data-level="3.2" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>3.2</b> tidyverse</a></li>
+<li class="chapter" data-level="3.3" data-path="nycflights13.html"><a href="nycflights13.html"><i class="fa fa-check"></i><b>3.3</b> nycflights13</a></li>
+<li class="chapter" data-level="3.4" data-path="onetable-verbs.html"><a href="onetable-verbs.html"><i class="fa fa-check"></i><b>3.4</b> 1つのテーブルに対するverb</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="onetable-verbs.html"><a href="onetable-verbs.html#filter"><i class="fa fa-check"></i><b>3.4.1</b> 値の条件による抽出：<code>filter()</code></a></li>
+<li class="chapter" data-level="3.4.2" data-path="onetable-verbs.html"><a href="onetable-verbs.html#指定した列の抽出select-select"><i class="fa fa-check"></i><b>3.4.2</b> 指定した列の抽出：<code>select()</code> #{select}</a></li>
+<li class="chapter" data-level="3.4.3" data-path="onetable-verbs.html"><a href="onetable-verbs.html#指定した列を昇順でソートarrange-arrange"><i class="fa fa-check"></i><b>3.4.3</b> 指定した列を昇順でソート：<code>arrange()</code> #{arrange}</a></li>
+<li class="chapter" data-level="3.4.4" data-path="onetable-verbs.html"><a href="onetable-verbs.html#mutate"><i class="fa fa-check"></i><b>3.4.4</b> 新しい列の作成：<code>mutate()</code></a></li>
+<li class="chapter" data-level="3.4.5" data-path="onetable-verbs.html"><a href="onetable-verbs.html#summarise"><i class="fa fa-check"></i><b>3.4.5</b> グループごとの要約：<code>group_by()</code>と<code>summarise()</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="pipe.html"><a href="pipe.html"><i class="fa fa-check"></i><b>3.5</b> パイプ</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -191,7 +204,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 6       2      3  9413 8259    5126    666             1795       1451</code></pre>
 <p><a href="http://archive.ics.uci.edu/ml/datasets/Wholesale+customers">卸売業者の顧客データ</a>のページにおけるAttribute Informationの項目を見てみると、<code>Channel</code>は<code>1</code>がホテル、レストランやカフェ、<code>2</code>が小売の販売チャンネルを意味しています。また、<code>Region</code>は<code>1</code>がリスボン、<code>2</code>がオポルト、<code>3</code>がその他の地域を表しているようです。これらは名義尺度の変数ですが、</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="datavis-base.html#cb18-1"></a><span class="kw">str</span>(ws_customer)</span></code></pre></div>
-<pre><code>## &#39;data.frame&#39;:	440 obs. of  8 variables:
+<pre><code>## &#39;data.frame&#39;:    440 obs. of  8 variables:
 ##  $ Channel         : int  2 2 2 1 2 2 2 2 1 2 ...
 ##  $ Region          : int  3 3 3 3 3 3 3 3 3 3 ...
 ##  $ Fresh           : int  12669 7057 6353 13265 22615 9413 12126 7579 5963 6006 ...
@@ -205,7 +218,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb20-2"><a href="datavis-base.html#cb20-2"></a>ws_customer<span class="op">$</span>Region &lt;-<span class="st"> </span><span class="kw">factor</span>(ws_customer<span class="op">$</span>Region,</span>
 <span id="cb20-3"><a href="datavis-base.html#cb20-3"></a>                             <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Lisbon&quot;</span>, <span class="st">&quot;Oporto&quot;</span>, <span class="st">&quot;Other Region&quot;</span>))</span>
 <span id="cb20-4"><a href="datavis-base.html#cb20-4"></a><span class="kw">str</span>(ws_customer)</span></code></pre></div>
-<pre><code>## &#39;data.frame&#39;:	440 obs. of  8 variables:
+<pre><code>## &#39;data.frame&#39;:    440 obs. of  8 variables:
 ##  $ Channel         : Factor w/ 2 levels &quot;Horeca&quot;,&quot;Retail&quot;: 2 2 2 1 2 2 2 2 1 2 ...
 ##  $ Region          : Factor w/ 3 levels &quot;Lisbon&quot;,&quot;Oporto&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
 ##  $ Fresh           : int  12669 7057 6353 13265 22615 9413 12126 7579 5963 6006 ...
@@ -282,8 +295,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="simple-summary.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="simple-summary.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="dplyr-tidyr-01.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

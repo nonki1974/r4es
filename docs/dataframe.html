@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>1.5 データ構造（4）データフレーム | Rによるデータ解析入門</title>
   <meta name="description" content="1.5 データ構造（4）データフレーム | Rによるデータ解析入門" />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="1.5 データ構造（4）データフレーム | Rによるデータ解析入門" />
   <meta property="og:type" content="book" />
@@ -271,7 +271,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><code>encoding</code>引数に、読み込むファイルの文字コード（このファイルの場合<code>UTF-8</code>）を指定します。この引数を指定しない場合、システム標準の文字コード（Windowsの場合<code>SHIFT-JIS</code>、Macの場合<code>UTF-8</code>）で読み込まれます。ファイルの文字コードと読み込もうとする文字コードに相違がある場合、文字化けが発生します。<code>UTF-8</code>のファイルを読み込む場合、Macの環境では、<code>encoding</code>引数の指定は必要ありません。</p>
 <p>特に引数を指定しない場合、csvファイルの中で、数値のみからなるの列は数値型、それ以外は文字型として読み込まれます。<code>fukuoka2015</code>の場合、<code>area_code</code>はコード番号を表すので名義尺度ですが、数値型として読み込まれるので、必要に応じて因子型に変換します。また、<code>地域</code>は文字型として読み込まれるので、こちらも必要に応じて因子型に変換します（後述）。</p>
 <div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="dataframe.html#cb138-1"></a><span class="kw">str</span>(fukuoka2015)</span></code></pre></div>
-<pre><code>## &#39;data.frame&#39;:	68 obs. of  6 variables:
+<pre><code>## &#39;data.frame&#39;:    68 obs. of  6 variables:
 ##  $ area_code: int  40101 40103 40105 40106 40107 40108 40109 40131 40132 40133 ...
 ##  $ 地域     : chr  &quot;門司区&quot; &quot;若松区&quot; &quot;戸畑区&quot; &quot;小倉北区&quot; ...
 ##  $ 総面積   : int  7367 7131 1661 3923 17174 3626 8313 6936 3163 1540 ...
