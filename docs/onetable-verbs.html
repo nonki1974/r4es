@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3.4 1つのテーブルに対するverb | Rによるデータ解析入門</title>
   <meta name="description" content="3.4 1つのテーブルに対するverb | Rによるデータ解析入門" />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3.4 1つのテーブルに対するverb | Rによるデータ解析入門" />
   <meta property="og:type" content="book" />
@@ -172,6 +172,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3.5" data-path="pipe.html"><a href="pipe.html"><i class="fa fa-check"></i><b>3.5</b> パイプ</a></li>
 </ul></li>
+<li class="chapter" data-level="4" data-path="dplyr-tidyr-02.html"><a href="dplyr-tidyr-02.html"><i class="fa fa-check"></i><b>4</b> dplyr/tidyrを用いたデータの整理と変換(2)</a><ul>
+<li class="chapter" data-level="4.1" data-path="two-table-verbs.html"><a href="two-table-verbs.html"><i class="fa fa-check"></i><b>4.1</b> 2つのテーブルを結合するverb</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="dplyr-tidyr-03.html"><a href="dplyr-tidyr-03.html"><i class="fa fa-check"></i><b>5</b> dplyr/tidyrを用いたデータの整理と変換(3)</a><ul>
+<li class="chapter" data-level="5.1" data-path="tidydata.html"><a href="tidydata.html"><i class="fa fa-check"></i><b>5.1</b> tidydataとは？</a></li>
+<li class="chapter" data-level="5.2" data-path="long-wide.html"><a href="long-wide.html"><i class="fa fa-check"></i><b>5.2</b> 縦長（long）データと横長（wide）データの相互変換</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="long-wide.html"><a href="long-wide.html#pivot_longer関数を用いたwideからlongへの変換"><i class="fa fa-check"></i><b>5.2.1</b> <code>pivot_longer()</code>関数を用いたwideからlongへの変換</a></li>
+<li class="chapter" data-level="5.2.2" data-path="long-wide.html"><a href="long-wide.html#pivot_wider関数を用いたwideからlongへの変換"><i class="fa fa-check"></i><b>5.2.2</b> <code>pivot_wider()</code>関数を用いたwideからlongへの変換</a></li>
+</ul></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -198,11 +208,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>帰ってくる値は常にテーブル</li>
 </ul>
 <p>verbの説明のために、以下のように簡単なデータフレームを作成しておきます。</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="onetable-verbs.html#cb8-1"></a>df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</span>
-<span id="cb8-2"><a href="onetable-verbs.html#cb8-2"></a>  <span class="dt">color =</span> <span class="kw">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;black&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;black&quot;</span>),</span>
-<span id="cb8-3"><a href="onetable-verbs.html#cb8-3"></a>  <span class="dt">value =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span></span>
-<span id="cb8-4"><a href="onetable-verbs.html#cb8-4"></a>)</span>
-<span id="cb8-5"><a href="onetable-verbs.html#cb8-5"></a>df</span></code></pre></div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="onetable-verbs.html#cb178-1"></a>df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</span>
+<span id="cb178-2"><a href="onetable-verbs.html#cb178-2"></a>  <span class="dt">color =</span> <span class="kw">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;black&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;black&quot;</span>),</span>
+<span id="cb178-3"><a href="onetable-verbs.html#cb178-3"></a>  <span class="dt">value =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span></span>
+<span id="cb178-4"><a href="onetable-verbs.html#cb178-4"></a>)</span>
+<span id="cb178-5"><a href="onetable-verbs.html#cb178-5"></a>df</span></code></pre></div>
 <pre><code>##   color value
 ## 1  blue     1
 ## 2 black     2
@@ -212,13 +222,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="filter" class="section level3">
 <h3><span class="header-section-number">3.4.1</span> 値の条件による抽出：<code>filter()</code></h3>
 <p><code>filter()</code>関数は第2引数以降で指定した条件に合致する行のみを抽出するためのverbです。以下のようにすると、変数<code>color</code>が<code>"blue"</code>である行のみが抽出されます。</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="onetable-verbs.html#cb10-1"></a><span class="kw">filter</span>(df, color <span class="op">==</span><span class="st"> &quot;blue&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="onetable-verbs.html#cb180-1"></a><span class="kw">filter</span>(df, color <span class="op">==</span><span class="st"> &quot;blue&quot;</span>)</span></code></pre></div>
 <pre><code>##   color value
 ## 1  blue     1
 ## 2  blue     3
 ## 3  blue     4</code></pre>
 <p>「等しい」という表現は、<code>==</code>となることに注意してください。変数<code>value</code>が1もしくは4の行のみ抽出する場合は</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="onetable-verbs.html#cb12-1"></a><span class="kw">filter</span>(df, value <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">4</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="onetable-verbs.html#cb182-1"></a><span class="kw">filter</span>(df, value <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">4</span>))</span></code></pre></div>
 <pre><code>##   color value
 ## 1  blue     1
 ## 2  blue     4</code></pre>
@@ -287,7 +297,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p><code>color</code>が<code>"blue"</code>で<code>value</code>が3未満の行のみを抽出するには以下のようにします。</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="onetable-verbs.html#cb14-1"></a><span class="kw">filter</span>(df, color <span class="op">==</span><span class="st"> &quot;blue&quot;</span> <span class="op">&amp;</span><span class="st"> </span>value <span class="op">&lt;=</span><span class="st"> </span><span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="onetable-verbs.html#cb184-1"></a><span class="kw">filter</span>(df, color <span class="op">==</span><span class="st"> &quot;blue&quot;</span> <span class="op">&amp;</span><span class="st"> </span>value <span class="op">&lt;=</span><span class="st"> </span><span class="dv">3</span>)</span></code></pre></div>
 <pre><code>##   color value
 ## 1  blue     1
 ## 2  blue     3</code></pre>
@@ -295,14 +305,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="指定した列の抽出select-select" class="section level3">
 <h3><span class="header-section-number">3.4.2</span> 指定した列の抽出：<code>select()</code> #{select}</h3>
 <p><code>select()</code>関数は第2引数以降で指定した列を抽出するためのverbです。<code>df</code>から変数<code>color</code>のみ、もしくは<code>color</code>以外の変数を抽出するには次のようにします。</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="onetable-verbs.html#cb16-1"></a><span class="kw">select</span>(df, color)</span></code></pre></div>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="onetable-verbs.html#cb186-1"></a><span class="kw">select</span>(df, color)</span></code></pre></div>
 <pre><code>##   color
 ## 1  blue
 ## 2 black
 ## 3  blue
 ## 4  blue
 ## 5 black</code></pre>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="onetable-verbs.html#cb18-1"></a><span class="kw">select</span>(df, <span class="op">-</span>color)</span></code></pre></div>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="onetable-verbs.html#cb188-1"></a><span class="kw">select</span>(df, <span class="op">-</span>color)</span></code></pre></div>
 <pre><code>##   value
 ## 1     1
 ## 2     2
@@ -313,7 +323,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="指定した列を昇順でソートarrange-arrange" class="section level3">
 <h3><span class="header-section-number">3.4.3</span> 指定した列を昇順でソート：<code>arrange()</code> #{arrange}</h3>
 <p><code>arrange()</code>は、第2引数以降で指定した列について、昇順でソートするためのverbです。<code>color</code>の列について、昇順でソートするには</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="onetable-verbs.html#cb20-1"></a><span class="kw">arrange</span>(df, color)</span></code></pre></div>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="onetable-verbs.html#cb190-1"></a><span class="kw">arrange</span>(df, color)</span></code></pre></div>
 <pre><code>##   color value
 ## 1 black     2
 ## 2 black     5
@@ -321,7 +331,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4  blue     3
 ## 5  blue     4</code></pre>
 <p>とします。<code>color</code>の列は文字列であるため、アルファベット順に並びます。<code>value</code>の列を降順にソートするためには<code>desc()</code>関数を用いて</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="onetable-verbs.html#cb22-1"></a><span class="kw">arrange</span>(df, <span class="kw">desc</span>(value))</span></code></pre></div>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="onetable-verbs.html#cb192-1"></a><span class="kw">arrange</span>(df, <span class="kw">desc</span>(value))</span></code></pre></div>
 <pre><code>##   color value
 ## 1 black     5
 ## 2  blue     4
@@ -333,7 +343,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="mutate" class="section level3">
 <h3><span class="header-section-number">3.4.4</span> 新しい列の作成：<code>mutate()</code></h3>
 <p>新しい列を作成して、他の列に対する演算結果等を格納する場合には、<code>mutate()</code>を用います。<code>df</code>の<code>value</code>列の各値を2倍した結果を新たに作成した<code>double</code>列に格納するには、以下のようにします。</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="onetable-verbs.html#cb24-1"></a><span class="kw">mutate</span>(df, <span class="dt">double =</span> <span class="dv">2</span><span class="op">*</span>value)</span></code></pre></div>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="onetable-verbs.html#cb194-1"></a><span class="kw">mutate</span>(df, <span class="dt">double =</span> <span class="dv">2</span><span class="op">*</span>value)</span></code></pre></div>
 <pre><code>##   color value double
 ## 1  blue     1      2
 ## 2 black     2      4
@@ -341,7 +351,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4  blue     4      8
 ## 5 black     5     10</code></pre>
 <p>第2引数で定義した変数を、第3引数以降での演算に利用できます。</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="onetable-verbs.html#cb26-1"></a><span class="kw">mutate</span>(df, <span class="dt">double =</span> <span class="dv">2</span><span class="op">*</span>value, <span class="dt">quadruple =</span> <span class="dv">2</span><span class="op">*</span>double)</span></code></pre></div>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="onetable-verbs.html#cb196-1"></a><span class="kw">mutate</span>(df, <span class="dt">double =</span> <span class="dv">2</span><span class="op">*</span>value, <span class="dt">quadruple =</span> <span class="dv">2</span><span class="op">*</span>double)</span></code></pre></div>
 <pre><code>##   color value double quadruple
 ## 1  blue     1      2         4
 ## 2 black     2      4         8
@@ -352,13 +362,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="summarise" class="section level3">
 <h3><span class="header-section-number">3.4.5</span> グループごとの要約：<code>group_by()</code>と<code>summarise()</code></h3>
 <p>グループごとに平均値や中央値などの要約を計算したい場合には、<code>group_by()</code>と<code>summarise()</code>を組み合わせて用います。全体の要約を行う場合には、<code>summarise()</code>のみを用いることもあります。例えば、<code>df</code>の<code>value</code>の合計を求めるには以下のようにします。</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="onetable-verbs.html#cb28-1"></a><span class="kw">summarise</span>(df, <span class="dt">total =</span> <span class="kw">sum</span>(value), <span class="dt">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="onetable-verbs.html#cb198-1"></a><span class="kw">summarise</span>(df, <span class="dt">total =</span> <span class="kw">sum</span>(value), <span class="dt">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span></code></pre></div>
 <pre><code>##   total
 ## 1    15</code></pre>
 <p>第3引数の<code>.groups = "drop"</code>は、要約後にグループ化の情報を残すかどうかの設定となります。特に必要が無ければ<code>"drop"</code>を指定しておくとよいでしょう。</p>
 <p><code>color</code>ごとに合計を求めるには、<code>group_by()</code>でグループ化を行ってから、<code>summarise()</code>で要約を行います。<code>group_by()</code>を実行することで、テーブルにグループ化された変数についての情報が付加されます。</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="onetable-verbs.html#cb30-1"></a>by_color &lt;-<span class="st"> </span><span class="kw">group_by</span>(df, color)</span>
-<span id="cb30-2"><a href="onetable-verbs.html#cb30-2"></a>by_color</span></code></pre></div>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="onetable-verbs.html#cb200-1"></a>by_color &lt;-<span class="st"> </span><span class="kw">group_by</span>(df, color)</span>
+<span id="cb200-2"><a href="onetable-verbs.html#cb200-2"></a>by_color</span></code></pre></div>
 <pre><code>## # A tibble: 5 x 2
 ## # Groups:   color [2]
 ##   color value
@@ -369,15 +379,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4 blue      4
 ## 5 black     5</code></pre>
 <p>この出力は、<code>color</code>列に2つのグループが設定されていることを示しています。この結果に対して<code>summarise()</code>を適用すれば、グループごとの要約ができます。</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="onetable-verbs.html#cb32-1"></a><span class="kw">summarise</span>(by_color, <span class="dt">total =</span> <span class="kw">sum</span>(value), <span class="dt">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="onetable-verbs.html#cb202-1"></a><span class="kw">summarise</span>(by_color, <span class="dt">total =</span> <span class="kw">sum</span>(value), <span class="dt">.groups =</span> <span class="st">&quot;drop&quot;</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##   color total
 ##   &lt;chr&gt; &lt;int&gt;
 ## 1 black     7
 ## 2 blue      8</code></pre>
 <p>複数の列の値の組み合わせでグループ分けを行う場合には、それらの列名を<code>group_by()</code>の第2引数以降に並べます。</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="onetable-verbs.html#cb34-1"></a>by_date &lt;-<span class="st"> </span><span class="kw">group_by</span>(flights, year, month, day)</span>
-<span id="cb34-2"><a href="onetable-verbs.html#cb34-2"></a>by_date</span></code></pre></div>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="onetable-verbs.html#cb204-1"></a>by_date &lt;-<span class="st"> </span><span class="kw">group_by</span>(flights, year, month, day)</span>
+<span id="cb204-2"><a href="onetable-verbs.html#cb204-2"></a>by_date</span></code></pre></div>
 <pre><code>## # A tibble: 336,776 x 19
 ## # Groups:   year, month, day [365]
 ##     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
@@ -496,6 +506,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

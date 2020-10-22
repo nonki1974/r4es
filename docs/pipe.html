@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3.5 パイプ | Rによるデータ解析入門</title>
   <meta name="description" content="3.5 パイプ | Rによるデータ解析入門" />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3.5 パイプ | Rによるデータ解析入門" />
   <meta property="og:type" content="book" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="onetable-verbs.html"/>
-
+<link rel="next" href="dplyr-tidyr-02.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -172,6 +172,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3.5" data-path="pipe.html"><a href="pipe.html"><i class="fa fa-check"></i><b>3.5</b> パイプ</a></li>
 </ul></li>
+<li class="chapter" data-level="4" data-path="dplyr-tidyr-02.html"><a href="dplyr-tidyr-02.html"><i class="fa fa-check"></i><b>4</b> dplyr/tidyrを用いたデータの整理と変換(2)</a><ul>
+<li class="chapter" data-level="4.1" data-path="two-table-verbs.html"><a href="two-table-verbs.html"><i class="fa fa-check"></i><b>4.1</b> 2つのテーブルを結合するverb</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="dplyr-tidyr-03.html"><a href="dplyr-tidyr-03.html"><i class="fa fa-check"></i><b>5</b> dplyr/tidyrを用いたデータの整理と変換(3)</a><ul>
+<li class="chapter" data-level="5.1" data-path="tidydata.html"><a href="tidydata.html"><i class="fa fa-check"></i><b>5.1</b> tidydataとは？</a></li>
+<li class="chapter" data-level="5.2" data-path="long-wide.html"><a href="long-wide.html"><i class="fa fa-check"></i><b>5.2</b> 縦長（long）データと横長（wide）データの相互変換</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="long-wide.html"><a href="long-wide.html#pivot_longer関数を用いたwideからlongへの変換"><i class="fa fa-check"></i><b>5.2.1</b> <code>pivot_longer()</code>関数を用いたwideからlongへの変換</a></li>
+<li class="chapter" data-level="5.2.2" data-path="long-wide.html"><a href="long-wide.html#pivot_wider関数を用いたwideからlongへの変換"><i class="fa fa-check"></i><b>5.2.2</b> <code>pivot_wider()</code>関数を用いたwideからlongへの変換</a></li>
+</ul></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -192,33 +202,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="pipe" class="section level2">
 <h2><span class="header-section-number">3.5</span> パイプ</h2>
 <p>以下のように、複数のverbを続けて実行すると、可読性が悪くなります。どのような処理をしているのでしょうか。</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="pipe.html#cb36-1"></a>hourly_delay &lt;-<span class="st"> </span><span class="kw">filter</span>(</span>
-<span id="cb36-2"><a href="pipe.html#cb36-2"></a>  <span class="kw">summarise</span>(</span>
-<span id="cb36-3"><a href="pipe.html#cb36-3"></a>    <span class="kw">group_by</span>(</span>
-<span id="cb36-4"><a href="pipe.html#cb36-4"></a>      <span class="kw">filter</span>(</span>
-<span id="cb36-5"><a href="pipe.html#cb36-5"></a>        flights,</span>
-<span id="cb36-6"><a href="pipe.html#cb36-6"></a>        <span class="op">!</span><span class="kw">is.na</span>(dep_delay)</span>
-<span id="cb36-7"><a href="pipe.html#cb36-7"></a>      ),</span>
-<span id="cb36-8"><a href="pipe.html#cb36-8"></a>      year, month, day, hour</span>
-<span id="cb36-9"><a href="pipe.html#cb36-9"></a>    ),</span>
-<span id="cb36-10"><a href="pipe.html#cb36-10"></a>    <span class="dt">delay =</span> <span class="kw">mean</span>(dep_delay),</span>
-<span id="cb36-11"><a href="pipe.html#cb36-11"></a>    <span class="dt">n =</span> <span class="kw">n</span>(),</span>
-<span id="cb36-12"><a href="pipe.html#cb36-12"></a>    <span class="dt">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
-<span id="cb36-13"><a href="pipe.html#cb36-13"></a>  ),</span>
-<span id="cb36-14"><a href="pipe.html#cb36-14"></a>  n <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span></span>
-<span id="cb36-15"><a href="pipe.html#cb36-15"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="pipe.html#cb206-1"></a>hourly_delay &lt;-<span class="st"> </span><span class="kw">filter</span>(</span>
+<span id="cb206-2"><a href="pipe.html#cb206-2"></a>  <span class="kw">summarise</span>(</span>
+<span id="cb206-3"><a href="pipe.html#cb206-3"></a>    <span class="kw">group_by</span>(</span>
+<span id="cb206-4"><a href="pipe.html#cb206-4"></a>      <span class="kw">filter</span>(</span>
+<span id="cb206-5"><a href="pipe.html#cb206-5"></a>        flights,</span>
+<span id="cb206-6"><a href="pipe.html#cb206-6"></a>        <span class="op">!</span><span class="kw">is.na</span>(dep_delay)</span>
+<span id="cb206-7"><a href="pipe.html#cb206-7"></a>      ),</span>
+<span id="cb206-8"><a href="pipe.html#cb206-8"></a>      year, month, day, hour</span>
+<span id="cb206-9"><a href="pipe.html#cb206-9"></a>    ),</span>
+<span id="cb206-10"><a href="pipe.html#cb206-10"></a>    <span class="dt">delay =</span> <span class="kw">mean</span>(dep_delay),</span>
+<span id="cb206-11"><a href="pipe.html#cb206-11"></a>    <span class="dt">n =</span> <span class="kw">n</span>(),</span>
+<span id="cb206-12"><a href="pipe.html#cb206-12"></a>    <span class="dt">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
+<span id="cb206-13"><a href="pipe.html#cb206-13"></a>  ),</span>
+<span id="cb206-14"><a href="pipe.html#cb206-14"></a>  n <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span></span>
+<span id="cb206-15"><a href="pipe.html#cb206-15"></a>)</span></code></pre></div>
 <p><strong>magrittr</strong>パッケージ（dplyrが入っていればインストールされている）で提供されている<strong>パイプ演算子</strong>を用いると、このような処理を簡潔に記述できる。一般に、ある関数<code>f()</code>をオブジェクト<code>x</code>に引数<code>y</code>を伴って適用する場合、</p>
 <pre><code>x %&gt;% f(y)</code></pre>
 <p>と記述すれば</p>
 <pre><code>f(x, y)</code></pre>
 <p>を実行したことになります。パイプはいくつも続けて適用することができるため、上の処理は</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="pipe.html#cb39-1"></a>hourly_delay &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb39-2"><a href="pipe.html#cb39-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(dep_delay)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb39-3"><a href="pipe.html#cb39-3"></a><span class="st">  </span><span class="kw">group_by</span>(year, month, day, hour) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb39-4"><a href="pipe.html#cb39-4"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">delay =</span> <span class="kw">mean</span>(dep_delay),</span>
-<span id="cb39-5"><a href="pipe.html#cb39-5"></a>            <span class="dt">n =</span> <span class="kw">n</span>(), <span class="dt">.groups =</span> <span class="st">&quot;drop&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb39-6"><a href="pipe.html#cb39-6"></a><span class="st">  </span><span class="kw">filter</span>(n <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span>)</span>
-<span id="cb39-7"><a href="pipe.html#cb39-7"></a>hourly_delay</span></code></pre></div>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="pipe.html#cb209-1"></a>hourly_delay &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb209-2"><a href="pipe.html#cb209-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(dep_delay)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb209-3"><a href="pipe.html#cb209-3"></a><span class="st">  </span><span class="kw">group_by</span>(year, month, day, hour) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb209-4"><a href="pipe.html#cb209-4"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">delay =</span> <span class="kw">mean</span>(dep_delay),</span>
+<span id="cb209-5"><a href="pipe.html#cb209-5"></a>            <span class="dt">n =</span> <span class="kw">n</span>(), <span class="dt">.groups =</span> <span class="st">&quot;drop&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb209-6"><a href="pipe.html#cb209-6"></a><span class="st">  </span><span class="kw">filter</span>(n <span class="op">&gt;</span><span class="st"> </span><span class="dv">10</span>)</span>
+<span id="cb209-7"><a href="pipe.html#cb209-7"></a>hourly_delay</span></code></pre></div>
 <pre><code>## # A tibble: 5,813 x 6
 ##     year month   day  hour  delay     n
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;
@@ -237,20 +247,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </div>
 <!-- </div> -->
-
-
-
-
-
-
-
             </section>
 
           </div>
         </div>
       </div>
-<a href="onetable-verbs.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="onetable-verbs.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="dplyr-tidyr-02.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -300,6 +303,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

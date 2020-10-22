@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3.1 パッケージによる機能拡張 | Rによるデータ解析入門</title>
   <meta name="description" content="3.1 パッケージによる機能拡張 | Rによるデータ解析入門" />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3.1 パッケージによる機能拡張 | Rによるデータ解析入門" />
   <meta property="og:type" content="book" />
@@ -172,6 +172,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3.5" data-path="pipe.html"><a href="pipe.html"><i class="fa fa-check"></i><b>3.5</b> パイプ</a></li>
 </ul></li>
+<li class="chapter" data-level="4" data-path="dplyr-tidyr-02.html"><a href="dplyr-tidyr-02.html"><i class="fa fa-check"></i><b>4</b> dplyr/tidyrを用いたデータの整理と変換(2)</a><ul>
+<li class="chapter" data-level="4.1" data-path="two-table-verbs.html"><a href="two-table-verbs.html"><i class="fa fa-check"></i><b>4.1</b> 2つのテーブルを結合するverb</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="dplyr-tidyr-03.html"><a href="dplyr-tidyr-03.html"><i class="fa fa-check"></i><b>5</b> dplyr/tidyrを用いたデータの整理と変換(3)</a><ul>
+<li class="chapter" data-level="5.1" data-path="tidydata.html"><a href="tidydata.html"><i class="fa fa-check"></i><b>5.1</b> tidydataとは？</a></li>
+<li class="chapter" data-level="5.2" data-path="long-wide.html"><a href="long-wide.html"><i class="fa fa-check"></i><b>5.2</b> 縦長（long）データと横長（wide）データの相互変換</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="long-wide.html"><a href="long-wide.html#pivot_longer関数を用いたwideからlongへの変換"><i class="fa fa-check"></i><b>5.2.1</b> <code>pivot_longer()</code>関数を用いたwideからlongへの変換</a></li>
+<li class="chapter" data-level="5.2.2" data-path="long-wide.html"><a href="long-wide.html#pivot_wider関数を用いたwideからlongへの変換"><i class="fa fa-check"></i><b>5.2.2</b> <code>pivot_wider()</code>関数を用いたwideからlongへの変換</a></li>
+</ul></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -192,17 +202,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="package" class="section level2">
 <h2><span class="header-section-number">3.1</span> パッケージによる機能拡張</h2>
 <p>Rの特徴として、パッケージによって様々な機能を拡張できる点が挙げられます。パッケージのインストールには、<code>install.packages()</code>関数を用います。例えば、この後で利用する<strong>dplyr</strong>パッケージをインストールするには、以下のようにします。</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="package.html#cb1-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;dplyr&quot;</span>)</span></code></pre></div>
-<p>パッケージのインストールは、Rを利用するPCで1度だけ実行しておけば十分です<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>。</p>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="package.html#cb171-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;dplyr&quot;</span>)</span></code></pre></div>
+<p>パッケージのインストールは、Rを利用するPCで1度だけ実行しておけば十分です<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>。</p>
 <p>パッケージで提供されている関数を利用する場合には、セッションごとに<code>library()</code>関数を実行しておく必要があります。</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="package.html#cb2-1"></a><span class="kw">library</span>(dplyr)</span></code></pre></div>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="package.html#cb172-1"></a><span class="kw">library</span>(dplyr)</span></code></pre></div>
 <p>これを実行しない場合、関数をパッケージ名と共に<code>dplyr::filter()</code>のような形式で用いる必要があります。実行した場合は、単に<code>filter()</code>とすれば利用できます。</p>
 <p>ただし、<strong>dplyr</strong>パッケージは後述の<strong>tidyverse</strong>で合わせてインストールされますので、ここでは上記コマンドの実行は不要です。</p>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="1">
-<li id="fn1"><p>定期的にアップデートは必要。Rのメジャーバージョン（例えば4.0.2の場合は“4”）が上がった場合は、インストールが必要）<a href="package.html#fnref1" class="footnote-back">↩︎</a></p></li>
+<ol start="3">
+<li id="fn3"><p>定期的にアップデートは必要。Rのメジャーバージョン（例えば4.0.2の場合は“4”）が上がった場合は、インストールが必要）<a href="package.html#fnref3" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -261,6 +271,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

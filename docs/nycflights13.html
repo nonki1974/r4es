@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3.3 nycflights13 | Rによるデータ解析入門</title>
   <meta name="description" content="3.3 nycflights13 | Rによるデータ解析入門" />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3.3 nycflights13 | Rによるデータ解析入門" />
   <meta property="og:type" content="book" />
@@ -172,6 +172,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3.5" data-path="pipe.html"><a href="pipe.html"><i class="fa fa-check"></i><b>3.5</b> パイプ</a></li>
 </ul></li>
+<li class="chapter" data-level="4" data-path="dplyr-tidyr-02.html"><a href="dplyr-tidyr-02.html"><i class="fa fa-check"></i><b>4</b> dplyr/tidyrを用いたデータの整理と変換(2)</a><ul>
+<li class="chapter" data-level="4.1" data-path="two-table-verbs.html"><a href="two-table-verbs.html"><i class="fa fa-check"></i><b>4.1</b> 2つのテーブルを結合するverb</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="dplyr-tidyr-03.html"><a href="dplyr-tidyr-03.html"><i class="fa fa-check"></i><b>5</b> dplyr/tidyrを用いたデータの整理と変換(3)</a><ul>
+<li class="chapter" data-level="5.1" data-path="tidydata.html"><a href="tidydata.html"><i class="fa fa-check"></i><b>5.1</b> tidydataとは？</a></li>
+<li class="chapter" data-level="5.2" data-path="long-wide.html"><a href="long-wide.html"><i class="fa fa-check"></i><b>5.2</b> 縦長（long）データと横長（wide）データの相互変換</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="long-wide.html"><a href="long-wide.html#pivot_longer関数を用いたwideからlongへの変換"><i class="fa fa-check"></i><b>5.2.1</b> <code>pivot_longer()</code>関数を用いたwideからlongへの変換</a></li>
+<li class="chapter" data-level="5.2.2" data-path="long-wide.html"><a href="long-wide.html#pivot_wider関数を用いたwideからlongへの変換"><i class="fa fa-check"></i><b>5.2.2</b> <code>pivot_wider()</code>関数を用いたwideからlongへの変換</a></li>
+</ul></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -192,12 +202,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="nycflights13" class="section level2">
 <h2><span class="header-section-number">3.3</span> nycflights13</h2>
 <p>ここでは、<strong>nycflights13</strong>パッケージで提供されている<code>flights</code>データを利用して各種機能の解説や演習を行っていきます。パッケージのインストールは以下のように行います。</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="nycflights13.html#cb4-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;nycflights13&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="nycflights13.html#cb174-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;nycflights13&quot;</span>)</span></code></pre></div>
 <p>データを利用するには</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="nycflights13.html#cb5-1"></a><span class="kw">library</span>(nycflights13)</span></code></pre></div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="nycflights13.html#cb175-1"></a><span class="kw">library</span>(nycflights13)</span></code></pre></div>
 <p>としておきます。</p>
-<p><code>flights</code>にデータが格納されています。<code>flights</code>データは、データフレームを拡張した<strong>tibble</strong>という形式となっていますが、ほとんどの場合データフレームと同じ扱い方で問題ありません<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>。データフレームの場合、以下のようにオブジェクトの中身を出力するとすべてが出力されますが、tibbleの場合、最初の10行のみと、コンソールに入る列数分の変数が表示され、データの下に残りの行数と変数の数と変数名と変数の型が表示されます。</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="nycflights13.html#cb6-1"></a>flights</span></code></pre></div>
+<p><code>flights</code>にデータが格納されています。<code>flights</code>データは、データフレームを拡張した<strong>tibble</strong>という形式となっていますが、ほとんどの場合データフレームと同じ扱い方で問題ありません<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>。データフレームの場合、以下のようにオブジェクトの中身を出力するとすべてが出力されますが、tibbleの場合、最初の10行のみと、コンソールに入る列数分の変数が表示され、データの下に残りの行数と変数の数と変数名と変数の型が表示されます。</p>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="nycflights13.html#cb176-1"></a>flights</span></code></pre></div>
 <pre><code>## # A tibble: 336,776 x 19
 ##     year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time
 ##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;
@@ -284,8 +294,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div class="footnotes">
 <hr />
-<ol start="2">
-<li id="fn2"><p>そうでない場合も一部あります。<a href="nycflights13.html#fnref2" class="footnote-back">↩︎</a></p></li>
+<ol start="4">
+<li id="fn4"><p>そうでない場合も一部あります。<a href="nycflights13.html#fnref4" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -344,6 +354,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

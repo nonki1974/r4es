@@ -1,0 +1,82 @@
+# dplyr/tidyrを用いたデータの整理と変換(3) {#dplyr_tidyr_03}
+
+```{r echo=FALSE}
+pacman::p_load(tidyverse)
+```
+
+## tidydataとは？ {#tidydata}
+
+以下の原則を満たすデータを、**tidydata**と呼びます。
+
+- 各変数には専用の列がある
+- 各観測には専用の行がある
+- 各値は専用のセルにある
+
+データはさまざまな形で提供されますが、tidydataの形式に変換することで、分析や可視化がスムーズに行えるようになります。**tidyverse**に含まれるパッケージ群は、tidydataを前提とした関数を提供しています。その中でも、tidyでないデータをtidydataに変換する関数を提供するパッケージが**tidyr**パッケージです。
+
+例えば、以下のようなデータはtidydataです。
+
+```{r}
+table1 <- tibble(
+  country = c("Afghanistan", "Afghanistan", "Brazil", "Brazil", "China", "China"),
+  year = rep(c(1999L, 2000L), 3),
+  cases = c(745L, 2666L, 37737L, 80488L, 212258L, 213766L),
+  population = c(19987071L, 20595360L, 172006362L, 174504898L, 1272915272L, 1280428583L)
+)
+```
+
+```{r echo=FALSE}
+knitr::kable(table1)
+```
+
+以下のデータは、`cases`と`population`の値が`count`に混在しており、それぞれが専用の列をもたない形になっているため、tidydataではありません。
+
+```{r}
+table2 <- table1 %>% 
+  pivot_longer(c(cases, population), names_to = "key", values_to = "value") %>% 
+  arrange(country, year)
+```
+
+```{r echo=FALSE}
+knitr::kable(table2)
+```
+
+以下のデータは、`rate`の列におけるそれぞれのセルに複数の値が含まれているため、tidydataではありません。
+
+```{r}
+table3 <- table1 %>% 
+  unite(rate, cases, population, sep = "/")
+```
+
+```{r echo=FALSE}
+knitr::kable(table3)
+```
+
+以下のデータは、2つのテーブルにデータがまたがっているため、tidydataではありません。
+
+```{r}
+table4a <- table1 %>% 
+	select(-population) %>% 
+	pivot_wider(names_from = year, values_from = cases)
+```
+
+```{r echo=FALSE}
+knitr::kable(table4a)
+```
+
+```{r}
+table4b <- table1 %>% 
+	select(-cases) %>% 
+	pivot_wider(names_from = year, values_from = population)
+```
+
+```{r echo=FALSE}
+knitr::kable(table4b)
+```
+
+
+
+
+
+
+

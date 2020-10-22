@@ -33,3 +33,10 @@ filter
 mutate
 summarise
 pipe
+dplyr_tidyr_02
+two_table_verbs
+dplyr_tidyr_03
+tidydata
+long_wide
+pivot_longer関数を用いたwideからlongへの変換
+pivot_wider関数を用いたwideからlongへの変換
