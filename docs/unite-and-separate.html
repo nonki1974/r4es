@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5.1 tidydataとは？ | Rによるデータ解析入門</title>
-  <meta name="description" content="5.1 tidydataとは？ | Rによるデータ解析入門" />
+  <title>5.3 列の分割と結合 | Rによるデータ解析入門</title>
+  <meta name="description" content="5.3 列の分割と結合 | Rによるデータ解析入門" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5.1 tidydataとは？ | Rによるデータ解析入門" />
+  <meta property="og:title" content="5.3 列の分割と結合 | Rによるデータ解析入門" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5.1 tidydataとは？ | Rによるデータ解析入門" />
+  <meta name="twitter:title" content="5.3 列の分割と結合 | Rによるデータ解析入門" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="dplyr-tidyr-03.html"/>
-<link rel="next" href="long-wide.html"/>
+<link rel="prev" href="long-wide.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -200,269 +200,103 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="tidydata" class="section level2">
-<h2><span class="header-section-number">5.1</span> tidydataとは？</h2>
-<p>以下の原則を満たすデータを、<strong>tidydata</strong>と呼びます。</p>
-<ul>
-<li>各変数には専用の列がある</li>
-<li>各観測には専用の行がある</li>
-<li>各値は専用のセルにある</li>
-</ul>
-<p>データはさまざまな形で提供されますが、tidydataの形式に変換することで、分析や可視化がスムーズに行えるようになります。<strong>tidyverse</strong>に含まれるパッケージ群は、tidydataを前提とした関数を提供しています。その中でも、tidyでないデータをtidydataに変換する関数を提供するパッケージが<strong>tidyr</strong>パッケージです。</p>
-<p>例えば、以下のようなデータはtidydataです。</p>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="tidydata.html#cb234-1"></a>table1 &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
-<span id="cb234-2"><a href="tidydata.html#cb234-2"></a>  <span class="dt">country =</span> <span class="kw">c</span>(<span class="st">&quot;Afghanistan&quot;</span>, <span class="st">&quot;Afghanistan&quot;</span>, <span class="st">&quot;Brazil&quot;</span>, <span class="st">&quot;Brazil&quot;</span>, <span class="st">&quot;China&quot;</span>, <span class="st">&quot;China&quot;</span>),</span>
-<span id="cb234-3"><a href="tidydata.html#cb234-3"></a>  <span class="dt">year =</span> <span class="kw">rep</span>(<span class="kw">c</span>(1999L, 2000L), <span class="dv">3</span>),</span>
-<span id="cb234-4"><a href="tidydata.html#cb234-4"></a>  <span class="dt">cases =</span> <span class="kw">c</span>(745L, 2666L, 37737L, 80488L, 212258L, 213766L),</span>
-<span id="cb234-5"><a href="tidydata.html#cb234-5"></a>  <span class="dt">population =</span> <span class="kw">c</span>(19987071L, 20595360L, 172006362L, 174504898L, 1272915272L, 1280428583L)</span>
-<span id="cb234-6"><a href="tidydata.html#cb234-6"></a>)</span></code></pre></div>
-<table>
-<thead>
-<tr class="header">
-<th align="left">country</th>
-<th align="right">year</th>
-<th align="right">cases</th>
-<th align="right">population</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Afghanistan</td>
-<td align="right">1999</td>
-<td align="right">745</td>
-<td align="right">19987071</td>
-</tr>
-<tr class="even">
-<td align="left">Afghanistan</td>
-<td align="right">2000</td>
-<td align="right">2666</td>
-<td align="right">20595360</td>
-</tr>
-<tr class="odd">
-<td align="left">Brazil</td>
-<td align="right">1999</td>
-<td align="right">37737</td>
-<td align="right">172006362</td>
-</tr>
-<tr class="even">
-<td align="left">Brazil</td>
-<td align="right">2000</td>
-<td align="right">80488</td>
-<td align="right">174504898</td>
-</tr>
-<tr class="odd">
-<td align="left">China</td>
-<td align="right">1999</td>
-<td align="right">212258</td>
-<td align="right">1272915272</td>
-</tr>
-<tr class="even">
-<td align="left">China</td>
-<td align="right">2000</td>
-<td align="right">213766</td>
-<td align="right">1280428583</td>
-</tr>
-</tbody>
-</table>
-<p>以下のデータは、<code>cases</code>と<code>population</code>の値が<code>count</code>に混在しており、それぞれが専用の列をもたない形になっているため、tidydataではありません。</p>
-<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="tidydata.html#cb235-1"></a>table2 &lt;-<span class="st"> </span>table1 <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb235-2"><a href="tidydata.html#cb235-2"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="kw">c</span>(cases, population), <span class="dt">names_to =</span> <span class="st">&quot;key&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb235-3"><a href="tidydata.html#cb235-3"></a><span class="st">  </span><span class="kw">arrange</span>(country, year)</span></code></pre></div>
-<table>
-<thead>
-<tr class="header">
-<th align="left">country</th>
-<th align="right">year</th>
-<th align="left">key</th>
-<th align="right">value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Afghanistan</td>
-<td align="right">1999</td>
-<td align="left">cases</td>
-<td align="right">745</td>
-</tr>
-<tr class="even">
-<td align="left">Afghanistan</td>
-<td align="right">1999</td>
-<td align="left">population</td>
-<td align="right">19987071</td>
-</tr>
-<tr class="odd">
-<td align="left">Afghanistan</td>
-<td align="right">2000</td>
-<td align="left">cases</td>
-<td align="right">2666</td>
-</tr>
-<tr class="even">
-<td align="left">Afghanistan</td>
-<td align="right">2000</td>
-<td align="left">population</td>
-<td align="right">20595360</td>
-</tr>
-<tr class="odd">
-<td align="left">Brazil</td>
-<td align="right">1999</td>
-<td align="left">cases</td>
-<td align="right">37737</td>
-</tr>
-<tr class="even">
-<td align="left">Brazil</td>
-<td align="right">1999</td>
-<td align="left">population</td>
-<td align="right">172006362</td>
-</tr>
-<tr class="odd">
-<td align="left">Brazil</td>
-<td align="right">2000</td>
-<td align="left">cases</td>
-<td align="right">80488</td>
-</tr>
-<tr class="even">
-<td align="left">Brazil</td>
-<td align="right">2000</td>
-<td align="left">population</td>
-<td align="right">174504898</td>
-</tr>
-<tr class="odd">
-<td align="left">China</td>
-<td align="right">1999</td>
-<td align="left">cases</td>
-<td align="right">212258</td>
-</tr>
-<tr class="even">
-<td align="left">China</td>
-<td align="right">1999</td>
-<td align="left">population</td>
-<td align="right">1272915272</td>
-</tr>
-<tr class="odd">
-<td align="left">China</td>
-<td align="right">2000</td>
-<td align="left">cases</td>
-<td align="right">213766</td>
-</tr>
-<tr class="even">
-<td align="left">China</td>
-<td align="right">2000</td>
-<td align="left">population</td>
-<td align="right">1280428583</td>
-</tr>
-</tbody>
-</table>
-<p>以下のデータは、<code>rate</code>の列におけるそれぞれのセルに複数の値が含まれているため、tidydataではありません。</p>
-<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="tidydata.html#cb236-1"></a>table3 &lt;-<span class="st"> </span>table1 <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb236-2"><a href="tidydata.html#cb236-2"></a><span class="st">  </span><span class="kw">unite</span>(rate, cases, population, <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>)</span></code></pre></div>
-<table>
-<thead>
-<tr class="header">
-<th align="left">country</th>
-<th align="right">year</th>
-<th align="left">rate</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Afghanistan</td>
-<td align="right">1999</td>
-<td align="left">745/19987071</td>
-</tr>
-<tr class="even">
-<td align="left">Afghanistan</td>
-<td align="right">2000</td>
-<td align="left">2666/20595360</td>
-</tr>
-<tr class="odd">
-<td align="left">Brazil</td>
-<td align="right">1999</td>
-<td align="left">37737/172006362</td>
-</tr>
-<tr class="even">
-<td align="left">Brazil</td>
-<td align="right">2000</td>
-<td align="left">80488/174504898</td>
-</tr>
-<tr class="odd">
-<td align="left">China</td>
-<td align="right">1999</td>
-<td align="left">212258/1272915272</td>
-</tr>
-<tr class="even">
-<td align="left">China</td>
-<td align="right">2000</td>
-<td align="left">213766/1280428583</td>
-</tr>
-</tbody>
-</table>
-<p>以下のデータは、2つのテーブルにデータがまたがっているため、tidydataではありません。</p>
-<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="tidydata.html#cb237-1"></a>table4a &lt;-<span class="st"> </span>table1 <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb237-2"><a href="tidydata.html#cb237-2"></a><span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>population) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb237-3"><a href="tidydata.html#cb237-3"></a><span class="st">    </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> year, <span class="dt">values_from =</span> cases)</span></code></pre></div>
-<table>
-<thead>
-<tr class="header">
-<th align="left">country</th>
-<th align="right">1999</th>
-<th align="right">2000</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Afghanistan</td>
-<td align="right">745</td>
-<td align="right">2666</td>
-</tr>
-<tr class="even">
-<td align="left">Brazil</td>
-<td align="right">37737</td>
-<td align="right">80488</td>
-</tr>
-<tr class="odd">
-<td align="left">China</td>
-<td align="right">212258</td>
-<td align="right">213766</td>
-</tr>
-</tbody>
-</table>
-<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="tidydata.html#cb238-1"></a>table4b &lt;-<span class="st"> </span>table1 <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb238-2"><a href="tidydata.html#cb238-2"></a><span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>cases) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb238-3"><a href="tidydata.html#cb238-3"></a><span class="st">    </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> year, <span class="dt">values_from =</span> population)</span></code></pre></div>
-<table>
-<thead>
-<tr class="header">
-<th align="left">country</th>
-<th align="right">1999</th>
-<th align="right">2000</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Afghanistan</td>
-<td align="right">19987071</td>
-<td align="right">20595360</td>
-</tr>
-<tr class="even">
-<td align="left">Brazil</td>
-<td align="right">172006362</td>
-<td align="right">174504898</td>
-</tr>
-<tr class="odd">
-<td align="left">China</td>
-<td align="right">1272915272</td>
-<td align="right">1280428583</td>
-</tr>
-</tbody>
-</table>
+<div id="unite_and_separate" class="section level2">
+<h2><span class="header-section-number">5.3</span> 列の分割と結合</h2>
+<p><code>table3</code>は<code>rate</code>の列に複数の変数（<code>population</code>と<code>cases</code>）の情報が文字列として格納されており、tidyではありません。このようにひとつの列に含まれている文字列を、複数の列に分割したい場合は、<code>separate()</code>関数を用います。<code>separate()</code>関数は、<strong>dplyr</strong>のverbと同様に、第1引数はデータフレームで、出力もデータフレームです。第1引数以外で必要な引数としては，分割元の変数を指定する<code>col</code>と分割した後に設定する変数名のベクトル<code>into</code>となります。<code>table3</code>の場合、<code>col</code>に<code>rate</code>、<code>into</code>に<code>c("cases", "population")</code>を指定します。</p>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="unite-and-separate.html#cb245-1"></a>table3</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 3
+##   country      year rate             
+##   &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;            
+## 1 Afghanistan  1999 745/19987071     
+## 2 Afghanistan  2000 2666/20595360    
+## 3 Brazil       1999 37737/172006362  
+## 4 Brazil       2000 80488/174504898  
+## 5 China        1999 212258/1272915272
+## 6 China        2000 213766/1280428583</code></pre>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="unite-and-separate.html#cb247-1"></a>table3 <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb247-2"><a href="unite-and-separate.html#cb247-2"></a><span class="st">  </span><span class="kw">separate</span>(rate, <span class="kw">c</span>(<span class="st">&quot;cases&quot;</span>, <span class="st">&quot;population&quot;</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 4
+##   country      year cases  population
+##   &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;     
+## 1 Afghanistan  1999 745    19987071  
+## 2 Afghanistan  2000 2666   20595360  
+## 3 Brazil       1999 37737  172006362 
+## 4 Brazil       2000 80488  174504898 
+## 5 China        1999 212258 1272915272
+## 6 China        2000 213766 1280428583</code></pre>
+<p>これでもOKですが、分割された後の変数が文字列になっているので、数字のみの文字列であれば、<code>convert</code>引数を<code>TRUE</code>に設定すると、数値に変換してくれます。</p>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="unite-and-separate.html#cb249-1"></a>table3 <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb249-2"><a href="unite-and-separate.html#cb249-2"></a><span class="st">  </span><span class="kw">separate</span>(rate, <span class="kw">c</span>(<span class="st">&quot;cases&quot;</span>, <span class="st">&quot;population&quot;</span>), <span class="dt">convert =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 4
+##   country      year  cases population
+##   &lt;chr&gt;       &lt;int&gt;  &lt;int&gt;      &lt;int&gt;
+## 1 Afghanistan  1999    745   19987071
+## 2 Afghanistan  2000   2666   20595360
+## 3 Brazil       1999  37737  172006362
+## 4 Brazil       2000  80488  174504898
+## 5 China        1999 212258 1272915272
+## 6 China        2000 213766 1280428583</code></pre>
+<p>また、区切り文字については、デフォルトでは数値以外の文字となっていますが、指定したい場合は、<code>sep</code>引数を指定します。（<code>table3</code>の場合は指定しなくてもOKです。）</p>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="unite-and-separate.html#cb251-1"></a>table3 <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb251-2"><a href="unite-and-separate.html#cb251-2"></a><span class="st">  </span><span class="kw">separate</span>(rate, <span class="kw">c</span>(<span class="st">&quot;cases&quot;</span>, <span class="st">&quot;population&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>)</span></code></pre></div>
+<p><code>separate()</code>関数とは反対に、複数の変数をひとつの列に結合したい場合は、<code>unite()</code>関数を用います。ここでは、<code>unite()</code>関数の動作確認のために、<code>table3</code>の<code>year</code>を先頭2桁の<code>century</code>と後ろ2桁の<code>year</code>に分割をしてから、再度結合することを考えます。<code>sep</code>引数に数値を与えると、その数値の桁数分で分割されます。</p>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="unite-and-separate.html#cb252-1"></a>table5 &lt;-<span class="st"> </span>table3 <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb252-2"><a href="unite-and-separate.html#cb252-2"></a><span class="st">  </span><span class="kw">separate</span>(year, <span class="kw">c</span>(<span class="st">&quot;century&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="dt">sep =</span> <span class="dv">2</span>))</span></code></pre></div>
+<pre><code>## Warning: Expected 3 pieces. Missing pieces filled with `NA` in 6 rows [1, 2, 3,
+## 4, 5, 6].</code></pre>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="unite-and-separate.html#cb254-1"></a>table5</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 5
+##   country     century year  `2`   rate             
+##   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;            
+## 1 Afghanistan 1999    &lt;NA&gt;  &lt;NA&gt;  745/19987071     
+## 2 Afghanistan 2000    &lt;NA&gt;  &lt;NA&gt;  2666/20595360    
+## 3 Brazil      1999    &lt;NA&gt;  &lt;NA&gt;  37737/172006362  
+## 4 Brazil      2000    &lt;NA&gt;  &lt;NA&gt;  80488/174504898  
+## 5 China       1999    &lt;NA&gt;  &lt;NA&gt;  212258/1272915272
+## 6 China       2000    &lt;NA&gt;  &lt;NA&gt;  213766/1280428583</code></pre>
+<p><code>century</code>と<code>year</code>の列を<code>unite()</code>関数で結合して、改めて<code>year</code>列とします。<code>unite()</code>関数も<strong>dplyr</strong>のverbと同様に、第1引数はデータフレームで、出力もデータフレームです。第1引数以外で必要な引数としては，結合後の変数名<code>col</code>と、<code>select()</code>と同様に指定された結合対象の変数名となります。</p>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="unite-and-separate.html#cb256-1"></a>table5 <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb256-2"><a href="unite-and-separate.html#cb256-2"></a><span class="st">  </span><span class="kw">unite</span>(<span class="dt">col =</span> new, century, year)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 4
+##   country     new     `2`   rate             
+##   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;            
+## 1 Afghanistan 1999_NA &lt;NA&gt;  745/19987071     
+## 2 Afghanistan 2000_NA &lt;NA&gt;  2666/20595360    
+## 3 Brazil      1999_NA &lt;NA&gt;  37737/172006362  
+## 4 Brazil      2000_NA &lt;NA&gt;  80488/174504898  
+## 5 China       1999_NA &lt;NA&gt;  212258/1272915272
+## 6 China       2000_NA &lt;NA&gt;  213766/1280428583</code></pre>
+<p>このように、デフォルトではアンダースコア<code>_</code>によって結合されますが、結合文字を指定したい場合は<code>sep</code>変数を指定します（以下の例は空の文字列）。</p>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="unite-and-separate.html#cb258-1"></a>table5 <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb258-2"><a href="unite-and-separate.html#cb258-2"></a><span class="st">  </span><span class="kw">unite</span>(<span class="dt">col =</span> new, century, year, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 4
+##   country     new    `2`   rate             
+##   &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;            
+## 1 Afghanistan 1999NA &lt;NA&gt;  745/19987071     
+## 2 Afghanistan 2000NA &lt;NA&gt;  2666/20595360    
+## 3 Brazil      1999NA &lt;NA&gt;  37737/172006362  
+## 4 Brazil      2000NA &lt;NA&gt;  80488/174504898  
+## 5 China       1999NA &lt;NA&gt;  212258/1272915272
+## 6 China       2000NA &lt;NA&gt;  213766/1280428583</code></pre>
+
 </div>
+<!-- </div> -->
+
+
+
+
+
+
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="dplyr-tidyr-03.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="long-wide.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="long-wide.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

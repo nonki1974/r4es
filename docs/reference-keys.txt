@@ -40,3 +40,4 @@ tidydata
 long_wide
 pivot_longer関数を用いたwideからlongへの変換
 pivot_wider関数を用いたwideからlongへの変換
+unite_and_separate

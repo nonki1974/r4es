@@ -73,7 +73,89 @@ table4b <- table1 %>%
 ```{r echo=FALSE}
 knitr::kable(table4b)
 ```
+## 縦長（long）データと横長（wide）データの相互変換 {#long_wide}
 
+### `pivot_longer()`関数を用いたwideからlongへの変換
+
+`table4a`や`table4b`は、列名が`1999`や`2000`というように「年」に関する変数の観測値となっています。また、テーブル内部の数値は、`table4a`の場合`cases`の観測値、`table4b`の場合は`population`の観測値というように、単一の変数の観測値が複数列にまたがっています。このような形のテーブルとなっているデータのことを**横長（wide型）データ**と呼びます。
+
+```{r}
+knitr::kable(table4a)
+```
+
+このデータを、`year`列に「年」の観測値（1999もしくは2000）、`cases`列に`cases`の観測値を格納する形式、すなわち**縦長（long型）データ**に変換するには、`pivot_longer()`関数を用います。
+
+`pivot_longer()`関数の第1引数は**dplyr**のverbと同様にデータフレームとなります。また、関数を適用した結果もデータフレームになりますので、パイプ処理の中で利用できます。第2引数に、観測値が列名となっている列の一覧を**dplyr**の`select()`関数で変数を選択する場合と同様の形式（ただし、複数の変数の列挙は`c()`関数を使う）で与えます。また、それらに対する新たに設定する変数名を`names_to`引数に文字列として指定し、それらの値に対して新たに設定する変数名を`values_to`引数に文字列として指定します。`table4a`に対しては、例えば以下のようにします。
+
+```{r}
+table4a %>% 
+  pivot_longer(-country, names_to = "year", values_to = "cases")
+```
+
+観測値が列名となっている列の一覧は、` c(`1999`,`2000`) `のような形式でもいいですが、ここでは`country`以外のすべての列ということで、`-country`としています。また、`names_to`と`values_to`は、新たに設定する変数名であり、`table4a`に含まれる列名ではありませんので、ダブルクォートをつけて文字列として指定する必要があります。
+
+### `pivot_wider()`関数を用いたwideからlongへの変換
+
+`table2`は1つの観測（各国の1年分の観測）が2行にまたがっています。これはtidydataの1行が1観測という原則を満たしておらず、tidydataではありません。これをtidydataにするためには、`count`列を広げて`key`列の値を変数名とした新たな列を作成する必要があります。
+
+```{r}
+knitr::kable(table2)
+```
+
+これは、前のセクションにおける`pivot_longer()`と逆の操作に相当し、long形式からwide形式への変換となります。これを行うのが`pivot_wider()`関数です。
+
+`pivot_wider()`関数も`pivot_longer()`関数と同様にパイプ処理の中で利用できます。`names_from`引数に変数名を含む列（ここでは`key`）、`values_from`引数にそれらの変数名に対応した値が格納されている列（ここでは`count`）を指定します。これらは、データフレーム内の変数名ですので、ダブルクォートはつけません。`table2`に対しては例えば以下のようにします。
+
+```{r}
+table2 %>% 
+  pivot_wider(names_from = key, values_from = value)
+```
+
+## 列の分割と結合 {#unite_and_separate}
+
+`table3`は`rate`の列に複数の変数（`population`と`cases`）の情報が文字列として格納されており、tidyではありません。このようにひとつの列に含まれている文字列を、複数の列に分割したい場合は、`separate()`関数を用います。`separate()`関数は、**dplyr**のverbと同様に、第1引数はデータフレームで、出力もデータフレームです。第1引数以外で必要な引数としては，分割元の変数を指定する`col`と分割した後に設定する変数名のベクトル`into`となります。`table3`の場合、`col`に`rate`、`into`に`c("cases", "population")`を指定します。
+
+```{r}
+table3
+table3 %>% 
+  separate(rate, c("cases", "population"))
+```
+
+これでもOKですが、分割された後の変数が文字列になっているので、数字のみの文字列であれば、`convert`引数を`TRUE`に設定すると、数値に変換してくれます。
+
+```{r}
+table3 %>% 
+  separate(rate, c("cases", "population"), convert = TRUE)
+```
+
+また、区切り文字については、デフォルトでは数値以外の文字となっていますが、指定したい場合は、`sep`引数を指定します。（`table3`の場合は指定しなくてもOKです。）
+
+```{r eval=FALSE}
+table3 %>% 
+  separate(rate, c("cases", "population"), sep = "/")
+```
+
+`separate()`関数とは反対に、複数の変数をひとつの列に結合したい場合は、`unite()`関数を用います。ここでは、`unite()`関数の動作確認のために、`table3`の`year`を先頭2桁の`century`と後ろ2桁の`year`に分割をしてから、再度結合することを考えます。`sep`引数に数値を与えると、その数値の桁数分で分割されます。
+
+```{r}
+table5 <- table3 %>% 
+  separate(year, c("century", "year", sep = 2))
+table5
+```
+
+`century`と`year`の列を`unite()`関数で結合して、改めて`year`列とします。`unite()`関数も**dplyr**のverbと同様に、第1引数はデータフレームで、出力もデータフレームです。第1引数以外で必要な引数としては，結合後の変数名`col`と、`select()`と同様に指定された結合対象の変数名となります。
+
+```{r}
+table5 %>% 
+  unite(col = new, century, year)
+```
+
+このように、デフォルトではアンダースコア`_`によって結合されますが、結合文字を指定したい場合は`sep`変数を指定します（以下の例は空の文字列）。
+
+```{r}
+table5 %>% 
+  unite(col = new, century, year, sep = "")
+```
 
 
 
