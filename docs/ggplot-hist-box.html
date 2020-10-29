@@ -184,17 +184,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.3" data-path="unite-and-separate.html"><a href="unite-and-separate.html"><i class="fa fa-check"></i><b>5.3</b> 列の分割と結合</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="ggplot2によるデータの可視化1.html"><a href="ggplot2によるデータの可視化1.html"><i class="fa fa-check"></i><b>6</b> ggplot2によるデータの可視化（1）</a><ul>
-<li class="chapter" data-level="6.1" data-path="ggplot2パッケージについて.html"><a href="ggplot2パッケージについて.html"><i class="fa fa-check"></i><b>6.1</b> ggplot2パッケージについて</a></li>
-<li class="chapter" data-level="6.2" data-path="ggplot2における可視化の基本.html"><a href="ggplot2における可視化の基本.html"><i class="fa fa-check"></i><b>6.2</b> ggplot2における可視化の基本</a></li>
+<li class="chapter" data-level="6.1" data-path="about-ggplot2.html"><a href="about-ggplot2.html"><i class="fa fa-check"></i><b>6.1</b> ggplot2パッケージについて</a></li>
+<li class="chapter" data-level="6.2" data-path="basics-ggplot2.html"><a href="basics-ggplot2.html"><i class="fa fa-check"></i><b>6.2</b> ggplot2における可視化の基本</a></li>
 <li class="chapter" data-level="6.3" data-path="ggplot-barplot.html"><a href="ggplot-barplot.html"><i class="fa fa-check"></i><b>6.3</b> 棒グラフ</a><ul>
-<li class="chapter" data-level="6.3.1" data-path="ggplot-barplot.html"><a href="ggplot-barplot.html#帯グラフと集合縦棒グラフ"><i class="fa fa-check"></i><b>6.3.1</b> 帯グラフと集合縦棒グラフ</a></li>
-<li class="chapter" data-level="6.3.2" data-path="ggplot-barplot.html"><a href="ggplot-barplot.html#カテゴリ因子型の水準の並べ替え"><i class="fa fa-check"></i><b>6.3.2</b> カテゴリ（因子型の水準）の並べ替え</a></li>
+<li class="chapter" data-level="6.3.1" data-path="ggplot-barplot.html"><a href="ggplot-barplot.html#geom_position"><i class="fa fa-check"></i><b>6.3.1</b> 帯グラフと集合縦棒グラフ</a></li>
+<li class="chapter" data-level="6.3.2" data-path="ggplot-barplot.html"><a href="ggplot-barplot.html#order_factor"><i class="fa fa-check"></i><b>6.3.2</b> カテゴリ（因子型の水準）の並べ替え</a></li>
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="ggplot-hist-box.html"><a href="ggplot-hist-box.html"><i class="fa fa-check"></i><b>6.4</b> ヒストグラムと箱ひげ図</a></li>
 <li class="chapter" data-level="6.5" data-path="ggplot-line.html"><a href="ggplot-line.html"><i class="fa fa-check"></i><b>6.5</b> 折れ線グラフ</a><ul>
-<li class="chapter" data-level="6.5.1" data-path="ggplot-line.html"><a href="ggplot-line.html#x軸が経過時間y軸が1つの変数"><i class="fa fa-check"></i><b>6.5.1</b> x軸が経過時間、y軸が1つの変数</a></li>
-<li class="chapter" data-level="6.5.2" data-path="ggplot-line.html"><a href="ggplot-line.html#x軸が経過時間y軸が2つ以上の変数"><i class="fa fa-check"></i><b>6.5.2</b> x軸が経過時間、y軸が2つ以上の変数</a></li>
-<li class="chapter" data-level="6.5.3" data-path="ggplot-line.html"><a href="ggplot-line.html#x軸が日付y軸が2つ以上の変数"><i class="fa fa-check"></i><b>6.5.3</b> x軸が日付、y軸が2つ以上の変数</a></li>
+<li class="chapter" data-level="6.5.1" data-path="ggplot-line.html"><a href="ggplot-line.html#ggplot_line_y1"><i class="fa fa-check"></i><b>6.5.1</b> x軸が経過時間、y軸が1つの変数</a></li>
+<li class="chapter" data-level="6.5.2" data-path="ggplot-line.html"><a href="ggplot-line.html#ggplot_line_y2"><i class="fa fa-check"></i><b>6.5.2</b> x軸が経過時間、y軸が2つ以上の変数</a></li>
+<li class="chapter" data-level="6.5.3" data-path="ggplot-line.html"><a href="ggplot-line.html#ggplot_line_xdate"><i class="fa fa-check"></i><b>6.5.3</b> x軸が日付、y軸が2つ以上の変数</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -217,14 +217,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="ggplot_hist_box" class="section level2">
 <h2><span class="header-section-number">6.4</span> ヒストグラムと箱ひげ図</h2>
 <p>1つの量的変数の分布をみる場合はヒストグラムを使います。<strong>ggplot2</strong>では、<code>geom_hist()</code>関数を用います。<code>mpg</code>データで高速道路の燃費<code>hwy</code>の分布をみる場合は以下のようにします。</p>
-<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="ggplot-hist-box.html#cb275-1"></a><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(hwy)) <span class="op">+</span></span>
-<span id="cb275-2"><a href="ggplot-hist-box.html#cb275-2"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-116-1.png" width="672" /></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="ggplot-hist-box.html#cb16-1"></a><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(hwy)) <span class="op">+</span></span>
+<span id="cb16-2"><a href="ggplot-hist-box.html#cb16-2"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <p><code>binwidth</code>は階級幅になります。指定しない場合は自動で設定されますが、警告表示が出力されます。</p>
 <p>質的変数のカテゴリごとの量的変数の分布を見たい場合は、箱ひげ図を使います。<strong>ggplot2</strong>では、<code>geom_boxplot()</code>関数を使います。<code>mpg</code>データで、<code>class</code>ごとの<code>hwy</code>の分布をみる場合は以下のようにします。</p>
-<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="ggplot-hist-box.html#cb276-1"></a><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(class, hwy)) <span class="op">+</span></span>
-<span id="cb276-2"><a href="ggplot-hist-box.html#cb276-2"></a><span class="st">  </span><span class="kw">geom_boxplot</span>()</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-117-1.png" width="672" /></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="ggplot-hist-box.html#cb17-1"></a><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(class, hwy)) <span class="op">+</span></span>
+<span id="cb17-2"><a href="ggplot-hist-box.html#cb17-2"></a><span class="st">  </span><span class="kw">geom_boxplot</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 </div>
             </section>
 
@@ -282,20 +282,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

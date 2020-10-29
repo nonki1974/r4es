@@ -184,17 +184,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.3" data-path="unite-and-separate.html"><a href="unite-and-separate.html"><i class="fa fa-check"></i><b>5.3</b> 列の分割と結合</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="ggplot2によるデータの可視化1.html"><a href="ggplot2によるデータの可視化1.html"><i class="fa fa-check"></i><b>6</b> ggplot2によるデータの可視化（1）</a><ul>
-<li class="chapter" data-level="6.1" data-path="ggplot2パッケージについて.html"><a href="ggplot2パッケージについて.html"><i class="fa fa-check"></i><b>6.1</b> ggplot2パッケージについて</a></li>
-<li class="chapter" data-level="6.2" data-path="ggplot2における可視化の基本.html"><a href="ggplot2における可視化の基本.html"><i class="fa fa-check"></i><b>6.2</b> ggplot2における可視化の基本</a></li>
+<li class="chapter" data-level="6.1" data-path="about-ggplot2.html"><a href="about-ggplot2.html"><i class="fa fa-check"></i><b>6.1</b> ggplot2パッケージについて</a></li>
+<li class="chapter" data-level="6.2" data-path="basics-ggplot2.html"><a href="basics-ggplot2.html"><i class="fa fa-check"></i><b>6.2</b> ggplot2における可視化の基本</a></li>
 <li class="chapter" data-level="6.3" data-path="ggplot-barplot.html"><a href="ggplot-barplot.html"><i class="fa fa-check"></i><b>6.3</b> 棒グラフ</a><ul>
-<li class="chapter" data-level="6.3.1" data-path="ggplot-barplot.html"><a href="ggplot-barplot.html#帯グラフと集合縦棒グラフ"><i class="fa fa-check"></i><b>6.3.1</b> 帯グラフと集合縦棒グラフ</a></li>
-<li class="chapter" data-level="6.3.2" data-path="ggplot-barplot.html"><a href="ggplot-barplot.html#カテゴリ因子型の水準の並べ替え"><i class="fa fa-check"></i><b>6.3.2</b> カテゴリ（因子型の水準）の並べ替え</a></li>
+<li class="chapter" data-level="6.3.1" data-path="ggplot-barplot.html"><a href="ggplot-barplot.html#geom_position"><i class="fa fa-check"></i><b>6.3.1</b> 帯グラフと集合縦棒グラフ</a></li>
+<li class="chapter" data-level="6.3.2" data-path="ggplot-barplot.html"><a href="ggplot-barplot.html#order_factor"><i class="fa fa-check"></i><b>6.3.2</b> カテゴリ（因子型の水準）の並べ替え</a></li>
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="ggplot-hist-box.html"><a href="ggplot-hist-box.html"><i class="fa fa-check"></i><b>6.4</b> ヒストグラムと箱ひげ図</a></li>
 <li class="chapter" data-level="6.5" data-path="ggplot-line.html"><a href="ggplot-line.html"><i class="fa fa-check"></i><b>6.5</b> 折れ線グラフ</a><ul>
-<li class="chapter" data-level="6.5.1" data-path="ggplot-line.html"><a href="ggplot-line.html#x軸が経過時間y軸が1つの変数"><i class="fa fa-check"></i><b>6.5.1</b> x軸が経過時間、y軸が1つの変数</a></li>
-<li class="chapter" data-level="6.5.2" data-path="ggplot-line.html"><a href="ggplot-line.html#x軸が経過時間y軸が2つ以上の変数"><i class="fa fa-check"></i><b>6.5.2</b> x軸が経過時間、y軸が2つ以上の変数</a></li>
-<li class="chapter" data-level="6.5.3" data-path="ggplot-line.html"><a href="ggplot-line.html#x軸が日付y軸が2つ以上の変数"><i class="fa fa-check"></i><b>6.5.3</b> x軸が日付、y軸が2つ以上の変数</a></li>
+<li class="chapter" data-level="6.5.1" data-path="ggplot-line.html"><a href="ggplot-line.html#ggplot_line_y1"><i class="fa fa-check"></i><b>6.5.1</b> x軸が経過時間、y軸が1つの変数</a></li>
+<li class="chapter" data-level="6.5.2" data-path="ggplot-line.html"><a href="ggplot-line.html#ggplot_line_y2"><i class="fa fa-check"></i><b>6.5.2</b> x軸が経過時間、y軸が2つ以上の変数</a></li>
+<li class="chapter" data-level="6.5.3" data-path="ggplot-line.html"><a href="ggplot-line.html#ggplot_line_xdate"><i class="fa fa-check"></i><b>6.5.3</b> x軸が日付、y軸が2つ以上の変数</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -217,66 +217,66 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="ggplot_line" class="section level2">
 <h2><span class="header-section-number">6.5</span> 折れ線グラフ</h2>
 <p>折れ線グラフは経過時間に伴って変化する量的変数を示すグラフです。ここでは、3つのパターンについて紹介します。</p>
-<div id="x軸が経過時間y軸が1つの変数" class="section level3">
+<div id="ggplot_line_y1" class="section level3">
 <h3><span class="header-section-number">6.5.1</span> x軸が経過時間、y軸が1つの変数</h3>
 <p>この場合が折れ線グラフの基本となります。折れ線グラフは<code>geom_line()</code>関数で描画します。</p>
-<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="ggplot-line.html#cb277-1"></a>df_time &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">t =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">y =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>))</span>
-<span id="cb277-2"><a href="ggplot-line.html#cb277-2"></a>df_time</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="ggplot-line.html#cb18-1"></a>df_time &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">t =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">y =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>))</span>
+<span id="cb18-2"><a href="ggplot-line.html#cb18-2"></a>df_time</span></code></pre></div>
 <pre><code>##     t           y
-## 1   1  0.83377571
-## 2   2  0.21064379
-## 3   3 -0.92455517
-## 4   4  1.45013539
-## 5   5  0.79867469
-## 6   6 -0.73599933
-## 7   7  0.05961702
-## 8   8  0.49233189
-## 9   9  0.57944129
-## 10 10  0.48486124</code></pre>
-<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="ggplot-line.html#cb279-1"></a><span class="kw">ggplot</span>(df_time, <span class="kw">aes</span>(t, y)) <span class="op">+</span></span>
-<span id="cb279-2"><a href="ggplot-line.html#cb279-2"></a><span class="st">  </span><span class="kw">geom_line</span>()</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-118-1.png" width="672" /></p>
+## 1   1  0.49468061
+## 2   2  1.28472004
+## 3   3 -0.35426812
+## 4   4  0.41833406
+## 5   5 -0.34806792
+## 6   6 -0.07437318
+## 7   7 -1.74297669
+## 8   8  1.62838606
+## 9   9 -1.00620293
+## 10 10 -1.05195365</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="ggplot-line.html#cb20-1"></a><span class="kw">ggplot</span>(df_time, <span class="kw">aes</span>(t, y)) <span class="op">+</span></span>
+<span id="cb20-2"><a href="ggplot-line.html#cb20-2"></a><span class="st">  </span><span class="kw">geom_line</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 <p><code>flights</code>データの場合に、月ごとの平均遅延時間をプロットするには以下のようにします。</p>
-<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="ggplot-line.html#cb280-1"></a>flights <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb280-2"><a href="ggplot-line.html#cb280-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(arr_delay)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb280-3"><a href="ggplot-line.html#cb280-3"></a><span class="st">  </span><span class="kw">group_by</span>(month) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb280-4"><a href="ggplot-line.html#cb280-4"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">arr_delay =</span> <span class="kw">mean</span>(arr_delay), <span class="dt">.group =</span> <span class="st">&quot;drop&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb280-5"><a href="ggplot-line.html#cb280-5"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(month, arr_delay)) <span class="op">+</span></span>
-<span id="cb280-6"><a href="ggplot-line.html#cb280-6"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
-<span id="cb280-7"><a href="ggplot-line.html#cb280-7"></a><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="ggplot-line.html#cb21-1"></a>flights <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb21-2"><a href="ggplot-line.html#cb21-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(arr_delay)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb21-3"><a href="ggplot-line.html#cb21-3"></a><span class="st">  </span><span class="kw">group_by</span>(month) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb21-4"><a href="ggplot-line.html#cb21-4"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">arr_delay =</span> <span class="kw">mean</span>(arr_delay), <span class="dt">.group =</span> <span class="st">&quot;drop&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb21-5"><a href="ggplot-line.html#cb21-5"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(month, arr_delay)) <span class="op">+</span></span>
+<span id="cb21-6"><a href="ggplot-line.html#cb21-6"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
+<span id="cb21-7"><a href="ggplot-line.html#cb21-7"></a><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>)</span></code></pre></div>
 <pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-119-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <p>最終行の<code>scale_x_continuous()</code>は、<code>x</code>軸の目盛りを設定するためのものです。</p>
 </div>
-<div id="x軸が経過時間y軸が2つ以上の変数" class="section level3">
+<div id="ggplot_line_y2" class="section level3">
 <h3><span class="header-section-number">6.5.2</span> x軸が経過時間、y軸が2つ以上の変数</h3>
 <p>2つ以上の量的変数の時間推移を見たい場合は、<code>geom_line()</code>の<strong>aes</strong>において<code>group</code>を指定します。</p>
-<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="ggplot-line.html#cb282-1"></a>df_time &lt;-<span class="st"> </span>df_time <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb282-2"><a href="ggplot-line.html#cb282-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">z =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>))</span>
-<span id="cb282-3"><a href="ggplot-line.html#cb282-3"></a>df_time</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="ggplot-line.html#cb23-1"></a>df_time &lt;-<span class="st"> </span>df_time <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb23-2"><a href="ggplot-line.html#cb23-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">z =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>))</span>
+<span id="cb23-3"><a href="ggplot-line.html#cb23-3"></a>df_time</span></code></pre></div>
 <pre><code>##     t           y           z
-## 1   1  0.83377571 -2.54788106
-## 2   2  0.21064379 -0.30502495
-## 3   3 -0.92455517 -0.70852207
-## 4   4  1.45013539  1.29800240
-## 5   5  0.79867469 -1.13392771
-## 6   6 -0.73599933  1.29484289
-## 7   7  0.05961702  0.02467013
-## 8   8  0.49233189  0.06366231
-## 9   9  0.57944129  0.18315157
-## 10 10  0.48486124 -1.63279505</code></pre>
+## 1   1  0.49468061  2.60548819
+## 2   2  1.28472004  0.17109088
+## 3   3 -0.35426812  0.41795061
+## 4   4  0.41833406  1.51972552
+## 5   5 -0.34806792  0.95983247
+## 6   6 -0.07437318 -0.84773856
+## 7   7 -1.74297669 -0.01607274
+## 8   8  1.62838606  0.76677649
+## 9   9 -1.00620293  2.52688594
+## 10 10 -1.05195365  0.10443449</code></pre>
 <p>変数が異なる列に格納されている（横長データ）の場合、一旦縦長に変形して、列名となっていた変数を<code>group</code>に指定します。</p>
-<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="ggplot-line.html#cb284-1"></a>df_time <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb284-2"><a href="ggplot-line.html#cb284-2"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="op">-</span>t, <span class="dt">names_to =</span> <span class="st">&quot;var&quot;</span>, <span class="dt">values_to =</span><span class="st">&quot;value&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb284-3"><a href="ggplot-line.html#cb284-3"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(t, value, <span class="dt">group =</span> var, <span class="dt">color =</span> var)) <span class="op">+</span></span>
-<span id="cb284-4"><a href="ggplot-line.html#cb284-4"></a><span class="st">  </span><span class="kw">geom_line</span>()</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-121-1.png" width="672" /></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="ggplot-line.html#cb25-1"></a>df_time <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb25-2"><a href="ggplot-line.html#cb25-2"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="op">-</span>t, <span class="dt">names_to =</span> <span class="st">&quot;var&quot;</span>, <span class="dt">values_to =</span><span class="st">&quot;value&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb25-3"><a href="ggplot-line.html#cb25-3"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(t, value, <span class="dt">group =</span> var, <span class="dt">color =</span> var)) <span class="op">+</span></span>
+<span id="cb25-4"><a href="ggplot-line.html#cb25-4"></a><span class="st">  </span><span class="kw">geom_line</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 </div>
-<div id="x軸が日付y軸が2つ以上の変数" class="section level3">
+<div id="ggplot_line_xdate" class="section level3">
 <h3><span class="header-section-number">6.5.3</span> x軸が日付、y軸が2つ以上の変数</h3>
 <p>以上の例は、x軸は単なる数値でしたが、時間変化のデータの場合、日付であることも多いです。例として以下のようなデータを考えます。</p>
-<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="ggplot-line.html#cb285-1"></a>fuk_temp &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;./data/fukuoka_temp.csv&quot;</span>, <span class="dt">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
-<span id="cb285-2"><a href="ggplot-line.html#cb285-2"></a><span class="kw">head</span>(fuk_temp)</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="ggplot-line.html#cb26-1"></a>fuk_temp &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;./data/fukuoka_temp.csv&quot;</span>, <span class="dt">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
+<span id="cb26-2"><a href="ggplot-line.html#cb26-2"></a><span class="kw">head</span>(fuk_temp)</span></code></pre></div>
 <pre><code>##       年月 平均気温 日最高気温の平均 日最低気温の平均
 ## 1 2010/1/1      6.6             10.3              3.3
 ## 2 2010/2/1      9.4             13.1              6.0
@@ -285,22 +285,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5 2010/5/1     19.2             23.6             15.6
 ## 6 2010/6/1     23.5             27.6             20.7</code></pre>
 <p><code>年月</code>列に文字列として<code>2010/1/1</code>のような形式で日付の情報が格納されています。このままだと、文字列なので正常に折れ線グラフが描画されません。文字列を日付としてのデータ型に変換する場合は、<strong>lubridate</strong>パッケージの<code>as_date()</code>関数を用います。<strong>lubridate</strong>パッケージもtidyverseに含まれていますが、ロードは同時にされませんので、パッケージの関数を利用することを明示しておきます。</p>
-<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="ggplot-line.html#cb287-1"></a>fuk_temp <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb287-2"><a href="ggplot-line.html#cb287-2"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="op">-</span>年月, <span class="dt">names_to =</span> <span class="st">&quot;type&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;temp&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb287-3"><a href="ggplot-line.html#cb287-3"></a><span class="st">  </span><span class="kw">mutate</span>(年月 =<span class="st"> </span>lubridate<span class="op">::</span><span class="kw">as_date</span>(年月)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb287-4"><a href="ggplot-line.html#cb287-4"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(年月, temp, <span class="dt">group =</span> type, <span class="dt">color =</span> type)) <span class="op">+</span></span>
-<span id="cb287-5"><a href="ggplot-line.html#cb287-5"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
-<span id="cb287-6"><a href="ggplot-line.html#cb287-6"></a><span class="st">  </span><span class="kw">scale_x_date</span>(<span class="dt">labels =</span> scales<span class="op">::</span><span class="kw">date_format</span>(<span class="st">&quot;%Y/%m&quot;</span>)) <span class="op">+</span></span>
-<span id="cb287-7"><a href="ggplot-line.html#cb287-7"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;福岡市の気温&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-123-1.png" width="672" /></p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="ggplot-line.html#cb28-1"></a>fuk_temp <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb28-2"><a href="ggplot-line.html#cb28-2"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="op">-</span>年月, <span class="dt">names_to =</span> <span class="st">&quot;type&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;temp&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb28-3"><a href="ggplot-line.html#cb28-3"></a><span class="st">  </span><span class="kw">mutate</span>(年月 =<span class="st"> </span>lubridate<span class="op">::</span><span class="kw">as_date</span>(年月)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb28-4"><a href="ggplot-line.html#cb28-4"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(年月, temp, <span class="dt">group =</span> type, <span class="dt">color =</span> type)) <span class="op">+</span></span>
+<span id="cb28-5"><a href="ggplot-line.html#cb28-5"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
+<span id="cb28-6"><a href="ggplot-line.html#cb28-6"></a><span class="st">  </span><span class="kw">scale_x_date</span>(<span class="dt">labels =</span> scales<span class="op">::</span><span class="kw">date_format</span>(<span class="st">&quot;%Y/%m&quot;</span>)) <span class="op">+</span></span>
+<span id="cb28-7"><a href="ggplot-line.html#cb28-7"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;福岡市の気温&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 
 </div>
 </div>
 <!-- </div> -->
-
-
-
-
 
 
 
@@ -363,20 +359,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

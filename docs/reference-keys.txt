@@ -52,3 +52,10 @@ ggplot_line
 x軸が経過時間y軸が1つの変数
 x軸が経過時間y軸が2つ以上の変数
 x軸が日付y軸が2つ以上の変数
+about_ggplot2
+basics_ggplot2
+geom_position
+order_factor
+ggplot_line_y1
+ggplot_line_y2
+ggplot_line_xdate
