@@ -1,0 +1,232 @@
+# ggplot2によるデータの可視化（1）
+
+```{r echo=FALSE}
+pacman::p_load(tidyverse, nycflights13)
+```
+
+
+## ggplot2パッケージについて
+
+**ggplot2**パッケージは、Wilkinson(2005)による"Grammar of Graphics"の理論に基づいてデータを可視化する機能を提供します。パッケージの開発者は**dplyr**パッケージと同じHadley Wickhamです。**ggplot2**は、可視化のための一貫した文法を提供するだけでなく、グラフの出力が洗練されていることから、多くの支持を集めています。
+
+ggplot2はtidyverseに含まれているので、tidyverseが利用可能な状態であればggplot2の関数は利用できます。このテキストでは、ggplot2の2020年10月時点での最新版3.2.2の利用を前提に説明します。
+
+## ggplot2における可視化の基本
+
+Rの標準機能で提供される`plot()`関数では、引数に描画したいデータが含まれるベクトルを指定します。一方、**ggplot2**においては、描画したいデータが含まれるデータフレームを指定するのが基本です。その上で、描画したいグラフの種類（**geoms**）と、グラフの描画要素（**aesthetics**）にデータフレーム内のどの変数を割り当てるかを記述します。ここでは、**ggplot2**に含まれる`mpg`データを用いて説明します。`mpg`データには1999年から2008年の間に毎年新しい車種を発売している主要な38のモデルについて、1999年と2008年の燃費などの値が記録されています。以下のコマンドにより、一般の道路における燃費`cty`と高速道路における燃費`hwy`（単位はいずれもmiles per gallon）の散布図を描画できます。
+
+```{r}
+ggplot(data = mpg, mapping = aes(x = cty, y = hwy)) +
+  geom_point()
+```
+
+まず、`ggplot()`関数の`data`引数にデータフレームを指定し、`mapping`引数に、`aes()`関数を用いて、**aesthetics**への対応を記述します。ただ、これだけでは、グラフは描画されません。`ggplot()`関数は、グラフの基本情報を設定するための関数と考えればよいでしょう。この情報に**geoms**の情報を`+`演算子によって加えることで、実際にグラフが描画されます。**ggplot2**では、このように、グラフに対して新たな情報や機能を付加する場合、具体的には
+
+- レイヤー（プロットやラベルや見出し）を追加
+- 設定（グラフ全体のスタイルなど）を追加
+- 座標系の変更
+- 層別プロット（facet）の作成
+
+をしたい場合に、`+`演算子でコマンドを接続するというスタイルをとっています。`geom_point()`関数は、`aes`で指定した`x`と`y`の各要素の組を平面上の点としてプロットするという命令です（つまり散布図を描画）。上のコマンドは、引数名を省略して記述すると以下のようになります。
+
+```{r eval=FALSE}
+ggplot(mpg, aes(cty, hwy)) +
+  geom_point()
+```
+
+`aes()`関数の第1、第2引数はそれぞれ`x`と`y`との対応となっていますが、それ以降の引数に、描画要素の大きさ（`size`）や色（`color`）などへの対応を記述することができます。また、**aesthetics**は**geoms**の方で記述することもできます。以下のようにすれば、`class`ごとに色分けされた散布図が描画されます。
+
+```{r}
+p <- ggplot(mpg, aes(cty, hwy))
+p + geom_point(aes(color = class))
+```
+
+また、`size = displ`とすれば、排気量（`displ`）の値に応じた大きさで散布図の点がプロットされます。
+
+```{r}
+p + geom_point(aes(size = displ))
+```
+
+`geom_point()`関数はグラフィックスとして点を追加するための関数ですが、これ以外にも
+
+- `geom_bar()`：棒グラフ
+- `geom_boxplot()`：箱ひげ図
+- `geom_histogram()`：ヒストグラム
+- `geom_line()`：折れ線グラフ
+
+などの関数が用意されています。使い方については、以降のセクションで説明していきます。
+
+## 棒グラフ {#ggplot_barplot}
+
+**ggplot2**で棒グラフを作成するには`geom_bar()`関数を使います。棒グラフは、質的変数に対する頻度や比例尺度での集計値を示すグラフです。標準では、**aes**として1つの質的変数のみを指定します。例えば、`mpg`データで`class`ごとの度数を棒グラフにしたい場合は次のようにします。
+
+```{r}
+ggplot(mpg, aes(x = class)) +
+  geom_bar()
+```
+
+散布図の場合は、`x`と`y`に指定された変数の値がそのままプロットされましたが、棒グラフの場合は、指定した質的変数（`class`）の度数を集計してからプロットするという流れになっています。これは、**ggplot2**のグラフ描画関数に連動する**統計変換**（Statistical Transformation）が実行される仕組みになっているためです。棒グラフの場合は度数の計算（`count`）ですが、ヒストグラムの場合は階級ごとの度数（`bin`）、箱ひげ図の場合は分位点（`boxplot`というように、標準での統計処理が定められています。これらは標準設定であり、データの与えられ方によっては変更すべき場合があります。例えば、以下のように、度数がすでに計算されており、個人ごとのデータがないような場合には、統計変換をしない（`identity`）設定にして、**aes**の`x`と`y`にそれぞれ、質的変数と度数を与えることによって棒グラフを描画することができます^[散布図を描画する`geom_point()`の標準の統計変換は`identity`となっています。]。
+
+```{r}
+fwu <- data.frame(
+  dept = c("国際教養学科", "環境科学科", "食・健康学科"),
+  students = c(605, 283, 148)
+)
+fwu
+```
+
+```{r}
+ggplot(fwu, aes(dept, students)) +
+  geom_bar(stat = "identity")
+```
+
+`geom_bar()`で`stat = "identity"`とする代わりに、`geom_col()`を用いて、
+
+```{r eval=FALSE}
+ggplot(fwu, aes(dept, students)) +
+  geom_col()
+```
+
+とすることもできます。例えば、構成比率を棒グラフにしたい場合は、以下のようにするとよいでしょう。
+
+```{r}
+mpg %>% 
+  group_by(class) %>% 
+  summarise(n = n(), .groups = "drop") %>% 
+  mutate(prop = n / sum(n)) %>% 
+  ggplot() +
+  geom_col(aes(class, prop))
+```
+
+### 帯グラフと集合縦棒グラフ
+
+`geom_bar()`関数では、`position`引数を使うことによって、集合縦棒グラフ（`position = "dodge"`）や帯グラフ（`position = fill`）を描画することができます。この場合、**aes**の`fill`に塗り分けたい（層別したい）質的変数を指定します。例えば集合縦棒グラフの場合は以下のようにします。
+
+```{r}
+ggplot(mpg, aes(class, fill = drv)) +
+  geom_bar(position = "dodge")
+```
+
+また、帯グラフの場合は以下のようになります。
+
+```{r}
+ggplot(mpg, aes(class, fill = drv)) +
+  geom_bar(position = "fill")
+```
+
+`geom_bar()`関数における`position`引数のデフォルト設定は`stack`であり、`position`を指定せずに**aes**の`fill`を指定すると以下のように、積み上げ縦棒グラフが描画されます。
+
+```{r}
+ggplot(mpg, aes(class, fill = drv)) +
+  geom_bar()
+```
+
+### カテゴリ（因子型の水準）の並べ替え
+
+`geom_bar()`関数は、`x`軸の質的変数を因子型に設定されたカテゴリの順番で描画します。その変数が名義尺度の場合は、頻度の順番で並べ替えた方がいいです。これを簡単に行うには、**forcats**パッケージ（これもtidyverseに含まれています）を使います。例えば、`mpg`で`class`の頻度順に因子型の水準の順番を並べ替えるには`fct_infreq()`関数を以下のように適用します。
+
+```{r}
+ggplot(mpg, aes(fct_infreq(class))) +
+  geom_bar()
+```
+
+一方、頻度を集計した後の`fwu`データでは、因子型の水準を集計された別の変数（ここでは`students`）の順番で並べ替えるようにします。この場合は、`fct_reorder()`関数を以下のように適用します。
+
+```{r}
+ggplot(fwu, aes(fct_reorder(dept, -students), students)) +
+  geom_bar(stat = "identity")
+```
+
+`-students`となっているのは、`fct_reorder()`関数が昇順で並べ替えるため、`students`の符号を反転したものを昇順に並べ替えることで、`students`を降順で並べ替えるようにしているからです。
+
+## ヒストグラムと箱ひげ図 {#ggplot_hist_box}
+
+1つの量的変数の分布をみる場合はヒストグラムを使います。**ggplot2**では、`geom_hist()`関数を用います。`mpg`データで高速道路の燃費`hwy`の分布をみる場合は以下のようにします。
+
+```{r}
+ggplot(mpg, aes(hwy)) +
+  geom_histogram(binwidth = 2)
+```
+
+`binwidth`は階級幅になります。指定しない場合は自動で設定されますが、警告表示が出力されます。
+
+質的変数のカテゴリごとの量的変数の分布を見たい場合は、箱ひげ図を使います。**ggplot2**では、`geom_boxplot()`関数を使います。`mpg`データで、`class`ごとの`hwy`の分布をみる場合は以下のようにします。
+
+```{r}
+ggplot(mpg, aes(class, hwy)) +
+  geom_boxplot()
+```
+
+## 折れ線グラフ {#ggplot_line}
+
+折れ線グラフは経過時間に伴って変化する量的変数を示すグラフです。ここでは、3つのパターンについて紹介します。
+
+### x軸が経過時間、y軸が1つの変数
+
+この場合が折れ線グラフの基本となります。折れ線グラフは`geom_line()`関数で描画します。
+
+```{r}
+df_time <- data.frame(t = 1:10, y = rnorm(10))
+df_time
+ggplot(df_time, aes(t, y)) +
+  geom_line()
+```
+
+`flights`データの場合に、月ごとの平均遅延時間をプロットするには以下のようにします。
+
+```{r}
+flights %>% 
+  filter(!is.na(arr_delay)) %>% 
+  group_by(month) %>% 
+  summarise(arr_delay = mean(arr_delay), .group = "drop") %>% 
+  ggplot(aes(month, arr_delay)) +
+  geom_line() +
+  scale_x_continuous(breaks = 1:12)
+```
+
+最終行の`scale_x_continuous()`は、`x`軸の目盛りを設定するためのものです。
+
+### x軸が経過時間、y軸が2つ以上の変数
+
+2つ以上の量的変数の時間推移を見たい場合は、`geom_line()`の**aes**において`group`を指定します。
+
+```{r}
+df_time <- df_time %>% 
+  mutate(z = rnorm(10))
+df_time
+```
+
+変数が異なる列に格納されている（横長データ）の場合、一旦縦長に変形して、列名となっていた変数を`group`に指定します。
+
+```{r}
+df_time %>% 
+  pivot_longer(-t, names_to = "var", values_to ="value") %>% 
+  ggplot(aes(t, value, group = var, color = var)) +
+  geom_line()
+```
+
+### x軸が日付、y軸が2つ以上の変数
+
+以上の例は、x軸は単なる数値でしたが、時間変化のデータの場合、日付であることも多いです。例として以下のようなデータを考えます。
+
+```{r}
+fuk_temp <- read.csv("./data/fukuoka_temp.csv", encoding = "UTF-8")
+head(fuk_temp)
+```
+
+`年月`列に文字列として`2010/1/1`のような形式で日付の情報が格納されています。このままだと、文字列なので正常に折れ線グラフが描画されません。文字列を日付としてのデータ型に変換する場合は、**lubridate**パッケージの`as_date()`関数を用います。**lubridate**パッケージもtidyverseに含まれていますが、ロードは同時にされませんので、パッケージの関数を利用することを明示しておきます。
+
+```{r}
+fuk_temp %>% 
+  pivot_longer(-年月, names_to = "type", values_to = "temp") %>% 
+  mutate(年月 = lubridate::as_date(年月)) %>% 
+  ggplot(aes(年月, temp, group = type, color = type)) +
+  geom_line() +
+  scale_x_date(labels = scales::date_format("%Y/%m")) +
+  labs(title = "福岡市の気温")
+```
+
+
+
+
+
