@@ -50,6 +50,8 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -183,7 +185,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="unite-and-separate.html"><a href="unite-and-separate.html"><i class="fa fa-check"></i><b>5.3</b> 列の分割と結合</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="ggplot2によるデータの可視化1.html"><a href="ggplot2によるデータの可視化1.html"><i class="fa fa-check"></i><b>6</b> ggplot2によるデータの可視化（1）</a><ul>
+<li class="chapter" data-level="6" data-path="ggplot2-01.html"><a href="ggplot2-01.html"><i class="fa fa-check"></i><b>6</b> ggplot2によるデータの可視化（1）</a><ul>
 <li class="chapter" data-level="6.1" data-path="about-ggplot2.html"><a href="about-ggplot2.html"><i class="fa fa-check"></i><b>6.1</b> ggplot2パッケージについて</a></li>
 <li class="chapter" data-level="6.2" data-path="basics-ggplot2.html"><a href="basics-ggplot2.html"><i class="fa fa-check"></i><b>6.2</b> ggplot2における可視化の基本</a></li>
 <li class="chapter" data-level="6.3" data-path="ggplot-barplot.html"><a href="ggplot-barplot.html"><i class="fa fa-check"></i><b>6.3</b> 棒グラフ</a><ul>
@@ -195,6 +197,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.5.1" data-path="ggplot-line.html"><a href="ggplot-line.html#ggplot_line_y1"><i class="fa fa-check"></i><b>6.5.1</b> x軸が経過時間、y軸が1つの変数</a></li>
 <li class="chapter" data-level="6.5.2" data-path="ggplot-line.html"><a href="ggplot-line.html#ggplot_line_y2"><i class="fa fa-check"></i><b>6.5.2</b> x軸が経過時間、y軸が2つ以上の変数</a></li>
 <li class="chapter" data-level="6.5.3" data-path="ggplot-line.html"><a href="ggplot-line.html#ggplot_line_xdate"><i class="fa fa-check"></i><b>6.5.3</b> x軸が日付、y軸が2つ以上の変数</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="ggplot2-02.html"><a href="ggplot2-02.html"><i class="fa fa-check"></i><b>7</b> ggplot2によるデータの可視化（2）</a><ul>
+<li class="chapter" data-level="7.1" data-path="facet.html"><a href="facet.html"><i class="fa fa-check"></i><b>7.1</b> 層別</a></li>
+<li class="chapter" data-level="7.2" data-path="output.html"><a href="output.html"><i class="fa fa-check"></i><b>7.2</b> 出力の調整</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="output.html"><a href="output.html#テーマ"><i class="fa fa-check"></i><b>7.2.1</b> テーマ</a></li>
+<li class="chapter" data-level="7.2.2" data-path="output.html"><a href="output.html#軸ラベルタイトルなど"><i class="fa fa-check"></i><b>7.2.2</b> 軸ラベル、タイトルなど</a></li>
+<li class="chapter" data-level="7.2.3" data-path="output.html"><a href="output.html#フォントサイズの調整"><i class="fa fa-check"></i><b>7.2.3</b> フォントサイズの調整</a></li>
+<li class="chapter" data-level="7.2.4" data-path="output.html"><a href="output.html#advancedパワポにグラフをいい感じで貼り付ける"><i class="fa fa-check"></i><b>7.2.4</b> 【Advanced】パワポにグラフをいい感じで貼り付ける</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -217,65 +228,65 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="ggplot_barplot" class="section level2">
 <h2><span class="header-section-number">6.3</span> 棒グラフ</h2>
 <p><strong>ggplot2</strong>で棒グラフを作成するには<code>geom_bar()</code>関数を使います。棒グラフは、質的変数に対する頻度や比例尺度での集計値を示すグラフです。標準では、<strong>aes</strong>として1つの質的変数のみを指定します。例えば、<code>mpg</code>データで<code>class</code>ごとの度数を棒グラフにしたい場合は次のようにします。</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="ggplot-barplot.html#cb5-1"></a><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(<span class="dt">x =</span> class)) <span class="op">+</span></span>
-<span id="cb5-2"><a href="ggplot-barplot.html#cb5-2"></a><span class="st">  </span><span class="kw">geom_bar</span>()</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-<p>散布図の場合は、<code>x</code>と<code>y</code>に指定された変数の値がそのままプロットされましたが、棒グラフの場合は、指定した質的変数（<code>class</code>）の度数を集計してからプロットするという流れになっています。これは、<strong>ggplot2</strong>のグラフ描画関数に連動する<strong>統計変換</strong>（Statistical Transformation）が実行される仕組みになっているためです。棒グラフの場合は度数の計算（<code>count</code>）ですが、ヒストグラムの場合は階級ごとの度数（<code>bin</code>）、箱ひげ図の場合は分位点（<code>boxplot</code>というように、標準での統計処理が定められています。これらは標準設定であり、データの与えられ方によっては変更すべき場合があります。例えば、以下のように、度数がすでに計算されており、個人ごとのデータがないような場合には、統計変換をしない（<code>identity</code>）設定にして、<strong>aes</strong>の<code>x</code>と<code>y</code>にそれぞれ、質的変数と度数を与えることによって棒グラフを描画することができます<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>。</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="ggplot-barplot.html#cb6-1"></a>fwu &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</span>
-<span id="cb6-2"><a href="ggplot-barplot.html#cb6-2"></a>  <span class="dt">dept =</span> <span class="kw">c</span>(<span class="st">&quot;国際教養学科&quot;</span>, <span class="st">&quot;環境科学科&quot;</span>, <span class="st">&quot;食・健康学科&quot;</span>),</span>
-<span id="cb6-3"><a href="ggplot-barplot.html#cb6-3"></a>  <span class="dt">students =</span> <span class="kw">c</span>(<span class="dv">605</span>, <span class="dv">283</span>, <span class="dv">148</span>)</span>
-<span id="cb6-4"><a href="ggplot-barplot.html#cb6-4"></a>)</span>
-<span id="cb6-5"><a href="ggplot-barplot.html#cb6-5"></a>fwu</span></code></pre></div>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="ggplot-barplot.html#cb264-1"></a><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(<span class="dt">x =</span> class)) <span class="op">+</span></span>
+<span id="cb264-2"><a href="ggplot-barplot.html#cb264-2"></a><span class="st">  </span><span class="kw">geom_bar</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-106-1.png" width="672" /></p>
+<p>散布図の場合は、<code>x</code>と<code>y</code>に指定された変数の値がそのままプロットされましたが、棒グラフの場合は、指定した質的変数（<code>class</code>）の度数を集計してからプロットするという流れになっています。これは、<strong>ggplot2</strong>のグラフ描画関数に連動する<strong>統計変換</strong>（Statistical Transformation）が実行される仕組みになっているためです。棒グラフの場合は度数の計算（<code>count</code>）ですが、ヒストグラムの場合は階級ごとの度数（<code>bin</code>）、箱ひげ図の場合は分位点（<code>boxplot</code>というように、標準での統計処理が定められています。これらは標準設定であり、データの与えられ方によっては変更すべき場合があります。例えば、以下のように、度数がすでに計算されており、個人ごとのデータがないような場合には、統計変換をしない（<code>identity</code>）設定にして、<strong>aes</strong>の<code>x</code>と<code>y</code>にそれぞれ、質的変数と度数を与えることによって棒グラフを描画することができます<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>。</p>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="ggplot-barplot.html#cb265-1"></a>fwu &lt;-<span class="st"> </span><span class="kw">data.frame</span>(</span>
+<span id="cb265-2"><a href="ggplot-barplot.html#cb265-2"></a>  <span class="dt">dept =</span> <span class="kw">c</span>(<span class="st">&quot;国際教養学科&quot;</span>, <span class="st">&quot;環境科学科&quot;</span>, <span class="st">&quot;食・健康学科&quot;</span>),</span>
+<span id="cb265-3"><a href="ggplot-barplot.html#cb265-3"></a>  <span class="dt">students =</span> <span class="kw">c</span>(<span class="dv">605</span>, <span class="dv">283</span>, <span class="dv">148</span>)</span>
+<span id="cb265-4"><a href="ggplot-barplot.html#cb265-4"></a>)</span>
+<span id="cb265-5"><a href="ggplot-barplot.html#cb265-5"></a>fwu</span></code></pre></div>
 <pre><code>##           dept students
 ## 1 国際教養学科      605
 ## 2   環境科学科      283
 ## 3 食・健康学科      148</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="ggplot-barplot.html#cb8-1"></a><span class="kw">ggplot</span>(fwu, <span class="kw">aes</span>(dept, students)) <span class="op">+</span></span>
-<span id="cb8-2"><a href="ggplot-barplot.html#cb8-2"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="ggplot-barplot.html#cb267-1"></a><span class="kw">ggplot</span>(fwu, <span class="kw">aes</span>(dept, students)) <span class="op">+</span></span>
+<span id="cb267-2"><a href="ggplot-barplot.html#cb267-2"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-108-1.png" width="672" /></p>
 <p><code>geom_bar()</code>で<code>stat = "identity"</code>とする代わりに、<code>geom_col()</code>を用いて、</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="ggplot-barplot.html#cb9-1"></a><span class="kw">ggplot</span>(fwu, <span class="kw">aes</span>(dept, students)) <span class="op">+</span></span>
-<span id="cb9-2"><a href="ggplot-barplot.html#cb9-2"></a><span class="st">  </span><span class="kw">geom_col</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="ggplot-barplot.html#cb268-1"></a><span class="kw">ggplot</span>(fwu, <span class="kw">aes</span>(dept, students)) <span class="op">+</span></span>
+<span id="cb268-2"><a href="ggplot-barplot.html#cb268-2"></a><span class="st">  </span><span class="kw">geom_col</span>()</span></code></pre></div>
 <p>とすることもできます。例えば、構成比率を棒グラフにしたい場合は、以下のようにするとよいでしょう。</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="ggplot-barplot.html#cb10-1"></a>mpg <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb10-2"><a href="ggplot-barplot.html#cb10-2"></a><span class="st">  </span><span class="kw">group_by</span>(class) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb10-3"><a href="ggplot-barplot.html#cb10-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>(), <span class="dt">.groups =</span> <span class="st">&quot;drop&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb10-4"><a href="ggplot-barplot.html#cb10-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">prop =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb10-5"><a href="ggplot-barplot.html#cb10-5"></a><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></span>
-<span id="cb10-6"><a href="ggplot-barplot.html#cb10-6"></a><span class="st">  </span><span class="kw">geom_col</span>(<span class="kw">aes</span>(class, prop))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="ggplot-barplot.html#cb269-1"></a>mpg <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb269-2"><a href="ggplot-barplot.html#cb269-2"></a><span class="st">  </span><span class="kw">group_by</span>(class) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb269-3"><a href="ggplot-barplot.html#cb269-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>(), <span class="dt">.groups =</span> <span class="st">&quot;drop&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb269-4"><a href="ggplot-barplot.html#cb269-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">prop =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb269-5"><a href="ggplot-barplot.html#cb269-5"></a><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></span>
+<span id="cb269-6"><a href="ggplot-barplot.html#cb269-6"></a><span class="st">  </span><span class="kw">geom_col</span>(<span class="kw">aes</span>(class, prop))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-110-1.png" width="672" /></p>
 <div id="geom_position" class="section level3">
 <h3><span class="header-section-number">6.3.1</span> 帯グラフと集合縦棒グラフ</h3>
 <p><code>geom_bar()</code>関数では、<code>position</code>引数を使うことによって、集合縦棒グラフ（<code>position = "dodge"</code>）や帯グラフ（<code>position = fill</code>）を描画することができます。この場合、<strong>aes</strong>の<code>fill</code>に塗り分けたい（層別したい）質的変数を指定します。例えば集合縦棒グラフの場合は以下のようにします。</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="ggplot-barplot.html#cb11-1"></a><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(class, <span class="dt">fill =</span> drv)) <span class="op">+</span></span>
-<span id="cb11-2"><a href="ggplot-barplot.html#cb11-2"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="ggplot-barplot.html#cb270-1"></a><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(class, <span class="dt">fill =</span> drv)) <span class="op">+</span></span>
+<span id="cb270-2"><a href="ggplot-barplot.html#cb270-2"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-111-1.png" width="672" /></p>
 <p>また、帯グラフの場合は以下のようになります。</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="ggplot-barplot.html#cb12-1"></a><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(class, <span class="dt">fill =</span> drv)) <span class="op">+</span></span>
-<span id="cb12-2"><a href="ggplot-barplot.html#cb12-2"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="ggplot-barplot.html#cb271-1"></a><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(class, <span class="dt">fill =</span> drv)) <span class="op">+</span></span>
+<span id="cb271-2"><a href="ggplot-barplot.html#cb271-2"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-112-1.png" width="672" /></p>
 <p><code>geom_bar()</code>関数における<code>position</code>引数のデフォルト設定は<code>stack</code>であり、<code>position</code>を指定せずに<strong>aes</strong>の<code>fill</code>を指定すると以下のように、積み上げ縦棒グラフが描画されます。</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="ggplot-barplot.html#cb13-1"></a><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(class, <span class="dt">fill =</span> drv)) <span class="op">+</span></span>
-<span id="cb13-2"><a href="ggplot-barplot.html#cb13-2"></a><span class="st">  </span><span class="kw">geom_bar</span>()</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="ggplot-barplot.html#cb272-1"></a><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(class, <span class="dt">fill =</span> drv)) <span class="op">+</span></span>
+<span id="cb272-2"><a href="ggplot-barplot.html#cb272-2"></a><span class="st">  </span><span class="kw">geom_bar</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-113-1.png" width="672" /></p>
 </div>
 <div id="order_factor" class="section level3">
 <h3><span class="header-section-number">6.3.2</span> カテゴリ（因子型の水準）の並べ替え</h3>
 <p><code>geom_bar()</code>関数は、<code>x</code>軸の質的変数を因子型に設定されたカテゴリの順番で描画します。その変数が名義尺度の場合は、頻度の順番で並べ替えた方がいいです。これを簡単に行うには、<strong>forcats</strong>パッケージ（これもtidyverseに含まれています）を使います。例えば、<code>mpg</code>で<code>class</code>の頻度順に因子型の水準の順番を並べ替えるには<code>fct_infreq()</code>関数を以下のように適用します。</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="ggplot-barplot.html#cb14-1"></a><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(<span class="kw">fct_infreq</span>(class))) <span class="op">+</span></span>
-<span id="cb14-2"><a href="ggplot-barplot.html#cb14-2"></a><span class="st">  </span><span class="kw">geom_bar</span>()</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="ggplot-barplot.html#cb273-1"></a><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(<span class="kw">fct_infreq</span>(class))) <span class="op">+</span></span>
+<span id="cb273-2"><a href="ggplot-barplot.html#cb273-2"></a><span class="st">  </span><span class="kw">geom_bar</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-114-1.png" width="672" /></p>
 <p>一方、頻度を集計した後の<code>fwu</code>データでは、因子型の水準を集計された別の変数（ここでは<code>students</code>）の順番で並べ替えるようにします。この場合は、<code>fct_reorder()</code>関数を以下のように適用します。</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="ggplot-barplot.html#cb15-1"></a><span class="kw">ggplot</span>(fwu, <span class="kw">aes</span>(<span class="kw">fct_reorder</span>(dept, <span class="op">-</span>students), students)) <span class="op">+</span></span>
-<span id="cb15-2"><a href="ggplot-barplot.html#cb15-2"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="ggplot-barplot.html#cb274-1"></a><span class="kw">ggplot</span>(fwu, <span class="kw">aes</span>(<span class="kw">fct_reorder</span>(dept, <span class="op">-</span>students), students)) <span class="op">+</span></span>
+<span id="cb274-2"><a href="ggplot-barplot.html#cb274-2"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-115-1.png" width="672" /></p>
 <p><code>-students</code>となっているのは、<code>fct_reorder()</code>関数が昇順で並べ替えるため、<code>students</code>の符号を反転したものを昇順に並べ替えることで、<code>students</code>を降順で並べ替えるようにしているからです。</p>
 </div>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="1">
-<li id="fn1"><p>散布図を描画する<code>geom_point()</code>の標準の統計変換は<code>identity</code>となっています。<a href="ggplot-barplot.html#fnref1" class="footnote-back">↩︎</a></p></li>
+<ol start="5">
+<li id="fn5"><p>散布図を描画する<code>geom_point()</code>の標準の統計変換は<code>identity</code>となっています。<a href="ggplot-barplot.html#fnref5" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -334,6 +345,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

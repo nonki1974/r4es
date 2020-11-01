@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>6.5 折れ線グラフ | Rによるデータ解析入門</title>
-  <meta name="description" content="6.5 折れ線グラフ | Rによるデータ解析入門" />
+  <title>7.2 出力の調整 | Rによるデータ解析入門</title>
+  <meta name="description" content="7.2 出力の調整 | Rによるデータ解析入門" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="6.5 折れ線グラフ | Rによるデータ解析入門" />
+  <meta property="og:title" content="7.2 出力の調整 | Rによるデータ解析入門" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="6.5 折れ線グラフ | Rによるデータ解析入門" />
+  <meta name="twitter:title" content="7.2 出力の調整 | Rによるデータ解析入門" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="ggplot-hist-box.html"/>
-<link rel="next" href="ggplot2-02.html"/>
+<link rel="prev" href="facet.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -225,96 +225,84 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="ggplot_line" class="section level2">
-<h2><span class="header-section-number">6.5</span> 折れ線グラフ</h2>
-<p>折れ線グラフは経過時間に伴って変化する量的変数を示すグラフです。ここでは、3つのパターンについて紹介します。</p>
-<div id="ggplot_line_y1" class="section level3">
-<h3><span class="header-section-number">6.5.1</span> x軸が経過時間、y軸が1つの変数</h3>
-<p>この場合が折れ線グラフの基本となります。折れ線グラフは<code>geom_line()</code>関数で描画します。</p>
-<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="ggplot-line.html#cb277-1"></a>df_time &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">t =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="dt">y =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>))</span>
-<span id="cb277-2"><a href="ggplot-line.html#cb277-2"></a>df_time</span></code></pre></div>
-<pre><code>##     t           y
-## 1   1  0.83377571
-## 2   2  0.21064379
-## 3   3 -0.92455517
-## 4   4  1.45013539
-## 5   5  0.79867469
-## 6   6 -0.73599933
-## 7   7  0.05961702
-## 8   8  0.49233189
-## 9   9  0.57944129
-## 10 10  0.48486124</code></pre>
-<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="ggplot-line.html#cb279-1"></a><span class="kw">ggplot</span>(df_time, <span class="kw">aes</span>(t, y)) <span class="op">+</span></span>
-<span id="cb279-2"><a href="ggplot-line.html#cb279-2"></a><span class="st">  </span><span class="kw">geom_line</span>()</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-118-1.png" width="672" /></p>
-<p><code>flights</code>データの場合に、月ごとの平均遅延時間をプロットするには以下のようにします。</p>
-<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="ggplot-line.html#cb280-1"></a>flights <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb280-2"><a href="ggplot-line.html#cb280-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(arr_delay)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb280-3"><a href="ggplot-line.html#cb280-3"></a><span class="st">  </span><span class="kw">group_by</span>(month) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb280-4"><a href="ggplot-line.html#cb280-4"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">arr_delay =</span> <span class="kw">mean</span>(arr_delay), <span class="dt">.group =</span> <span class="st">&quot;drop&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb280-5"><a href="ggplot-line.html#cb280-5"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(month, arr_delay)) <span class="op">+</span></span>
-<span id="cb280-6"><a href="ggplot-line.html#cb280-6"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
-<span id="cb280-7"><a href="ggplot-line.html#cb280-7"></a><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>)</span></code></pre></div>
-<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-119-1.png" width="672" /></p>
-<p>最終行の<code>scale_x_continuous()</code>は、<code>x</code>軸の目盛りを設定するためのものです。</p>
+<div id="output" class="section level2">
+<h2><span class="header-section-number">7.2</span> 出力の調整</h2>
+<div id="テーマ" class="section level3">
+<h3><span class="header-section-number">7.2.1</span> テーマ</h3>
+<p>プロットを出力する<strong>ggplot2</strong>の一連のコマンドに<code>theme_**()</code>を加えることで、プロットの外観についてのテーマを変更することができます。</p>
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="output.html#cb290-1"></a><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(drv)) <span class="op">+</span></span>
+<span id="cb290-2"><a href="output.html#cb290-2"></a><span class="st">  </span><span class="kw">geom_bar</span>() <span class="op">+</span></span>
+<span id="cb290-3"><a href="output.html#cb290-3"></a><span class="st">  </span><span class="kw">theme_bw</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-127-1.png" width="672" /></p>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="output.html#cb291-1"></a><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(drv)) <span class="op">+</span></span>
+<span id="cb291-2"><a href="output.html#cb291-2"></a><span class="st">  </span><span class="kw">geom_bar</span>() <span class="op">+</span></span>
+<span id="cb291-3"><a href="output.html#cb291-3"></a><span class="st">  </span><span class="kw">theme_minimal</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-128-1.png" width="672" /></p>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="output.html#cb292-1"></a><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(drv)) <span class="op">+</span></span>
+<span id="cb292-2"><a href="output.html#cb292-2"></a><span class="st">  </span><span class="kw">geom_bar</span>() <span class="op">+</span></span>
+<span id="cb292-3"><a href="output.html#cb292-3"></a><span class="st">  </span><span class="kw">theme_dark</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-129-1.png" width="672" /></p>
 </div>
-<div id="ggplot_line_y2" class="section level3">
-<h3><span class="header-section-number">6.5.2</span> x軸が経過時間、y軸が2つ以上の変数</h3>
-<p>2つ以上の量的変数の時間推移を見たい場合は、<code>geom_line()</code>の<strong>aes</strong>において<code>group</code>を指定します。</p>
-<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="ggplot-line.html#cb282-1"></a>df_time &lt;-<span class="st"> </span>df_time <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb282-2"><a href="ggplot-line.html#cb282-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">z =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>))</span>
-<span id="cb282-3"><a href="ggplot-line.html#cb282-3"></a>df_time</span></code></pre></div>
-<pre><code>##     t           y           z
-## 1   1  0.83377571 -2.54788106
-## 2   2  0.21064379 -0.30502495
-## 3   3 -0.92455517 -0.70852207
-## 4   4  1.45013539  1.29800240
-## 5   5  0.79867469 -1.13392771
-## 6   6 -0.73599933  1.29484289
-## 7   7  0.05961702  0.02467013
-## 8   8  0.49233189  0.06366231
-## 9   9  0.57944129  0.18315157
-## 10 10  0.48486124 -1.63279505</code></pre>
-<p>変数が異なる列に格納されている（横長データ）の場合、一旦縦長に変形して、列名となっていた変数を<code>group</code>に指定します。</p>
-<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="ggplot-line.html#cb284-1"></a>df_time <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb284-2"><a href="ggplot-line.html#cb284-2"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="op">-</span>t, <span class="dt">names_to =</span> <span class="st">&quot;var&quot;</span>, <span class="dt">values_to =</span><span class="st">&quot;value&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb284-3"><a href="ggplot-line.html#cb284-3"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(t, value, <span class="dt">group =</span> var, <span class="dt">color =</span> var)) <span class="op">+</span></span>
-<span id="cb284-4"><a href="ggplot-line.html#cb284-4"></a><span class="st">  </span><span class="kw">geom_line</span>()</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-121-1.png" width="672" /></p>
+<div id="軸ラベルタイトルなど" class="section level3">
+<h3><span class="header-section-number">7.2.2</span> 軸ラベル、タイトルなど</h3>
+<p>軸ラベルは<code>xlab()</code>と<code>ylab()</code>関数で設定することができます。また、タイトルやサブタイトル、キャプションはそれぞれ、<code>labs()</code>関数の<code>title</code>引数、<code>subtitle</code>引数、<code>caption</code>引数で設定することができます。キャプションには、データの出典などを記述するとよいでしょう。</p>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="output.html#cb293-1"></a><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(drv)) <span class="op">+</span></span>
+<span id="cb293-2"><a href="output.html#cb293-2"></a><span class="st">  </span><span class="kw">geom_bar</span>() <span class="op">+</span></span>
+<span id="cb293-3"><a href="output.html#cb293-3"></a><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></span>
+<span id="cb293-4"><a href="output.html#cb293-4"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;drive train&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;度数&quot;</span>) <span class="op">+</span></span>
+<span id="cb293-5"><a href="output.html#cb293-5"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;駆動装置の種別ごとの新車数の集計&quot;</span>,</span>
+<span id="cb293-6"><a href="output.html#cb293-6"></a>       <span class="dt">subtitle =</span> <span class="st">&quot;1999年と2008年にアメリカで発売された新車データより&quot;</span>,</span>
+<span id="cb293-7"><a href="output.html#cb293-7"></a>       <span class="dt">caption =</span> <span class="st">&quot;データ出典：http://fueleconomy.gov/&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-130-1.png" width="672" /></p>
 </div>
-<div id="ggplot_line_xdate" class="section level3">
-<h3><span class="header-section-number">6.5.3</span> x軸が日付、y軸が2つ以上の変数</h3>
-<p>以上の例は、x軸は単なる数値でしたが、時間変化のデータの場合、日付であることも多いです。例として以下のようなデータを考えます。</p>
-<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="ggplot-line.html#cb285-1"></a>fuk_temp &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;./data/fukuoka_temp.csv&quot;</span>, <span class="dt">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
-<span id="cb285-2"><a href="ggplot-line.html#cb285-2"></a><span class="kw">head</span>(fuk_temp)</span></code></pre></div>
-<pre><code>##       年月 平均気温 日最高気温の平均 日最低気温の平均
-## 1 2010/1/1      6.6             10.3              3.3
-## 2 2010/2/1      9.4             13.1              6.0
-## 3 2010/3/1     10.9             14.3              7.6
-## 4 2010/4/1     13.8             18.1             10.3
-## 5 2010/5/1     19.2             23.6             15.6
-## 6 2010/6/1     23.5             27.6             20.7</code></pre>
-<p><code>年月</code>列に文字列として<code>2010/1/1</code>のような形式で日付の情報が格納されています。このままだと、文字列なので正常に折れ線グラフが描画されません。文字列を日付としてのデータ型に変換する場合は、<strong>lubridate</strong>パッケージの<code>as_date()</code>関数を用います。<strong>lubridate</strong>パッケージもtidyverseに含まれていますが、ロードは同時にされませんので、パッケージの関数を利用することを明示しておきます。</p>
-<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="ggplot-line.html#cb287-1"></a>fuk_temp <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb287-2"><a href="ggplot-line.html#cb287-2"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="op">-</span>年月, <span class="dt">names_to =</span> <span class="st">&quot;type&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;temp&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb287-3"><a href="ggplot-line.html#cb287-3"></a><span class="st">  </span><span class="kw">mutate</span>(年月 =<span class="st"> </span>lubridate<span class="op">::</span><span class="kw">as_date</span>(年月)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb287-4"><a href="ggplot-line.html#cb287-4"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(年月, temp, <span class="dt">group =</span> type, <span class="dt">color =</span> type)) <span class="op">+</span></span>
-<span id="cb287-5"><a href="ggplot-line.html#cb287-5"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
-<span id="cb287-6"><a href="ggplot-line.html#cb287-6"></a><span class="st">  </span><span class="kw">scale_x_date</span>(<span class="dt">labels =</span> scales<span class="op">::</span><span class="kw">date_format</span>(<span class="st">&quot;%Y/%m&quot;</span>)) <span class="op">+</span></span>
-<span id="cb287-7"><a href="ggplot-line.html#cb287-7"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;福岡市の気温&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-123-1.png" width="672" /></p>
+<div id="フォントサイズの調整" class="section level3">
+<h3><span class="header-section-number">7.2.3</span> フォントサイズの調整</h3>
+<p>出力したプロットをプレゼンテーションのスライドなどで利用したい場合には、そのままではフォントサイズが小さいことが多いです。全体のフォントサイズを大きくするには、<code>theme_***()</code>の中で、<code>base_size</code>引数を指定します。標準のテーマを用いる場合は、<code>theme_grey()</code>を利用してください。</p>
+<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="output.html#cb294-1"></a><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(drv)) <span class="op">+</span></span>
+<span id="cb294-2"><a href="output.html#cb294-2"></a><span class="st">  </span><span class="kw">geom_bar</span>() <span class="op">+</span></span>
+<span id="cb294-3"><a href="output.html#cb294-3"></a><span class="st">  </span><span class="kw">theme_minimal</span>(<span class="dt">base_size =</span> <span class="dv">16</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-131-1.png" width="672" /></p>
+</div>
+<div id="advancedパワポにグラフをいい感じで貼り付ける" class="section level3">
+<h3><span class="header-section-number">7.2.4</span> 【Advanced】パワポにグラフをいい感じで貼り付ける</h3>
+<p>パワーポイントのスライドにグラフを貼り付ける場合、基本的には画像としての貼り付けになりますので、貼り付けた後にパワーポイント上でフォントを変更したり、それ以外の見栄えを調整したりすることはできません。<strong>export</strong>パッケージを利用すると、パワーポイントで編集可能な形式でグラフを出力することができます。ただし、<strong>export</strong>パッケージは、Rの公式のパッケージサイトには登録されておらず、github<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>で公開されているため、パッケージインストールの手順がこれまでのものと異なります。まず、パッケージを管理するための<strong>pacman</strong>パッケージを以下の通りインストールします。</p>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="output.html#cb295-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;pacman&quot;</span>)</span></code></pre></div>
+<p>その後、以下のコマンドで<strong>export</strong>パッケージをインストールします。</p>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="output.html#cb296-1"></a>pacman<span class="op">::</span><span class="kw">p_load_gh</span>(<span class="st">&quot;tomwenseleers/export&quot;</span>)</span></code></pre></div>
+<p>このコマンドでパッケージのインストールと読み込み（<code>library()</code>と同様の処理）が同時に行われますが、次回以降は</p>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="output.html#cb297-1"></a><span class="kw">library</span>(export)</span></code></pre></div>
+<p>で実行してください。</p>
+<p><strong>export</strong>パッケージを使って、Rで表示させたプロットをパワーポイント形式のファイルで出力するには以下のようにします。</p>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="output.html#cb298-1"></a>export<span class="op">::</span><span class="kw">graph2ppt</span>()</span></code></pre></div>
+<p>これを実行すると、作業フォルダに<code>Rplot.pptx</code>の名前のファイルが作成されて、スライドにグラフが出力されます。既存のファイルにグラフを追加する場合は、<code>append = TRUE</code>を引数に指定します。また、ファイル名を指定したい場合は、<code>file = "ファイル名.pptx</code>とします。</p>
 
 </div>
 </div>
 <!-- </div> -->
+
+
+
+
+
+
+
+
+
+
+
+<div class="footnotes">
+<hr />
+<ol start="6">
+<li id="fn6"><p>オープンソースで開発されているソフトウェアのソースコードが公開されているサイト<a href="output.html#fnref6" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="ggplot-hist-box.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="ggplot2-02.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="facet.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

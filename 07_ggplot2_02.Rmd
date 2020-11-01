@@ -1,0 +1,102 @@
+# ggplot2によるデータの可視化（2） {#ggplot2_02}
+
+```{r echo=FALSE}
+pacman::p_load(tidyverse, nycflights13)
+```
+
+## 層別 {#facet}
+
+**ggplot2**における特徴的な機能として層別（facetting^[直訳すると「小平面」などとなりますが、ここではデータ解析の目的に合わせて層別と呼ぶことにします）があります。これは、ある質的変数によってプロットを分割するものです。層別は、`facet_grid()`関数および`facet_wrap()`関数によって実現できます。1つの質的変数で層別する場合には、`facet_wrap()`関数を用います。以下の例は、`class`ごとに`displ`と`hwy`の散布図を2行のレイアウト（`nrow = 2`）に収まるように配置するものです。
+
+```{r}
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point() +
+  facet_wrap(~ class, nrow = 2)
+```
+
+2つの質的変数で層別したい場合には、`facet_grid()`関数を用います。以下の例は、`drv`と`cyl`の値の組み合わせごとに、`displ`と`hwy`の散布図を並べるものです。
+
+```{r}
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point() +
+  facet_grid(drv ~ cyl)
+```
+
+## 出力の調整 {#output}
+
+### テーマ
+
+プロットを出力する**ggplot2**の一連のコマンドに`theme_**()`を加えることで、プロットの外観についてのテーマを変更することができます。
+
+```{r}
+ggplot(mpg, aes(drv)) +
+  geom_bar() +
+  theme_bw()
+```
+
+```{r}
+ggplot(mpg, aes(drv)) +
+  geom_bar() +
+  theme_minimal()
+```
+
+```{r}
+ggplot(mpg, aes(drv)) +
+  geom_bar() +
+  theme_dark()
+```
+
+### 軸ラベル、タイトルなど
+
+軸ラベルは`xlab()`と`ylab()`関数で設定することができます。また、タイトルやサブタイトル、キャプションはそれぞれ、`labs()`関数の`title`引数、`subtitle`引数、`caption`引数で設定することができます。キャプションには、データの出典などを記述するとよいでしょう。
+
+```{r}
+ggplot(mpg, aes(drv)) +
+  geom_bar() +
+  theme_minimal() +
+  xlab("drive train") + ylab("度数") +
+  labs(title = "駆動装置の種別ごとの新車数の集計",
+       subtitle = "1999年と2008年にアメリカで発売された新車データより",
+       caption = "データ出典：http://fueleconomy.gov/")
+```
+
+### フォントサイズの調整
+
+出力したプロットをプレゼンテーションのスライドなどで利用したい場合には、そのままではフォントサイズが小さいことが多いです。全体のフォントサイズを大きくするには、`theme_***()`の中で、`base_size`引数を指定します。標準のテーマを用いる場合は、`theme_grey()`を利用してください。
+
+```{r}
+ggplot(mpg, aes(drv)) +
+  geom_bar() +
+  theme_minimal(base_size = 16)
+```
+
+### 【Advanced】パワポにグラフをいい感じで貼り付ける
+
+パワーポイントのスライドにグラフを貼り付ける場合、基本的には画像としての貼り付けになりますので、貼り付けた後にパワーポイント上でフォントを変更したり、それ以外の見栄えを調整したりすることはできません。**export**パッケージを利用すると、パワーポイントで編集可能な形式でグラフを出力することができます。ただし、**export**パッケージは、Rの公式のパッケージサイトには登録されておらず、github^[オープンソースで開発されているソフトウェアのソースコードが公開されているサイト]で公開されているため、パッケージインストールの手順がこれまでのものと異なります。まず、パッケージを管理するための**pacman**パッケージを以下の通りインストールします。
+
+```{r eval=FALSE}
+install.packages("pacman")
+```
+
+その後、以下のコマンドで**export**パッケージをインストールします。
+
+```{r eval=FALSE}
+pacman::p_load_gh("tomwenseleers/export")
+```
+
+このコマンドでパッケージのインストールと読み込み（`library()`と同様の処理）が同時に行われますが、次回以降は
+
+```{r eval=FALSE}
+library(export)
+```
+
+で実行してください。
+
+**export**パッケージを使って、Rで表示させたプロットをパワーポイント形式のファイルで出力するには以下のようにします。
+
+```{r eval=FALSE}
+export::graph2ppt()
+```
+
+これを実行すると、作業フォルダに`Rplot.pptx`の名前のファイルが作成されて、スライドにグラフが出力されます。既存のファイルにグラフを追加する場合は、`append = TRUE`を引数に指定します。また、ファイル名を指定したい場合は、`file = "ファイル名.pptx`とします。
+

@@ -50,6 +50,8 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -183,7 +185,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="unite-and-separate.html"><a href="unite-and-separate.html"><i class="fa fa-check"></i><b>5.3</b> 列の分割と結合</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="ggplot2によるデータの可視化1.html"><a href="ggplot2によるデータの可視化1.html"><i class="fa fa-check"></i><b>6</b> ggplot2によるデータの可視化（1）</a><ul>
+<li class="chapter" data-level="6" data-path="ggplot2-01.html"><a href="ggplot2-01.html"><i class="fa fa-check"></i><b>6</b> ggplot2によるデータの可視化（1）</a><ul>
 <li class="chapter" data-level="6.1" data-path="about-ggplot2.html"><a href="about-ggplot2.html"><i class="fa fa-check"></i><b>6.1</b> ggplot2パッケージについて</a></li>
 <li class="chapter" data-level="6.2" data-path="basics-ggplot2.html"><a href="basics-ggplot2.html"><i class="fa fa-check"></i><b>6.2</b> ggplot2における可視化の基本</a></li>
 <li class="chapter" data-level="6.3" data-path="ggplot-barplot.html"><a href="ggplot-barplot.html"><i class="fa fa-check"></i><b>6.3</b> 棒グラフ</a><ul>
@@ -195,6 +197,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.5.1" data-path="ggplot-line.html"><a href="ggplot-line.html#ggplot_line_y1"><i class="fa fa-check"></i><b>6.5.1</b> x軸が経過時間、y軸が1つの変数</a></li>
 <li class="chapter" data-level="6.5.2" data-path="ggplot-line.html"><a href="ggplot-line.html#ggplot_line_y2"><i class="fa fa-check"></i><b>6.5.2</b> x軸が経過時間、y軸が2つ以上の変数</a></li>
 <li class="chapter" data-level="6.5.3" data-path="ggplot-line.html"><a href="ggplot-line.html#ggplot_line_xdate"><i class="fa fa-check"></i><b>6.5.3</b> x軸が日付、y軸が2つ以上の変数</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="ggplot2-02.html"><a href="ggplot2-02.html"><i class="fa fa-check"></i><b>7</b> ggplot2によるデータの可視化（2）</a><ul>
+<li class="chapter" data-level="7.1" data-path="facet.html"><a href="facet.html"><i class="fa fa-check"></i><b>7.1</b> 層別</a></li>
+<li class="chapter" data-level="7.2" data-path="output.html"><a href="output.html"><i class="fa fa-check"></i><b>7.2</b> 出力の調整</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="output.html"><a href="output.html#テーマ"><i class="fa fa-check"></i><b>7.2.1</b> テーマ</a></li>
+<li class="chapter" data-level="7.2.2" data-path="output.html"><a href="output.html#軸ラベルタイトルなど"><i class="fa fa-check"></i><b>7.2.2</b> 軸ラベル、タイトルなど</a></li>
+<li class="chapter" data-level="7.2.3" data-path="output.html"><a href="output.html#フォントサイズの調整"><i class="fa fa-check"></i><b>7.2.3</b> フォントサイズの調整</a></li>
+<li class="chapter" data-level="7.2.4" data-path="output.html"><a href="output.html#advancedパワポにグラフをいい感じで貼り付ける"><i class="fa fa-check"></i><b>7.2.4</b> 【Advanced】パワポにグラフをいい感じで貼り付ける</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -217,9 +228,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="basics_ggplot2" class="section level2">
 <h2><span class="header-section-number">6.2</span> ggplot2における可視化の基本</h2>
 <p>Rの標準機能で提供される<code>plot()</code>関数では、引数に描画したいデータが含まれるベクトルを指定します。一方、<strong>ggplot2</strong>においては、描画したいデータが含まれるデータフレームを指定するのが基本です。その上で、描画したいグラフの種類（<strong>geoms</strong>）と、グラフの描画要素（<strong>aesthetics</strong>）にデータフレーム内のどの変数を割り当てるかを記述します。ここでは、<strong>ggplot2</strong>に含まれる<code>mpg</code>データを用いて説明します。<code>mpg</code>データには1999年から2008年の間に毎年新しい車種を発売している主要な38のモデルについて、1999年と2008年の燃費などの値が記録されています。以下のコマンドにより、一般の道路における燃費<code>cty</code>と高速道路における燃費<code>hwy</code>（単位はいずれもmiles per gallon）の散布図を描画できます。</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="basics-ggplot2.html#cb1-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> cty, <span class="dt">y =</span> hwy)) <span class="op">+</span></span>
-<span id="cb1-2"><a href="basics-ggplot2.html#cb1-2"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="basics-ggplot2.html#cb260-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> mpg, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> cty, <span class="dt">y =</span> hwy)) <span class="op">+</span></span>
+<span id="cb260-2"><a href="basics-ggplot2.html#cb260-2"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-102-1.png" width="672" /></p>
 <p>まず、<code>ggplot()</code>関数の<code>data</code>引数にデータフレームを指定し、<code>mapping</code>引数に、<code>aes()</code>関数を用いて、<strong>aesthetics</strong>への対応を記述します。ただ、これだけでは、グラフは描画されません。<code>ggplot()</code>関数は、グラフの基本情報を設定するための関数と考えればよいでしょう。この情報に<strong>geoms</strong>の情報を<code>+</code>演算子によって加えることで、実際にグラフが描画されます。<strong>ggplot2</strong>では、このように、グラフに対して新たな情報や機能を付加する場合、具体的には</p>
 <ul>
 <li>レイヤー（プロットやラベルや見出し）を追加</li>
@@ -228,15 +239,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>層別プロット（facet）の作成</li>
 </ul>
 <p>をしたい場合に、<code>+</code>演算子でコマンドを接続するというスタイルをとっています。<code>geom_point()</code>関数は、<code>aes</code>で指定した<code>x</code>と<code>y</code>の各要素の組を平面上の点としてプロットするという命令です（つまり散布図を描画）。上のコマンドは、引数名を省略して記述すると以下のようになります。</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="basics-ggplot2.html#cb2-1"></a><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(cty, hwy)) <span class="op">+</span></span>
-<span id="cb2-2"><a href="basics-ggplot2.html#cb2-2"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="basics-ggplot2.html#cb261-1"></a><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(cty, hwy)) <span class="op">+</span></span>
+<span id="cb261-2"><a href="basics-ggplot2.html#cb261-2"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
 <p><code>aes()</code>関数の第1、第2引数はそれぞれ<code>x</code>と<code>y</code>との対応となっていますが、それ以降の引数に、描画要素の大きさ（<code>size</code>）や色（<code>color</code>）などへの対応を記述することができます。また、<strong>aesthetics</strong>は<strong>geoms</strong>の方で記述することもできます。以下のようにすれば、<code>class</code>ごとに色分けされた散布図が描画されます。</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="basics-ggplot2.html#cb3-1"></a>p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(cty, hwy))</span>
-<span id="cb3-2"><a href="basics-ggplot2.html#cb3-2"></a>p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> class))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="basics-ggplot2.html#cb262-1"></a>p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(cty, hwy))</span>
+<span id="cb262-2"><a href="basics-ggplot2.html#cb262-2"></a>p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> class))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-104-1.png" width="672" /></p>
 <p>また、<code>size = displ</code>とすれば、排気量（<code>displ</code>）の値に応じた大きさで散布図の点がプロットされます。</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="basics-ggplot2.html#cb4-1"></a>p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">size =</span> displ))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="basics-ggplot2.html#cb263-1"></a>p <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">size =</span> displ))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-105-1.png" width="672" /></p>
 <p><code>geom_point()</code>関数はグラフィックスとして点を追加するための関数ですが、これ以外にも</p>
 <ul>
 <li><code>geom_bar()</code>：棒グラフ</li>
@@ -302,6 +313,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

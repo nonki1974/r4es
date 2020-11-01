@@ -1,9 +1,8 @@
-# ggplot2によるデータの可視化（1）
+# ggplot2によるデータの可視化（1） {#ggplot2_01}
 
 ```{r echo=FALSE}
 pacman::p_load(tidyverse, nycflights13)
 ```
-
 
 ## ggplot2パッケージについて {#about_ggplot2}
 
