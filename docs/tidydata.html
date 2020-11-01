@@ -235,12 +235,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>データはさまざまな形で提供されますが、tidydataの形式に変換することで、分析や可視化がスムーズに行えるようになります。<strong>tidyverse</strong>に含まれるパッケージ群は、tidydataを前提とした関数を提供しています。その中でも、tidyでないデータをtidydataに変換する関数を提供するパッケージが<strong>tidyr</strong>パッケージです。</p>
 <p>例えば、以下のようなデータはtidydataです。</p>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="tidydata.html#cb234-1"></a>table1 &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
-<span id="cb234-2"><a href="tidydata.html#cb234-2"></a>  <span class="dt">country =</span> <span class="kw">c</span>(<span class="st">&quot;Afghanistan&quot;</span>, <span class="st">&quot;Afghanistan&quot;</span>, <span class="st">&quot;Brazil&quot;</span>, <span class="st">&quot;Brazil&quot;</span>, <span class="st">&quot;China&quot;</span>, <span class="st">&quot;China&quot;</span>),</span>
-<span id="cb234-3"><a href="tidydata.html#cb234-3"></a>  <span class="dt">year =</span> <span class="kw">rep</span>(<span class="kw">c</span>(1999L, 2000L), <span class="dv">3</span>),</span>
-<span id="cb234-4"><a href="tidydata.html#cb234-4"></a>  <span class="dt">cases =</span> <span class="kw">c</span>(745L, 2666L, 37737L, 80488L, 212258L, 213766L),</span>
-<span id="cb234-5"><a href="tidydata.html#cb234-5"></a>  <span class="dt">population =</span> <span class="kw">c</span>(19987071L, 20595360L, 172006362L, 174504898L, 1272915272L, 1280428583L)</span>
-<span id="cb234-6"><a href="tidydata.html#cb234-6"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="tidydata.html#cb1-1"></a>table1 &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
+<span id="cb1-2"><a href="tidydata.html#cb1-2"></a>  <span class="dt">country =</span> <span class="kw">c</span>(<span class="st">&quot;Afghanistan&quot;</span>, <span class="st">&quot;Afghanistan&quot;</span>, <span class="st">&quot;Brazil&quot;</span>, <span class="st">&quot;Brazil&quot;</span>, <span class="st">&quot;China&quot;</span>, <span class="st">&quot;China&quot;</span>),</span>
+<span id="cb1-3"><a href="tidydata.html#cb1-3"></a>  <span class="dt">year =</span> <span class="kw">rep</span>(<span class="kw">c</span>(1999L, 2000L), <span class="dv">3</span>),</span>
+<span id="cb1-4"><a href="tidydata.html#cb1-4"></a>  <span class="dt">cases =</span> <span class="kw">c</span>(745L, 2666L, 37737L, 80488L, 212258L, 213766L),</span>
+<span id="cb1-5"><a href="tidydata.html#cb1-5"></a>  <span class="dt">population =</span> <span class="kw">c</span>(19987071L, 20595360L, 172006362L, 174504898L, 1272915272L, 1280428583L)</span>
+<span id="cb1-6"><a href="tidydata.html#cb1-6"></a>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -290,9 +290,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>以下のデータは、<code>cases</code>と<code>population</code>の値が<code>count</code>に混在しており、それぞれが専用の列をもたない形になっているため、tidydataではありません。</p>
-<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="tidydata.html#cb235-1"></a>table2 &lt;-<span class="st"> </span>table1 <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb235-2"><a href="tidydata.html#cb235-2"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="kw">c</span>(cases, population), <span class="dt">names_to =</span> <span class="st">&quot;key&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb235-3"><a href="tidydata.html#cb235-3"></a><span class="st">  </span><span class="kw">arrange</span>(country, year)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="tidydata.html#cb2-1"></a>table2 &lt;-<span class="st"> </span>table1 <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb2-2"><a href="tidydata.html#cb2-2"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="kw">c</span>(cases, population), <span class="dt">names_to =</span> <span class="st">&quot;key&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb2-3"><a href="tidydata.html#cb2-3"></a><span class="st">  </span><span class="kw">arrange</span>(country, year)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -378,8 +378,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>以下のデータは、<code>rate</code>の列におけるそれぞれのセルに複数の値が含まれているため、tidydataではありません。</p>
-<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="tidydata.html#cb236-1"></a>table3 &lt;-<span class="st"> </span>table1 <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb236-2"><a href="tidydata.html#cb236-2"></a><span class="st">  </span><span class="kw">unite</span>(rate, cases, population, <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="tidydata.html#cb3-1"></a>table3 &lt;-<span class="st"> </span>table1 <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb3-2"><a href="tidydata.html#cb3-2"></a><span class="st">  </span><span class="kw">unite</span>(rate, cases, population, <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -422,9 +422,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>以下のデータは、2つのテーブルにデータがまたがっているため、tidydataではありません。</p>
-<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="tidydata.html#cb237-1"></a>table4a &lt;-<span class="st"> </span>table1 <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb237-2"><a href="tidydata.html#cb237-2"></a><span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>population) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb237-3"><a href="tidydata.html#cb237-3"></a><span class="st">    </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> year, <span class="dt">values_from =</span> cases)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="tidydata.html#cb4-1"></a>table4a &lt;-<span class="st"> </span>table1 <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb4-2"><a href="tidydata.html#cb4-2"></a><span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>population) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb4-3"><a href="tidydata.html#cb4-3"></a><span class="st">    </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> year, <span class="dt">values_from =</span> cases)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -451,9 +451,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="tidydata.html#cb238-1"></a>table4b &lt;-<span class="st"> </span>table1 <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb238-2"><a href="tidydata.html#cb238-2"></a><span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>cases) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb238-3"><a href="tidydata.html#cb238-3"></a><span class="st">    </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> year, <span class="dt">values_from =</span> population)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="tidydata.html#cb5-1"></a>table4b &lt;-<span class="st"> </span>table1 <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb5-2"><a href="tidydata.html#cb5-2"></a><span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>cases) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb5-3"><a href="tidydata.html#cb5-3"></a><span class="st">    </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> year, <span class="dt">values_from =</span> population)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -537,20 +537,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>
