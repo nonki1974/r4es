@@ -1,0 +1,296 @@
+# Webからのデータ取得（1）「e-Stat API」 {#api01}
+
+```{r echo=FALSE}
+pacman::p_load(tidyverse, estatapi)
+```
+
+オープンデータとは以下の性質を持つデータ、あるいはその普及を目指す考え方のことを言います。
+
+- インターネット経由でダウンロードできる
+- 再利用と再配布ができる
+- 誰でも利用できる
+- 使いやすく、変更可能な形式である
+
+近年、この考え方に基づいて、様々なデータがインターネット上に公開されるようになりました。一方で、「使いやすく、変更可能な形式」という点においては、十分でないものも多いです。例えば、印刷されたデータをスキャンしたPDFファイルであれば、そのデータを利用したい場合には、利用者がエクセルなどに入力する必要があります。それがWordやExcelから変換されたものであったとしても、データ部分を抽出するには手間がかかってしまいます。一方、政府の統計データを公開している[e-Stat](https://www.e-stat.go.jp/)においては、多くのエクセルファイルなどをダウンロードできるようになっていますが、印刷することを意識したレイアウトになっているものが多く、Rのデータフレームとして取り込むためには、無駄な部分を取り除いたり、列名を調整したりするなどの処理を手動で行う必要があります。
+
+このような問題を解決できるのが**Application Programing Inteface（API）**と呼ばれる仕組みです。APIを利用すると、あるプログラムやソフトウェア（ここでは、e-Statのデータを取得するためのプログラム）を外部のプログラム（ここではR）から呼び出して利用することができます。特に、利用したいプログラムやソフトウェアをインターネット経由で利用できるようになっている場合、そのAPIをWeb APIと呼ぶこともあります。APIを使うことで、例えば
+
+- 独自のTwitterアプリを開発
+- 独自のLINEのchatbotを開発
+- TwitterデータをRで直接取得
+- e-StatのデータをRで直接取得
+
+などのことができるようになります。
+
+## e-Stat API {#estatapi}
+
+ここでは、e-StatのAPI機能を使って、Rから直接e-Statのデータを取得する手順について紹介します。e-Stat APIでは、一部のデータを除き、e-Statで公開されている主要なデータを利用することができます。e-Stat APIで利用できるデータの一覧は以下のURLから確認できますので、データを探す際はこちらを参照するとよいでしょう。
+
+- https://www.e-stat.go.jp/stat-search/database
+
+e-StatのAPI機能を使うには、予めユーザー登録をしてアプリケーションIDを取得しておく必要があります。
+
+- [e-Stat API機能](https://www.e-stat.go.jp/api/)
+
+Rからe-Stat APIを使う際には、**estatapi**パッケージを利用します。初めて利用する場合は、インストールしておきます。
+
+```{r eval=FALSE}
+install.packages("estatapi")
+```
+
+**estatapi**を利用するセッションでは、最初に
+
+```{r eval=FALSE}
+library(estatapi)
+```
+
+を実行しておきます。また、取得したアプリケーションIDは、**estatapi**パッケージの関数を呼び出すごとに用いますので、以下のように変数に入れておくとよいでしょう。
+
+```{r eval=FALSE}
+appId <- "取得したアプリケーションID"
+```
+
+```{r include=FALSE}
+appId <- "403a1afad61c9591602d2965d6893c172ee14b3b"
+```
+
+### 統計表の検索
+
+e-Stat APIで利用可能な統計表を検索する場合はウェブサイトからの方が便利ですが、**estatapi**の関数でも`estat_getStatsList()`関数で検索できます。
+
+```{r}
+search_result <- estat_getStatsList(appId, "チョコレート")
+```
+
+```{r echo=FALSE}
+DT::datatable(select(search_result, -TITLE, -TABLE_NAME),
+              options = list(scrollX = TRUE,
+                             pageLength = 3))
+```
+
+### メタ情報の取得
+
+指定した統計データに関する情報（データ本体ではなく、列名や変数のカテゴリに関する情報など）を取得するには、`estat_getMetaInfo()`関数を用います。ここでは、家計調査における品目分類ごとの支出額についてのデータを見てみましょう。データのIDは、前の表から、`0003103532`となっています。
+
+```{r}
+metainfo_result <- estat_getMetaInfo(appId, "0003103532")
+```
+
+結果はリストで帰ってきますので、要素の一覧を確認します。
+
+```{r}
+names(metainfo_result)
+```
+
+リストの要素ごとに中身を確認します。
+
+```{r}
+metainfo_result$cat01
+metainfo_result$cat02
+metainfo_result$tab
+metainfo_result$area
+metainfo_result$time
+```
+
+分類品目において、「チョコレート」を含む分類を確認します。
+
+```{r}
+metainfo_result$cat01 %>% 
+  filter(str_detect(`@name`, "チョコレート"))
+```
+
+### 統計データの取得
+
+ここでは、チョコレート（`010800130`）の月別支出金額を見てみましょう。`cdArea = "00000"`は「全国」、`cdCat01 = "02"`は「2人以上の世帯」を指定しています。
+
+```{r}
+choco <- estat_getStatsData(appId, "0003103532", cdArea = "00000",
+                            cdCat01 = "010800130", cdCat02 = "03")
+```
+
+```{r echo=FALSE}
+DT::datatable(choco, extensions = 'FixedColumns',
+              options = list(scrollX = TRUE, pageLength = 5))
+```
+
+このデータを使って、月別支出金額の折れ線グラフを作成してみます。
+
+```{r}
+choco %>% 
+  mutate(time = paste0(`時間軸（月次）`, "1日")) %>% 
+  mutate(time = lubridate::ymd(time)) %>% 
+  ggplot(aes(time, value, group = 1)) +
+  geom_line() +
+  theme_minimal()
+```
+
+年毎の折れ線グラフを重ねて描画するには以下のようにします。
+
+```{r}
+choco %>% 
+  mutate(time = paste0(`時間軸（月次）`, "1日")) %>% 
+  mutate(time = lubridate::ymd(time)) %>%
+  mutate(year = lubridate::year(time)) %>% 
+  mutate(month = lubridate::month(time)) %>% 
+  ggplot(aes(month, value, group = year, color = factor(year))) +
+  geom_line() +
+  theme_minimal() +
+  scale_x_continuous(breaks = 1:12)
+```
+
+## 【例1】少子高齢化の可視化 {#aging_population}
+
+e-Statのデータを用いて、少子高齢化の推移を可視化してみます。キーワード「人口」で検索して、「社会・人口統計体系」→「都道府県データ」→「年度次」
+と辿り「Ａ　人口・世帯」の「API」をクリックするとデータのIDが`0000010101`であることが分かります。
+
+メタデータを取得してデータの概要を確認します。
+
+```{r}
+metainfo_result <- estat_getMetaInfo(appId, "0000010101")   
+names(metainfo_result)
+head(metainfo_result$cat01)
+```
+
+```{r}
+metainfo_result$cat01 %>% 
+  filter(`@code` >= "A1301", `@code` <= "A1303")
+metainfo_result$area
+```
+
+以上の情報から、以下のようにデータを取得します。`cdCat01From = "A1301"`と`cdCat01To = "A1303"`によって、「15歳未満」から「65歳以上」の集計カテゴリを取得するようにしています。`cdArea = "00000"`は「全国」を指定しています。
+
+```{r}
+population <- estat_getStatsData(
+  appId, "0000010101", cdCat01From = "A1301",
+  cdCat01To = "A1303", cdArea = "00000"
+)
+```
+
+このデータから、積み上げ縦棒グラフを作成します。
+
+```{r}
+population %>% 
+  filter(str_length(cat01_code) == 5) %>% 
+  ggplot(aes(調査年, value, fill = `Ａ　人口・世帯`)) +
+  geom_bar(stat = "identity")
+```
+
+見栄えを以下のように修正します。
+
+- 年齢区分の表示「A1301_１５歳未満人口」→「15歳未満」
+- 調査年の表示：切れのいい数字のみ（日付型に変換）
+- 人口の目盛：指数表示→千人単位の通常表示
+- テーマ：minimal
+- y軸ラベルの設定：「value」→「人口[千人]」
+
+```{r}
+population %>% 
+  filter(str_length(cat01_code) == 5) %>% 
+  separate(`Ａ　人口・世帯`, c("code", "年齢区分"), sep = "_") %>% 
+  mutate(code = order(code, decreasing = TRUE)) %>% 
+  mutate(年齢区分 = stringi::stri_trans_nfkc(年齢区分)) %>% 
+  mutate(年齢区分 = str_remove(年齢区分, "人口")) %>% 
+  mutate(年齢区分 = fct_reorder(年齢区分, code)) %>% 
+  mutate(調査年 = str_remove(調査年, "年度")) %>% 
+  mutate(調査年 = lubridate::ymd(調査年, truncated = 2)) %>% 
+  mutate(value = value / 1000) %>% 
+  ggplot(aes(調査年, value, fill = 年齢区分)) +
+  geom_bar(stat = "identity", alpha = 0.8) +
+  theme_minimal(base_size = 16) +
+  theme(legend.position = "bottom") +
+  scale_y_continuous(name = "人口[千人]", labels = scales::comma)
+```
+
+続いて、65歳以上の人口と15歳未満の人口の比を取った「老年化指数」を計算し、折れ線グラフで指数の推移を可視化してみます。
+
+```{r}
+population %>% 
+  filter(str_length(cat01_code) == 5) %>% 
+  select(-`Ａ　人口・世帯`) %>% 
+  pivot_wider(names_from = cat01_code, values_from = value) %>% 
+  mutate(老年化指数 = A1303 / A1301) %>% 
+  mutate(調査年 = str_remove(調査年, "年度")) %>% 
+  mutate(調査年 = lubridate::ymd(調査年, truncated = 2)) %>% 
+  ggplot(aes(調査年, 老年化指数)) +
+  geom_area(alpha = 0.6) +
+  geom_point(size = 2) +
+  geom_line(size = 1) +
+  theme_minimal(base_size = 16) +
+  labs(title = "老年化指数の推移",
+       caption = "出典：都道府県・市区町村のすがた（社会・人口統計体系）")
+```
+
+## 【例2】リサイクル率の推移の可視化 {#recycle}
+
+ここでは、都道府県別のリサイクル率を可視化してみます。データベースから「リサイクル率」で検索すると「社会・人口統計体系」の「都道府県データ」がヒットしますので、これを用います。データIDは`0000010108`となります。
+
+```{r}
+estat_getMetaInfo(appId, statsDataId = "0000010108")$cat01 %>% 
+  filter(str_detect(`@name`, "リサイクル率"))
+```
+
+```{r}
+rr <- estat_getStatsData(appId, statsDataId = "0000010108",
+                         cdCat01 = "H5614") %>% 
+  filter(地域 != "全国")
+head(rr)
+```
+
+
+
+```{r}
+rr %>% 
+  separate(調査年, "year", sep = 4, convert = TRUE) %>% 
+  ggplot(aes(year, value, group = 地域, color = 地域)) +
+  geom_line() +
+  theme_minimal() +
+  labs(x = "調査年", y = "リサイクル率[%]",
+       title = "都道府県別リサイクル率の推移",
+       caption = "出典：都道府県・市区町村のすがた（社会・人口統計体系）")
+```
+
+グラフから、全体としてリサイクル率が向上していることは分かりますが、線が多すぎて詳細がよく分かりません。プレゼンテーション用にグラフを加工してみます。グラフの表示方法でよく用いられるテクニックが「ハイライト」です。ここでは、最新の集計年での順位に基づき、1位と最下位、および福岡県をハイライトします。**ggplot2**のグラフでハイライトを行うには、**gghighlight**パッケージを用います。初めて使う場合は、インストールとセッション開始時のロードを行っておきます。
+
+```{r eval=FALSE}
+install.packages("gghighlight")
+library(gghighlight)
+```
+
+```{r include=FALSE}
+pacman::p_load(gghighlight)
+```
+
+**gghighlight**パッケージで利用できる`gghighlight()`関数で`filter()`関数と同様の書式で、ハイライトしたいデータを抽出する式を記述することで、該当するデータのハイライトができるようになります。例えば`mpg`データの場合に、`midsize`のクラスだけハイライトするには以下のようにします。
+
+```{r}
+ggplot(mpg, aes(class)) +
+  geom_bar() +
+  gghighlight(class == "midsize", use_group_by = FALSE)
+```
+
+2017年度のリサイクル率の順位に基づいてハイライトするため、2017年度のリサイクル率の順位を計算しておきます。
+
+```{r}
+order2017 <- filter(rr, 調査年 == "2017年度") %>% 
+  mutate(order = min_rank(value)) %>% 
+  select(地域, order)
+head(order2017)
+```
+
+これをリサイクル率のデータと結合して、リサイクル率が1位、47位および福岡県のデータをハイライトさせます。
+
+```{r}
+rr %>% 
+  left_join(order2017) %>% 
+  separate(調査年, "year", sep = 4, convert = TRUE) %>% 
+  ggplot(aes(year, value, group = 地域, color = 地域)) +
+  geom_line() +
+  gghighlight(order %in% c(1, 47) | 地域 == "福岡県",
+              use_group_by = FALSE,
+              label_params = list(direction = "y")) +
+  theme_minimal() +
+  labs(x = "調査年", y = "リサイクル率[%]",
+       title = "都道府県別リサイクル率の推移",
+       caption = "出典：都道府県・市区町村のすがた（社会・人口統計体系）")
+```
+
