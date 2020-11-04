@@ -247,17 +247,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="recycle" class="section level2">
 <h2><span class="header-section-number">8.3</span> 【例2】リサイクル率の推移の可視化</h2>
 <p>ここでは、都道府県別のリサイクル率を可視化してみます。データベースから「リサイクル率」で検索すると「社会・人口統計体系」の「都道府県データ」がヒットしますので、これを用います。データIDは<code>0000010108</code>となります。</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="recycle.html#cb37-1"></a><span class="kw">estat_getMetaInfo</span>(appId, <span class="dt">statsDataId =</span> <span class="st">&quot;0000010108&quot;</span>)<span class="op">$</span>cat01 <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb37-2"><a href="recycle.html#cb37-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="kw">str_detect</span>(<span class="st">`</span><span class="dt">@name</span><span class="st">`</span>, <span class="st">&quot;リサイクル率&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="recycle.html#cb335-1"></a><span class="kw">estat_getMetaInfo</span>(appId, <span class="dt">statsDataId =</span> <span class="st">&quot;0000010108&quot;</span>)<span class="op">$</span>cat01 <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb335-2"><a href="recycle.html#cb335-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="kw">str_detect</span>(<span class="st">`</span><span class="dt">@name</span><span class="st">`</span>, <span class="st">&quot;リサイクル率&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 4
 ##   `@code` `@name`                  `@level` `@unit`
 ##   &lt;chr&gt;   &lt;chr&gt;                    &lt;chr&gt;    &lt;chr&gt;  
 ## 1 H5614   H5614_ごみのリサイクル率 1        ％</code></pre>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="recycle.html#cb39-1"></a>rr &lt;-<span class="st"> </span><span class="kw">estat_getStatsData</span>(appId, <span class="dt">statsDataId =</span> <span class="st">&quot;0000010108&quot;</span>,</span>
-<span id="cb39-2"><a href="recycle.html#cb39-2"></a>                         <span class="dt">cdCat01 =</span> <span class="st">&quot;H5614&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb39-3"><a href="recycle.html#cb39-3"></a><span class="st">  </span><span class="kw">filter</span>(地域 <span class="op">!=</span><span class="st"> &quot;全国&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="recycle.html#cb337-1"></a>rr &lt;-<span class="st"> </span><span class="kw">estat_getStatsData</span>(appId, <span class="dt">statsDataId =</span> <span class="st">&quot;0000010108&quot;</span>,</span>
+<span id="cb337-2"><a href="recycle.html#cb337-2"></a>                         <span class="dt">cdCat01 =</span> <span class="st">&quot;H5614&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb337-3"><a href="recycle.html#cb337-3"></a><span class="st">  </span><span class="kw">filter</span>(地域 <span class="op">!=</span><span class="st"> &quot;全国&quot;</span>)</span></code></pre></div>
 <pre><code>## Fetching record 1-912... (total: 912 records)</code></pre>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="recycle.html#cb41-1"></a><span class="kw">head</span>(rr)</span></code></pre></div>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="recycle.html#cb339-1"></a><span class="kw">head</span>(rr)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 11
 ##   tab_code 観測値 cat01_code `Ｈ　居住` area_code 地域  time_code 調査年 unit 
 ##   &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;
@@ -268,29 +268,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5 00001    観測値 H5614      H5614_ごみの~ 01000     北海道~ 20031000~ 2003年~ ％   
 ## 6 00001    観測値 H5614      H5614_ごみの~ 01000     北海道~ 20041000~ 2004年~ ％   
 ## # ... with 2 more variables: value &lt;dbl&gt;, annotation &lt;chr&gt;</code></pre>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="recycle.html#cb43-1"></a>rr <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb43-2"><a href="recycle.html#cb43-2"></a><span class="st">  </span><span class="kw">separate</span>(調査年, <span class="st">&quot;year&quot;</span>, <span class="dt">sep =</span> <span class="dv">4</span>, <span class="dt">convert =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb43-3"><a href="recycle.html#cb43-3"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(year, value, <span class="dt">group =</span> 地域, <span class="dt">color =</span> 地域)) <span class="op">+</span></span>
-<span id="cb43-4"><a href="recycle.html#cb43-4"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
-<span id="cb43-5"><a href="recycle.html#cb43-5"></a><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></span>
-<span id="cb43-6"><a href="recycle.html#cb43-6"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;調査年&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;リサイクル率[%]&quot;</span>,</span>
-<span id="cb43-7"><a href="recycle.html#cb43-7"></a>       <span class="dt">title =</span> <span class="st">&quot;都道府県別リサイクル率の推移&quot;</span>,</span>
-<span id="cb43-8"><a href="recycle.html#cb43-8"></a>       <span class="dt">caption =</span> <span class="st">&quot;出典：都道府県・市区町村のすがた（社会・人口統計体系）&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="recycle.html#cb341-1"></a>rr <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb341-2"><a href="recycle.html#cb341-2"></a><span class="st">  </span><span class="kw">separate</span>(調査年, <span class="st">&quot;year&quot;</span>, <span class="dt">sep =</span> <span class="dv">4</span>, <span class="dt">convert =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb341-3"><a href="recycle.html#cb341-3"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(year, value, <span class="dt">group =</span> 地域, <span class="dt">color =</span> 地域)) <span class="op">+</span></span>
+<span id="cb341-4"><a href="recycle.html#cb341-4"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
+<span id="cb341-5"><a href="recycle.html#cb341-5"></a><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></span>
+<span id="cb341-6"><a href="recycle.html#cb341-6"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;調査年&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;リサイクル率[%]&quot;</span>,</span>
+<span id="cb341-7"><a href="recycle.html#cb341-7"></a>       <span class="dt">title =</span> <span class="st">&quot;都道府県別リサイクル率の推移&quot;</span>,</span>
+<span id="cb341-8"><a href="recycle.html#cb341-8"></a>       <span class="dt">caption =</span> <span class="st">&quot;出典：都道府県・市区町村のすがた（社会・人口統計体系）&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-159-1.png" width="672" /></p>
 <p>グラフから、全体としてリサイクル率が向上していることは分かりますが、線が多すぎて詳細がよく分かりません。プレゼンテーション用にグラフを加工してみます。グラフの表示方法でよく用いられるテクニックが「ハイライト」です。ここでは、最新の集計年での順位に基づき、1位と最下位、および福岡県をハイライトします。<strong>ggplot2</strong>のグラフでハイライトを行うには、<strong>gghighlight</strong>パッケージを用います。初めて使う場合は、インストールとセッション開始時のロードを行っておきます。</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="recycle.html#cb44-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;gghighlight&quot;</span>)</span>
-<span id="cb44-2"><a href="recycle.html#cb44-2"></a><span class="kw">library</span>(gghighlight)</span></code></pre></div>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="recycle.html#cb342-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;gghighlight&quot;</span>)</span>
+<span id="cb342-2"><a href="recycle.html#cb342-2"></a><span class="kw">library</span>(gghighlight)</span></code></pre></div>
 <p><strong>gghighlight</strong>パッケージで利用できる<code>gghighlight()</code>関数で<code>filter()</code>関数と同様の書式で、ハイライトしたいデータを抽出する式を記述することで、該当するデータのハイライトができるようになります。例えば<code>mpg</code>データの場合に、<code>midsize</code>のクラスだけハイライトするには以下のようにします。</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="recycle.html#cb45-1"></a><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(class)) <span class="op">+</span></span>
-<span id="cb45-2"><a href="recycle.html#cb45-2"></a><span class="st">  </span><span class="kw">geom_bar</span>() <span class="op">+</span></span>
-<span id="cb45-3"><a href="recycle.html#cb45-3"></a><span class="st">  </span><span class="kw">gghighlight</span>(class <span class="op">==</span><span class="st"> &quot;midsize&quot;</span>, <span class="dt">use_group_by =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="recycle.html#cb343-1"></a><span class="kw">ggplot</span>(mpg, <span class="kw">aes</span>(class)) <span class="op">+</span></span>
+<span id="cb343-2"><a href="recycle.html#cb343-2"></a><span class="st">  </span><span class="kw">geom_bar</span>() <span class="op">+</span></span>
+<span id="cb343-3"><a href="recycle.html#cb343-3"></a><span class="st">  </span><span class="kw">gghighlight</span>(class <span class="op">==</span><span class="st"> &quot;midsize&quot;</span>, <span class="dt">use_group_by =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <pre><code>## label_key: class</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-162-1.png" width="672" /></p>
 <p>2017年度のリサイクル率の順位に基づいてハイライトするため、2017年度のリサイクル率の順位を計算しておきます。</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="recycle.html#cb47-1"></a>order2017 &lt;-<span class="st"> </span><span class="kw">filter</span>(rr, 調査年 <span class="op">==</span><span class="st"> &quot;2017年度&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb47-2"><a href="recycle.html#cb47-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">order =</span> <span class="kw">min_rank</span>(value)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb47-3"><a href="recycle.html#cb47-3"></a><span class="st">  </span><span class="kw">select</span>(地域, order)</span>
-<span id="cb47-4"><a href="recycle.html#cb47-4"></a><span class="kw">head</span>(order2017)</span></code></pre></div>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="recycle.html#cb345-1"></a>order2017 &lt;-<span class="st"> </span><span class="kw">filter</span>(rr, 調査年 <span class="op">==</span><span class="st"> &quot;2017年度&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb345-2"><a href="recycle.html#cb345-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">order =</span> <span class="kw">min_rank</span>(value)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb345-3"><a href="recycle.html#cb345-3"></a><span class="st">  </span><span class="kw">select</span>(地域, order)</span>
+<span id="cb345-4"><a href="recycle.html#cb345-4"></a><span class="kw">head</span>(order2017)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 2
 ##   地域   order
 ##   &lt;chr&gt;  &lt;int&gt;
@@ -301,24 +301,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5 秋田県    10
 ## 6 山形県     5</code></pre>
 <p>これをリサイクル率のデータと結合して、リサイクル率が1位、47位および福岡県のデータをハイライトさせます。</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="recycle.html#cb49-1"></a>rr <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb49-2"><a href="recycle.html#cb49-2"></a><span class="st">  </span><span class="kw">left_join</span>(order2017) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb49-3"><a href="recycle.html#cb49-3"></a><span class="st">  </span><span class="kw">separate</span>(調査年, <span class="st">&quot;year&quot;</span>, <span class="dt">sep =</span> <span class="dv">4</span>, <span class="dt">convert =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb49-4"><a href="recycle.html#cb49-4"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(year, value, <span class="dt">group =</span> 地域, <span class="dt">color =</span> 地域)) <span class="op">+</span></span>
-<span id="cb49-5"><a href="recycle.html#cb49-5"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
-<span id="cb49-6"><a href="recycle.html#cb49-6"></a><span class="st">  </span><span class="kw">gghighlight</span>(order <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">47</span>) <span class="op">|</span><span class="st"> </span>地域 <span class="op">==</span><span class="st"> &quot;福岡県&quot;</span>,</span>
-<span id="cb49-7"><a href="recycle.html#cb49-7"></a>              <span class="dt">use_group_by =</span> <span class="ot">FALSE</span>,</span>
-<span id="cb49-8"><a href="recycle.html#cb49-8"></a>              <span class="dt">label_params =</span> <span class="kw">list</span>(<span class="dt">direction =</span> <span class="st">&quot;y&quot;</span>)) <span class="op">+</span></span>
-<span id="cb49-9"><a href="recycle.html#cb49-9"></a><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></span>
-<span id="cb49-10"><a href="recycle.html#cb49-10"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;調査年&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;リサイクル率[%]&quot;</span>,</span>
-<span id="cb49-11"><a href="recycle.html#cb49-11"></a>       <span class="dt">title =</span> <span class="st">&quot;都道府県別リサイクル率の推移&quot;</span>,</span>
-<span id="cb49-12"><a href="recycle.html#cb49-12"></a>       <span class="dt">caption =</span> <span class="st">&quot;出典：都道府県・市区町村のすがた（社会・人口統計体系）&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="recycle.html#cb347-1"></a>rr <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb347-2"><a href="recycle.html#cb347-2"></a><span class="st">  </span><span class="kw">left_join</span>(order2017) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb347-3"><a href="recycle.html#cb347-3"></a><span class="st">  </span><span class="kw">separate</span>(調査年, <span class="st">&quot;year&quot;</span>, <span class="dt">sep =</span> <span class="dv">4</span>, <span class="dt">convert =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb347-4"><a href="recycle.html#cb347-4"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(year, value, <span class="dt">group =</span> 地域, <span class="dt">color =</span> 地域)) <span class="op">+</span></span>
+<span id="cb347-5"><a href="recycle.html#cb347-5"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
+<span id="cb347-6"><a href="recycle.html#cb347-6"></a><span class="st">  </span><span class="kw">gghighlight</span>(order <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">47</span>) <span class="op">|</span><span class="st"> </span>地域 <span class="op">==</span><span class="st"> &quot;福岡県&quot;</span>,</span>
+<span id="cb347-7"><a href="recycle.html#cb347-7"></a>              <span class="dt">use_group_by =</span> <span class="ot">FALSE</span>,</span>
+<span id="cb347-8"><a href="recycle.html#cb347-8"></a>              <span class="dt">label_params =</span> <span class="kw">list</span>(<span class="dt">direction =</span> <span class="st">&quot;y&quot;</span>)) <span class="op">+</span></span>
+<span id="cb347-9"><a href="recycle.html#cb347-9"></a><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></span>
+<span id="cb347-10"><a href="recycle.html#cb347-10"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;調査年&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;リサイクル率[%]&quot;</span>,</span>
+<span id="cb347-11"><a href="recycle.html#cb347-11"></a>       <span class="dt">title =</span> <span class="st">&quot;都道府県別リサイクル率の推移&quot;</span>,</span>
+<span id="cb347-12"><a href="recycle.html#cb347-12"></a>       <span class="dt">caption =</span> <span class="st">&quot;出典：都道府県・市区町村のすがた（社会・人口統計体系）&quot;</span>)</span></code></pre></div>
 <pre><code>## Joining, by = &quot;地域&quot;</code></pre>
 <pre><code>## label_key: 地域</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-164-1.png" width="672" /></p>
 
 </div>
 <!-- </div> -->
+
+
+
+
+
+
+
+
+
+
+
             </section>
 
           </div>
@@ -375,6 +386,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

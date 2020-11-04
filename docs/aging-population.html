@@ -249,10 +249,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>e-Statのデータを用いて、少子高齢化の推移を可視化してみます。キーワード「人口」で検索して、「社会・人口統計体系」→「都道府県データ」→「年度次」
 と辿り「Ａ　人口・世帯」の「API」をクリックするとデータのIDが<code>0000010101</code>であることが分かります。</p>
 <p>メタデータを取得してデータの概要を確認します。</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="aging-population.html#cb24-1"></a>metainfo_result &lt;-<span class="st"> </span><span class="kw">estat_getMetaInfo</span>(appId, <span class="st">&quot;0000010101&quot;</span>)   </span>
-<span id="cb24-2"><a href="aging-population.html#cb24-2"></a><span class="kw">names</span>(metainfo_result)</span></code></pre></div>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="aging-population.html#cb322-1"></a>metainfo_result &lt;-<span class="st"> </span><span class="kw">estat_getMetaInfo</span>(appId, <span class="st">&quot;0000010101&quot;</span>)   </span>
+<span id="cb322-2"><a href="aging-population.html#cb322-2"></a><span class="kw">names</span>(metainfo_result)</span></code></pre></div>
 <pre><code>## [1] &quot;tab&quot;    &quot;cat01&quot;  &quot;area&quot;   &quot;time&quot;   &quot;.names&quot;</code></pre>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="aging-population.html#cb26-1"></a><span class="kw">head</span>(metainfo_result<span class="op">$</span>cat01)</span></code></pre></div>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="aging-population.html#cb324-1"></a><span class="kw">head</span>(metainfo_result<span class="op">$</span>cat01)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 4
 ##   `@code` `@name`                  `@level` `@unit`
 ##   &lt;chr&gt;   &lt;chr&gt;                    &lt;chr&gt;    &lt;chr&gt;  
@@ -262,8 +262,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4 A1102   A1102_日本人人口         1        人     
 ## 5 A110201 A110201_日本人人口（男） 1        人     
 ## 6 A110202 A110202_日本人人口（女） 1        人</code></pre>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="aging-population.html#cb28-1"></a>metainfo_result<span class="op">$</span>cat01 <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb28-2"><a href="aging-population.html#cb28-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="st">`</span><span class="dt">@code</span><span class="st">`</span> <span class="op">&gt;=</span><span class="st"> &quot;A1301&quot;</span>, <span class="st">`</span><span class="dt">@code</span><span class="st">`</span> <span class="op">&lt;=</span><span class="st"> &quot;A1303&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="aging-population.html#cb326-1"></a>metainfo_result<span class="op">$</span>cat01 <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb326-2"><a href="aging-population.html#cb326-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="st">`</span><span class="dt">@code</span><span class="st">`</span> <span class="op">&gt;=</span><span class="st"> &quot;A1301&quot;</span>, <span class="st">`</span><span class="dt">@code</span><span class="st">`</span> <span class="op">&lt;=</span><span class="st"> &quot;A1303&quot;</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 7 x 4
 ##   `@code` `@name`                    `@level` `@unit`
 ##   &lt;chr&gt;   &lt;chr&gt;                      &lt;chr&gt;    &lt;chr&gt;  
@@ -274,7 +274,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5 A130201 A130201_15～64歳人口（男） 1        人     
 ## 6 A130202 A130202_15～64歳人口（女） 1        人     
 ## 7 A1303   A1303_65歳以上人口         1        人</code></pre>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="aging-population.html#cb30-1"></a>metainfo_result<span class="op">$</span>area</span></code></pre></div>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="aging-population.html#cb328-1"></a>metainfo_result<span class="op">$</span>area</span></code></pre></div>
 <pre><code>## # A tibble: 48 x 3
 ##    `@code` `@name` `@level`
 ##    &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   
@@ -290,17 +290,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 10 09000   栃木県  2       
 ## # ... with 38 more rows</code></pre>
 <p>以上の情報から、以下のようにデータを取得します。<code>cdCat01From = "A1301"</code>と<code>cdCat01To = "A1303"</code>によって、「15歳未満」から「65歳以上」の集計カテゴリを取得するようにしています。<code>cdArea = "00000"</code>は「全国」を指定しています。</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="aging-population.html#cb32-1"></a>population &lt;-<span class="st"> </span><span class="kw">estat_getStatsData</span>(</span>
-<span id="cb32-2"><a href="aging-population.html#cb32-2"></a>  appId, <span class="st">&quot;0000010101&quot;</span>, <span class="dt">cdCat01From =</span> <span class="st">&quot;A1301&quot;</span>,</span>
-<span id="cb32-3"><a href="aging-population.html#cb32-3"></a>  <span class="dt">cdCat01To =</span> <span class="st">&quot;A1303&quot;</span>, <span class="dt">cdArea =</span> <span class="st">&quot;00000&quot;</span></span>
-<span id="cb32-4"><a href="aging-population.html#cb32-4"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="aging-population.html#cb330-1"></a>population &lt;-<span class="st"> </span><span class="kw">estat_getStatsData</span>(</span>
+<span id="cb330-2"><a href="aging-population.html#cb330-2"></a>  appId, <span class="st">&quot;0000010101&quot;</span>, <span class="dt">cdCat01From =</span> <span class="st">&quot;A1301&quot;</span>,</span>
+<span id="cb330-3"><a href="aging-population.html#cb330-3"></a>  <span class="dt">cdCat01To =</span> <span class="st">&quot;A1303&quot;</span>, <span class="dt">cdArea =</span> <span class="st">&quot;00000&quot;</span></span>
+<span id="cb330-4"><a href="aging-population.html#cb330-4"></a>)</span></code></pre></div>
 <pre><code>## Fetching record 1-308... (total: 308 records)</code></pre>
 <p>このデータから、積み上げ縦棒グラフを作成します。</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="aging-population.html#cb34-1"></a>population <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb34-2"><a href="aging-population.html#cb34-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="kw">str_length</span>(cat01_code) <span class="op">==</span><span class="st"> </span><span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb34-3"><a href="aging-population.html#cb34-3"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(調査年, value, <span class="dt">fill =</span> <span class="st">`</span><span class="dt">Ａ　人口・世帯</span><span class="st">`</span>)) <span class="op">+</span></span>
-<span id="cb34-4"><a href="aging-population.html#cb34-4"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="aging-population.html#cb332-1"></a>population <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb332-2"><a href="aging-population.html#cb332-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="kw">str_length</span>(cat01_code) <span class="op">==</span><span class="st"> </span><span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb332-3"><a href="aging-population.html#cb332-3"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(調査年, value, <span class="dt">fill =</span> <span class="st">`</span><span class="dt">Ａ　人口・世帯</span><span class="st">`</span>)) <span class="op">+</span></span>
+<span id="cb332-4"><a href="aging-population.html#cb332-4"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-154-1.png" width="672" /></p>
 <p>見栄えを以下のように修正します。</p>
 <ul>
 <li>年齢区分の表示「A1301_１５歳未満人口」→「15歳未満」</li>
@@ -309,38 +309,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>テーマ：minimal</li>
 <li>y軸ラベルの設定：「value」→「人口[千人]」</li>
 </ul>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="aging-population.html#cb35-1"></a>population <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb35-2"><a href="aging-population.html#cb35-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="kw">str_length</span>(cat01_code) <span class="op">==</span><span class="st"> </span><span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb35-3"><a href="aging-population.html#cb35-3"></a><span class="st">  </span><span class="kw">separate</span>(<span class="st">`</span><span class="dt">Ａ　人口・世帯</span><span class="st">`</span>, <span class="kw">c</span>(<span class="st">&quot;code&quot;</span>, <span class="st">&quot;年齢区分&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb35-4"><a href="aging-population.html#cb35-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">code =</span> <span class="kw">order</span>(code, <span class="dt">decreasing =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb35-5"><a href="aging-population.html#cb35-5"></a><span class="st">  </span><span class="kw">mutate</span>(年齢区分 =<span class="st"> </span>stringi<span class="op">::</span><span class="kw">stri_trans_nfkc</span>(年齢区分)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb35-6"><a href="aging-population.html#cb35-6"></a><span class="st">  </span><span class="kw">mutate</span>(年齢区分 =<span class="st"> </span><span class="kw">str_remove</span>(年齢区分, <span class="st">&quot;人口&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb35-7"><a href="aging-population.html#cb35-7"></a><span class="st">  </span><span class="kw">mutate</span>(年齢区分 =<span class="st"> </span><span class="kw">fct_reorder</span>(年齢区分, code)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb35-8"><a href="aging-population.html#cb35-8"></a><span class="st">  </span><span class="kw">mutate</span>(調査年 =<span class="st"> </span><span class="kw">str_remove</span>(調査年, <span class="st">&quot;年度&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb35-9"><a href="aging-population.html#cb35-9"></a><span class="st">  </span><span class="kw">mutate</span>(調査年 =<span class="st"> </span>lubridate<span class="op">::</span><span class="kw">ymd</span>(調査年, <span class="dt">truncated =</span> <span class="dv">2</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb35-10"><a href="aging-population.html#cb35-10"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">value =</span> value <span class="op">/</span><span class="st"> </span><span class="dv">1000</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb35-11"><a href="aging-population.html#cb35-11"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(調査年, value, <span class="dt">fill =</span> 年齢区分)) <span class="op">+</span></span>
-<span id="cb35-12"><a href="aging-population.html#cb35-12"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.8</span>) <span class="op">+</span></span>
-<span id="cb35-13"><a href="aging-population.html#cb35-13"></a><span class="st">  </span><span class="kw">theme_minimal</span>(<span class="dt">base_size =</span> <span class="dv">16</span>) <span class="op">+</span></span>
-<span id="cb35-14"><a href="aging-population.html#cb35-14"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="op">+</span></span>
-<span id="cb35-15"><a href="aging-population.html#cb35-15"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;人口[千人]&quot;</span>, <span class="dt">labels =</span> scales<span class="op">::</span>comma)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="aging-population.html#cb333-1"></a>population <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb333-2"><a href="aging-population.html#cb333-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="kw">str_length</span>(cat01_code) <span class="op">==</span><span class="st"> </span><span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb333-3"><a href="aging-population.html#cb333-3"></a><span class="st">  </span><span class="kw">separate</span>(<span class="st">`</span><span class="dt">Ａ　人口・世帯</span><span class="st">`</span>, <span class="kw">c</span>(<span class="st">&quot;code&quot;</span>, <span class="st">&quot;年齢区分&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb333-4"><a href="aging-population.html#cb333-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">code =</span> <span class="kw">order</span>(code, <span class="dt">decreasing =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb333-5"><a href="aging-population.html#cb333-5"></a><span class="st">  </span><span class="kw">mutate</span>(年齢区分 =<span class="st"> </span>stringi<span class="op">::</span><span class="kw">stri_trans_nfkc</span>(年齢区分)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb333-6"><a href="aging-population.html#cb333-6"></a><span class="st">  </span><span class="kw">mutate</span>(年齢区分 =<span class="st"> </span><span class="kw">str_remove</span>(年齢区分, <span class="st">&quot;人口&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb333-7"><a href="aging-population.html#cb333-7"></a><span class="st">  </span><span class="kw">mutate</span>(年齢区分 =<span class="st"> </span><span class="kw">fct_reorder</span>(年齢区分, code)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb333-8"><a href="aging-population.html#cb333-8"></a><span class="st">  </span><span class="kw">mutate</span>(調査年 =<span class="st"> </span><span class="kw">str_remove</span>(調査年, <span class="st">&quot;年度&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb333-9"><a href="aging-population.html#cb333-9"></a><span class="st">  </span><span class="kw">mutate</span>(調査年 =<span class="st"> </span>lubridate<span class="op">::</span><span class="kw">ymd</span>(調査年, <span class="dt">truncated =</span> <span class="dv">2</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb333-10"><a href="aging-population.html#cb333-10"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">value =</span> value <span class="op">/</span><span class="st"> </span><span class="dv">1000</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb333-11"><a href="aging-population.html#cb333-11"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(調査年, value, <span class="dt">fill =</span> 年齢区分)) <span class="op">+</span></span>
+<span id="cb333-12"><a href="aging-population.html#cb333-12"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.8</span>) <span class="op">+</span></span>
+<span id="cb333-13"><a href="aging-population.html#cb333-13"></a><span class="st">  </span><span class="kw">theme_minimal</span>(<span class="dt">base_size =</span> <span class="dv">16</span>) <span class="op">+</span></span>
+<span id="cb333-14"><a href="aging-population.html#cb333-14"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="op">+</span></span>
+<span id="cb333-15"><a href="aging-population.html#cb333-15"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">name =</span> <span class="st">&quot;人口[千人]&quot;</span>, <span class="dt">labels =</span> scales<span class="op">::</span>comma)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-155-1.png" width="672" /></p>
 <p>続いて、65歳以上の人口と15歳未満の人口の比を取った「老年化指数」を計算し、折れ線グラフで指数の推移を可視化してみます。</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="aging-population.html#cb36-1"></a>population <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb36-2"><a href="aging-population.html#cb36-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="kw">str_length</span>(cat01_code) <span class="op">==</span><span class="st"> </span><span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb36-3"><a href="aging-population.html#cb36-3"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span><span class="st">`</span><span class="dt">Ａ　人口・世帯</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb36-4"><a href="aging-population.html#cb36-4"></a><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> cat01_code, <span class="dt">values_from =</span> value) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb36-5"><a href="aging-population.html#cb36-5"></a><span class="st">  </span><span class="kw">mutate</span>(老年化指数 =<span class="st"> </span>A1303 <span class="op">/</span><span class="st"> </span>A1301) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb36-6"><a href="aging-population.html#cb36-6"></a><span class="st">  </span><span class="kw">mutate</span>(調査年 =<span class="st"> </span><span class="kw">str_remove</span>(調査年, <span class="st">&quot;年度&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb36-7"><a href="aging-population.html#cb36-7"></a><span class="st">  </span><span class="kw">mutate</span>(調査年 =<span class="st"> </span>lubridate<span class="op">::</span><span class="kw">ymd</span>(調査年, <span class="dt">truncated =</span> <span class="dv">2</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb36-8"><a href="aging-population.html#cb36-8"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(調査年, 老年化指数)) <span class="op">+</span></span>
-<span id="cb36-9"><a href="aging-population.html#cb36-9"></a><span class="st">  </span><span class="kw">geom_area</span>(<span class="dt">alpha =</span> <span class="fl">0.6</span>) <span class="op">+</span></span>
-<span id="cb36-10"><a href="aging-population.html#cb36-10"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span></span>
-<span id="cb36-11"><a href="aging-population.html#cb36-11"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></span>
-<span id="cb36-12"><a href="aging-population.html#cb36-12"></a><span class="st">  </span><span class="kw">theme_minimal</span>(<span class="dt">base_size =</span> <span class="dv">16</span>) <span class="op">+</span></span>
-<span id="cb36-13"><a href="aging-population.html#cb36-13"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;老年化指数の推移&quot;</span>,</span>
-<span id="cb36-14"><a href="aging-population.html#cb36-14"></a>       <span class="dt">caption =</span> <span class="st">&quot;出典：都道府県・市区町村のすがた（社会・人口統計体系）&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="aging-population.html#cb334-1"></a>population <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb334-2"><a href="aging-population.html#cb334-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="kw">str_length</span>(cat01_code) <span class="op">==</span><span class="st"> </span><span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb334-3"><a href="aging-population.html#cb334-3"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span><span class="st">`</span><span class="dt">Ａ　人口・世帯</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb334-4"><a href="aging-population.html#cb334-4"></a><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> cat01_code, <span class="dt">values_from =</span> value) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb334-5"><a href="aging-population.html#cb334-5"></a><span class="st">  </span><span class="kw">mutate</span>(老年化指数 =<span class="st"> </span>A1303 <span class="op">/</span><span class="st"> </span>A1301) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb334-6"><a href="aging-population.html#cb334-6"></a><span class="st">  </span><span class="kw">mutate</span>(調査年 =<span class="st"> </span><span class="kw">str_remove</span>(調査年, <span class="st">&quot;年度&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb334-7"><a href="aging-population.html#cb334-7"></a><span class="st">  </span><span class="kw">mutate</span>(調査年 =<span class="st"> </span>lubridate<span class="op">::</span><span class="kw">ymd</span>(調査年, <span class="dt">truncated =</span> <span class="dv">2</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb334-8"><a href="aging-population.html#cb334-8"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(調査年, 老年化指数)) <span class="op">+</span></span>
+<span id="cb334-9"><a href="aging-population.html#cb334-9"></a><span class="st">  </span><span class="kw">geom_area</span>(<span class="dt">alpha =</span> <span class="fl">0.6</span>) <span class="op">+</span></span>
+<span id="cb334-10"><a href="aging-population.html#cb334-10"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb334-11"><a href="aging-population.html#cb334-11"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb334-12"><a href="aging-population.html#cb334-12"></a><span class="st">  </span><span class="kw">theme_minimal</span>(<span class="dt">base_size =</span> <span class="dv">16</span>) <span class="op">+</span></span>
+<span id="cb334-13"><a href="aging-population.html#cb334-13"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;老年化指数の推移&quot;</span>,</span>
+<span id="cb334-14"><a href="aging-population.html#cb334-14"></a>       <span class="dt">caption =</span> <span class="st">&quot;出典：都道府県・市区町村のすがた（社会・人口統計体系）&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-156-1.png" width="672" /></p>
 </div>
             </section>
 
@@ -398,6 +398,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
