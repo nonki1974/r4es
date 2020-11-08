@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Rによるデータ解析入門</title>
-  <meta name="description" content="Rによるデータ解析入門" />
+  <title>9 Webからのデータ取得（2）「World Bank API」 | Rによるデータ解析入門</title>
+  <meta name="description" content="9 Webからのデータ取得（2）「World Bank API」 | Rによるデータ解析入門" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Rによるデータ解析入門" />
+  <meta property="og:title" content="9 Webからのデータ取得（2）「World Bank API」 | Rによるデータ解析入門" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Rによるデータ解析入門" />
+  <meta name="twitter:title" content="9 Webからのデータ取得（2）「World Bank API」 | Rによるデータ解析入門" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
+<link rel="prev" href="recycle.html"/>
 
-<link rel="next" href="vector.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -245,34 +245,185 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Rによるデータ解析入門</h1>
-<p class="author"><em>Tomokazu FUJINO (<span class="citation">@nonki1974</span>)</em></p>
+<div id="api02" class="section level1">
+<h1><span class="header-section-number">9</span> Webからのデータ取得（2）「World Bank API」</h1>
+<p>e-Statは日本の統計データを見る場合に利用しましたが、世界の国別の統計や指標を見たり比較したりする場合には<a href="https://data.worldbank.org/">世界銀行のウェブサイト</a>が便利です。世界銀行のデータをAPI経由で取得するためのRのパッケージが<strong>wbstats</strong>です。</p>
+<p>使っているPCで初めて利用する場合は、</p>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="api02.html#cb350-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;remotes&quot;</span>)</span>
+<span id="cb350-2"><a href="api02.html#cb350-2"></a>remotes<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;nset-ornl/wbstats&quot;</span>)</span></code></pre></div>
+<p>でインストールしてください。セッションを立ち上げた後（プロジェクトを立ち上げた後）には、</p>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="api02.html#cb351-1"></a><span class="kw">library</span>(wbstats)</span></code></pre></div>
+<p>を実行して<strong>wbstats</strong>の関数が利用できるようにしておきます。<code>wb_cachelist</code>は、利用可能な指標や国、トピックなどの一覧を保持しています。</p>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="api02.html#cb352-1"></a><span class="kw">str</span>(wb_cachelist, <span class="dt">max.level =</span> <span class="dv">1</span>)</span></code></pre></div>
+<pre><code>## List of 8
+##  $ countries    : tibble [304 x 18] (S3: tbl_df/tbl/data.frame)
+##  $ indicators   : tibble [16,649 x 8] (S3: tbl_df/tbl/data.frame)
+##  $ sources      : tibble [63 x 9] (S3: tbl_df/tbl/data.frame)
+##  $ topics       : tibble [21 x 3] (S3: tbl_df/tbl/data.frame)
+##  $ regions      : tibble [48 x 4] (S3: tbl_df/tbl/data.frame)
+##  $ income_levels: tibble [7 x 3] (S3: tbl_df/tbl/data.frame)
+##  $ lending_types: tibble [4 x 3] (S3: tbl_df/tbl/data.frame)
+##  $ languages    : tibble [23 x 3] (S3: tbl_df/tbl/data.frame)</code></pre>
+<p>利用可能な指標の一覧は以下のコマンドで確認できます。</p>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="api02.html#cb354-1"></a><span class="kw">View</span>(wb_cachelist<span class="op">$</span>indicators)</span></code></pre></div>
+<table style="width:100%;">
+<colgroup>
+<col width="6%" />
+<col width="11%" />
+<col width="1%" />
+<col width="46%" />
+<col width="20%" />
+<col width="5%" />
+<col width="2%" />
+<col width="4%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">indicator_id</th>
+<th align="left">indicator</th>
+<th align="left">unit</th>
+<th align="left">indicator_desc</th>
+<th align="left">source_org</th>
+<th align="left">topics</th>
+<th align="right">source_id</th>
+<th align="left">source</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1.0.HCount.1.90usd</td>
+<td align="left">Poverty Headcount ($1.90 a day)</td>
+<td align="left">NA</td>
+<td align="left">The poverty headcount index measures the proportion of the population with daily per capita income (in 2011 PPP) below the poverty line.</td>
+<td align="left">LAC Equity Lab tabulations of SEDLAC (CEDLAS and the World Bank).</td>
+<td align="left">11 , Poverty</td>
+<td align="right">37</td>
+<td align="left">LAC Equity Lab</td>
+</tr>
+<tr class="even">
+<td align="left">1.0.HCount.2.5usd</td>
+<td align="left">Poverty Headcount ($2.50 a day)</td>
+<td align="left">NA</td>
+<td align="left">The poverty headcount index measures the proportion of the population with daily per capita income (in 2005 PPP) below the poverty line.</td>
+<td align="left">LAC Equity Lab tabulations of SEDLAC (CEDLAS and the World Bank).</td>
+<td align="left">11 , Poverty</td>
+<td align="right">37</td>
+<td align="left">LAC Equity Lab</td>
+</tr>
+<tr class="odd">
+<td align="left">1.0.HCount.Mid10to50</td>
+<td align="left">Middle Class ($10-50 a day) Headcount</td>
+<td align="left">NA</td>
+<td align="left">The poverty headcount index measures the proportion of the population with daily per capita income (in 2005 PPP) below the poverty line.</td>
+<td align="left">LAC Equity Lab tabulations of SEDLAC (CEDLAS and the World Bank).</td>
+<td align="left">11 , Poverty</td>
+<td align="right">37</td>
+<td align="left">LAC Equity Lab</td>
+</tr>
+<tr class="even">
+<td align="left">1.0.HCount.Ofcl</td>
+<td align="left">Official Moderate Poverty Rate-National</td>
+<td align="left">NA</td>
+<td align="left">The poverty headcount index measures the proportion of the population with daily per capita income below the official poverty line developed by each country.</td>
+<td align="left">LAC Equity Lab tabulations of data from National Statistical Offices.</td>
+<td align="left">11 , Poverty</td>
+<td align="right">37</td>
+<td align="left">LAC Equity Lab</td>
+</tr>
+<tr class="odd">
+<td align="left">1.0.HCount.Poor4uds</td>
+<td align="left">Poverty Headcount ($4 a day)</td>
+<td align="left">NA</td>
+<td align="left">The poverty headcount index measures the proportion of the population with daily per capita income (in 2005 PPP) below the poverty line.</td>
+<td align="left">LAC Equity Lab tabulations of SEDLAC (CEDLAS and the World Bank).</td>
+<td align="left">11 , Poverty</td>
+<td align="right">37</td>
+<td align="left">LAC Equity Lab</td>
+</tr>
+<tr class="even">
+<td align="left">1.0.HCount.Vul4to10</td>
+<td align="left">Vulnerable ($4-10 a day) Headcount</td>
+<td align="left">NA</td>
+<td align="left">The poverty headcount index measures the proportion of the population with daily per capita income (in 2005 PPP) below the poverty line.</td>
+<td align="left">LAC Equity Lab tabulations of SEDLAC (CEDLAS and the World Bank).</td>
+<td align="left">11 , Poverty</td>
+<td align="right">37</td>
+<td align="left">LAC Equity Lab</td>
+</tr>
+</tbody>
+</table>
+<p>データの検索は<code>wb_search()</code>関数を用います。</p>
+<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="api02.html#cb355-1"></a><span class="kw">wb_search</span>(<span class="st">&quot;forest area&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 4 x 3
+##   indicator_id  indicator             indicator_desc                            
+##   &lt;chr&gt;         &lt;chr&gt;                 &lt;chr&gt;                                     
+## 1 AG.LND.FRST.~ Forest area (hectare~ Forest area is land under natural or plan~
+## 2 AG.LND.FRST.~ Forest area (sq. km)  Forest area is land under natural or plan~
+## 3 AG.LND.FRST.~ Forest area (% of la~ Forest area is land under natural or plan~
+## 4 ER.FST.DFST.~ Annual deforestation~ Average annual deforestation refers to th~</code></pre>
+<p>実際のデータの取得は、<code>wb_data()</code>関数を用います。<code>indicator</code>引数に取得したいデータのIDを指定します。</p>
+<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="api02.html#cb357-1"></a>fa_data &lt;-<span class="st"> </span><span class="kw">wb_data</span>(<span class="dt">indicator =</span> <span class="st">&quot;AG.LND.FRST.ZS&quot;</span>, <span class="dt">country =</span> <span class="st">&quot;all&quot;</span>)</span></code></pre></div>
+<p>いくつかの国について、国土面積に対する森林面積の割合の推移を折れ線グラフとしてプロットしてみます。</p>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="api02.html#cb358-1"></a>fa_data <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb358-2"><a href="api02.html#cb358-2"></a><span class="st">    </span><span class="kw">filter</span>(country <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Japan&quot;</span>, <span class="st">&quot;World&quot;</span>, <span class="st">&quot;China&quot;</span>,</span>
+<span id="cb358-3"><a href="api02.html#cb358-3"></a>                                                <span class="st">&quot;Latin America &amp; Caribbean&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb358-4"><a href="api02.html#cb358-4"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">date =</span> lubridate<span class="op">::</span><span class="kw">ymd</span>(date, <span class="dt">truncated =</span> <span class="dv">2</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb358-5"><a href="api02.html#cb358-5"></a><span class="st">    </span><span class="kw">rename</span>(<span class="dt">value =</span> <span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb358-6"><a href="api02.html#cb358-6"></a><span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(value)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb358-7"><a href="api02.html#cb358-7"></a><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(date, value, <span class="dt">group =</span> country, <span class="dt">color =</span> country)) <span class="op">+</span></span>
+<span id="cb358-8"><a href="api02.html#cb358-8"></a><span class="st">    </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
+<span id="cb358-9"><a href="api02.html#cb358-9"></a><span class="st">    </span><span class="kw">theme_minimal</span>(<span class="dt">base_size =</span> <span class="dv">16</span>) <span class="op">+</span></span>
+<span id="cb358-10"><a href="api02.html#cb358-10"></a><span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="op">+</span></span>
+<span id="cb358-11"><a href="api02.html#cb358-11"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;年&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;森林面積の割合[%]&quot;</span>,</span>
+<span id="cb358-12"><a href="api02.html#cb358-12"></a>             <span class="dt">title =</span> <span class="st">&quot;国土面積に対する森林面積の割合の推移&quot;</span>) <span class="op">+</span></span>
+<span id="cb358-13"><a href="api02.html#cb358-13"></a><span class="st">    </span><span class="kw">gghighlight</span>(<span class="dt">label_params =</span> <span class="kw">list</span>(<span class="dt">direction =</span> <span class="st">&quot;y&quot;</span>))</span></code></pre></div>
+<pre><code>## label_key: country</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-173-1.png" width="672" /></p>
+<p>次に、日本のCO2排出量の推移を見てみましょう。</p>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="api02.html#cb360-1"></a><span class="kw">View</span>(<span class="kw">wb_search</span>(<span class="st">&quot;CO2 emissions&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="api02.html#cb361-1"></a>co2_data &lt;-<span class="st"> </span><span class="kw">wb_data</span>(<span class="dt">indicator =</span> <span class="st">&quot;EN.ATM.CO2E.KT&quot;</span>)</span>
+<span id="cb361-2"><a href="api02.html#cb361-2"></a><span class="kw">head</span>(co2_data)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 9
+##   iso2c iso3c country  date EN.ATM.CO2E.KT unit  obs_status footnote
+##   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;   
+## 1 AW    ABW   Aruba    1960         11093. &lt;NA&gt;  &lt;NA&gt;       &lt;NA&gt;    
+## 2 AW    ABW   Aruba    1961         11577. &lt;NA&gt;  &lt;NA&gt;       &lt;NA&gt;    
+## 3 AW    ABW   Aruba    1962         12713. &lt;NA&gt;  &lt;NA&gt;       &lt;NA&gt;    
+## 4 AW    ABW   Aruba    1963         12178. &lt;NA&gt;  &lt;NA&gt;       &lt;NA&gt;    
+## 5 AW    ABW   Aruba    1964         11841. &lt;NA&gt;  &lt;NA&gt;       &lt;NA&gt;    
+## 6 AW    ABW   Aruba    1965         10623. &lt;NA&gt;  &lt;NA&gt;       &lt;NA&gt;    
+## # ... with 1 more variable: last_updated &lt;date&gt;</code></pre>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="api02.html#cb363-1"></a>co2_data <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb363-2"><a href="api02.html#cb363-2"></a><span class="st">    </span><span class="kw">filter</span>(country <span class="op">==</span><span class="st"> &quot;Japan&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb363-3"><a href="api02.html#cb363-3"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">date =</span> lubridate<span class="op">::</span><span class="kw">ymd</span>(date, <span class="dt">truncated =</span> <span class="dv">2</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb363-4"><a href="api02.html#cb363-4"></a><span class="st">    </span><span class="kw">rename</span>(<span class="dt">value =</span> <span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb363-5"><a href="api02.html#cb363-5"></a><span class="st">    </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(value)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb363-6"><a href="api02.html#cb363-6"></a><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(date, value)) <span class="op">+</span></span>
+<span id="cb363-7"><a href="api02.html#cb363-7"></a><span class="st">    </span><span class="kw">geom_area</span>(<span class="dt">alpha =</span> <span class="fl">0.7</span>) <span class="op">+</span></span>
+<span id="cb363-8"><a href="api02.html#cb363-8"></a><span class="st">    </span><span class="kw">theme_minimal</span>(<span class="dt">base_size =</span> <span class="dv">16</span>) <span class="op">+</span></span>
+<span id="cb363-9"><a href="api02.html#cb363-9"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;年&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;CO2排出量[kt]&quot;</span>,</span>
+<span id="cb363-10"><a href="api02.html#cb363-10"></a>             <span class="dt">title =</span> <span class="st">&quot;日本のCO2排出量の推移&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-176-1.png" width="672" /></p>
+
 </div>
-<div id="Rbasics" class="section level1">
-<h1><span class="header-section-number">1</span> Rの基礎（データ構造とデータ型）</h1>
-<p>ここでは、データは数値や文字の集まりであると考えます。Rで標準的に利用できるデータの格納方法（データ構造）は以下の4つです。</p>
-<ul>
-<li><strong>ベクトル</strong>（vector）</li>
-<li><strong>配列・行列</strong>（array, matrix）</li>
-<li><strong>リスト</strong>（list）</li>
-<li><strong>データフレーム</strong>（data frame）</li>
-</ul>
-<p>一方、個々のデータそのものの種類をデータ型と呼び、Rでは主に以下の3つを利用します。</p>
-<ul>
-<li><strong>数値型</strong>（numeric）</li>
-<li><strong>文字型</strong>（charater）</li>
-<li><strong>因子型</strong>（factor）</li>
-</ul>
-<p>特に、因子型は他のプログラミング言語にはないデータ型で、統計解析環境であるRならではのデータ型となっています。</p>
-</div>
+
+
+
+
+
+
+
+
+
+
+
             </section>
 
           </div>
         </div>
       </div>
+<a href="recycle.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-<a href="vector.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

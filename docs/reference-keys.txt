@@ -66,3 +66,4 @@ estatapi
 統計データの取得
 aging_population
 recycle
+api02
