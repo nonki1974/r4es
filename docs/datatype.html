@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>1.2 データ型 | Rによるデータ解析入門</title>
   <meta name="description" content="1.2 データ型 | Rによるデータ解析入門" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
   <meta property="og:title" content="1.2 データ型 | Rによるデータ解析入門" />
   <meta property="og:type" content="book" />
@@ -32,7 +32,8 @@
   
 <link rel="prev" href="vector.html"/>
 <link rel="next" href="arrayandmatrix.html"/>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,34 +50,32 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.16/datatables.js"></script>
+<script src="libs/datatables-binding-0.18/datatables.js"></script>
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
-<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
 <link href="libs/dt-ext-fixedcolumns-1.10.20/css/fixedColumns.dataTables.min.css" rel="stylesheet" />
 <script src="libs/dt-ext-fixedcolumns-1.10.20/js/dataTables.fixedColumns.min.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -96,7 +95,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -129,6 +128,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 </head>
 
 <body>
@@ -141,15 +141,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Rの基礎（データ構造とデータ型）</a><ul>
-<li class="chapter" data-level="1.1" data-path="vector.html"><a href="vector.html"><i class="fa fa-check"></i><b>1.1</b> データ構造（1）ベクトル</a><ul>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Rの基礎（データ構造とデータ型）</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="vector.html"><a href="vector.html"><i class="fa fa-check"></i><b>1.1</b> データ構造（1）ベクトル</a>
+<ul>
 <li class="chapter" data-level="1.1.1" data-path="vector.html"><a href="vector.html#object_and_var"><i class="fa fa-check"></i><b>1.1.1</b> オブジェクトと変数</a></li>
 <li class="chapter" data-level="1.1.2" data-path="vector.html"><a href="vector.html#usefulfunctionforgeneratingvec"><i class="fa fa-check"></i><b>1.1.2</b> 便利なベクトル作成法</a></li>
 <li class="chapter" data-level="1.1.3" data-path="vector.html"><a href="vector.html#operator_for_vec"><i class="fa fa-check"></i><b>1.1.3</b> ベクトルの演算</a></li>
 <li class="chapter" data-level="1.1.4" data-path="vector.html"><a href="vector.html#reference_for_element"><i class="fa fa-check"></i><b>1.1.4</b> ベクトルの要素の参照</a></li>
 <li class="chapter" data-level="1.1.5" data-path="vector.html"><a href="vector.html#useful_function_for_vec"><i class="fa fa-check"></i><b>1.1.5</b> ベクトルに対する便利な関数</a></li>
+<li class="chapter" data-level="1.1.6" data-path="vector.html"><a href="vector.html#attribute"><i class="fa fa-check"></i><b>1.1.6</b> ベクトルの属性</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="datatype.html"><a href="datatype.html"><i class="fa fa-check"></i><b>1.2</b> データ型</a><ul>
+<li class="chapter" data-level="1.2" data-path="datatype.html"><a href="datatype.html"><i class="fa fa-check"></i><b>1.2</b> データ型</a>
+<ul>
 <li class="chapter" data-level="1.2.1" data-path="datatype.html"><a href="datatype.html#numeric_and_char"><i class="fa fa-check"></i><b>1.2.1</b> 数値型と文字型</a></li>
 <li class="chapter" data-level="1.2.2" data-path="datatype.html"><a href="datatype.html#factor"><i class="fa fa-check"></i><b>1.2.2</b> 因子型</a></li>
 <li class="chapter" data-level="1.2.3" data-path="datatype.html"><a href="datatype.html#論理型"><i class="fa fa-check"></i><b>1.2.3</b> 論理型</a></li>
@@ -157,74 +161,89 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="arrayandmatrix.html"><a href="arrayandmatrix.html"><i class="fa fa-check"></i><b>1.3</b> データ構造（2）配列と行列</a></li>
 <li class="chapter" data-level="1.4" data-path="list.html"><a href="list.html"><i class="fa fa-check"></i><b>1.4</b> データ構造（3）リスト</a></li>
-<li class="chapter" data-level="1.5" data-path="dataframe.html"><a href="dataframe.html"><i class="fa fa-check"></i><b>1.5</b> データ構造（4）データフレーム</a><ul>
+<li class="chapter" data-level="1.5" data-path="dataframe.html"><a href="dataframe.html"><i class="fa fa-check"></i><b>1.5</b> データ構造（4）データフレーム</a>
+<ul>
 <li class="chapter" data-level="1.5.1" data-path="dataframe.html"><a href="dataframe.html#readcsv"><i class="fa fa-check"></i><b>1.5.1</b> 外部データのデータフレームへのインポート</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="datavis-summary.html"><a href="datavis-summary.html"><i class="fa fa-check"></i><b>2</b> データの簡単な要約と可視化</a><ul>
-<li class="chapter" data-level="2.1" data-path="simple-summary.html"><a href="simple-summary.html"><i class="fa fa-check"></i><b>2.1</b> データの簡単な要約</a></li>
-<li class="chapter" data-level="2.2" data-path="datavis-base.html"><a href="datavis-base.html"><i class="fa fa-check"></i><b>2.2</b> データの簡単な可視化</a><ul>
-<li class="chapter" data-level="2.2.1" data-path="datavis-base.html"><a href="datavis-base.html#barplot"><i class="fa fa-check"></i><b>2.2.1</b> 棒グラフ</a></li>
-<li class="chapter" data-level="2.2.2" data-path="datavis-base.html"><a href="datavis-base.html#histogram"><i class="fa fa-check"></i><b>2.2.2</b> ヒストグラム</a></li>
-<li class="chapter" data-level="2.2.3" data-path="datavis-base.html"><a href="datavis-base.html#boxplot"><i class="fa fa-check"></i><b>2.2.3</b> 箱ひげ図</a></li>
-<li class="chapter" data-level="2.2.4" data-path="datavis-base.html"><a href="datavis-base.html#scatterplot"><i class="fa fa-check"></i><b>2.2.4</b> 散布図</a></li>
-<li class="chapter" data-level="2.2.5" data-path="datavis-base.html"><a href="datavis-base.html#総称的関数"><i class="fa fa-check"></i><b>2.2.5</b> 総称的関数</a></li>
+<li class="chapter" data-level="2" data-path="datavis_summary.html"><a href="datavis_summary.html"><i class="fa fa-check"></i><b>2</b> データの簡単な要約と可視化</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="simple_summary.html"><a href="simple_summary.html"><i class="fa fa-check"></i><b>2.1</b> データの簡単な要約</a></li>
+<li class="chapter" data-level="2.2" data-path="datavis_base.html"><a href="datavis_base.html"><i class="fa fa-check"></i><b>2.2</b> データの簡単な可視化</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="datavis_base.html"><a href="datavis_base.html#barplot"><i class="fa fa-check"></i><b>2.2.1</b> 棒グラフ</a></li>
+<li class="chapter" data-level="2.2.2" data-path="datavis_base.html"><a href="datavis_base.html#histogram"><i class="fa fa-check"></i><b>2.2.2</b> ヒストグラム</a></li>
+<li class="chapter" data-level="2.2.3" data-path="datavis_base.html"><a href="datavis_base.html#boxplot"><i class="fa fa-check"></i><b>2.2.3</b> 箱ひげ図</a></li>
+<li class="chapter" data-level="2.2.4" data-path="datavis_base.html"><a href="datavis_base.html#scatterplot"><i class="fa fa-check"></i><b>2.2.4</b> 散布図</a></li>
+<li class="chapter" data-level="2.2.5" data-path="datavis_base.html"><a href="datavis_base.html#総称的関数"><i class="fa fa-check"></i><b>2.2.5</b> 総称的関数</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="dplyr-tidyr-01.html"><a href="dplyr-tidyr-01.html"><i class="fa fa-check"></i><b>3</b> dplyr/tidyrを用いたデータの整理と変換(1)</a><ul>
+<li class="chapter" data-level="3" data-path="dplyr_tidyr_01.html"><a href="dplyr_tidyr_01.html"><i class="fa fa-check"></i><b>3</b> dplyr/tidyrを用いたデータの整理と変換(1)</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="package.html"><a href="package.html"><i class="fa fa-check"></i><b>3.1</b> パッケージによる機能拡張</a></li>
 <li class="chapter" data-level="3.2" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>3.2</b> tidyverse</a></li>
 <li class="chapter" data-level="3.3" data-path="nycflights13.html"><a href="nycflights13.html"><i class="fa fa-check"></i><b>3.3</b> nycflights13</a></li>
-<li class="chapter" data-level="3.4" data-path="onetable-verbs.html"><a href="onetable-verbs.html"><i class="fa fa-check"></i><b>3.4</b> 1つのテーブルに対するverb</a><ul>
-<li class="chapter" data-level="3.4.1" data-path="onetable-verbs.html"><a href="onetable-verbs.html#filter"><i class="fa fa-check"></i><b>3.4.1</b> 値の条件による抽出：<code>filter()</code></a></li>
-<li class="chapter" data-level="3.4.2" data-path="onetable-verbs.html"><a href="onetable-verbs.html#指定した列の抽出select-select"><i class="fa fa-check"></i><b>3.4.2</b> 指定した列の抽出：<code>select()</code> #{select}</a></li>
-<li class="chapter" data-level="3.4.3" data-path="onetable-verbs.html"><a href="onetable-verbs.html#指定した列を昇順でソートarrange-arrange"><i class="fa fa-check"></i><b>3.4.3</b> 指定した列を昇順でソート：<code>arrange()</code> #{arrange}</a></li>
-<li class="chapter" data-level="3.4.4" data-path="onetable-verbs.html"><a href="onetable-verbs.html#mutate"><i class="fa fa-check"></i><b>3.4.4</b> 新しい列の作成：<code>mutate()</code></a></li>
-<li class="chapter" data-level="3.4.5" data-path="onetable-verbs.html"><a href="onetable-verbs.html#summarise"><i class="fa fa-check"></i><b>3.4.5</b> グループごとの要約：<code>group_by()</code>と<code>summarise()</code></a></li>
+<li class="chapter" data-level="3.4" data-path="onetable_verbs.html"><a href="onetable_verbs.html"><i class="fa fa-check"></i><b>3.4</b> 1つのテーブルに対するverb</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="onetable_verbs.html"><a href="onetable_verbs.html#filter"><i class="fa fa-check"></i><b>3.4.1</b> 値の条件による抽出：<code>filter()</code></a></li>
+<li class="chapter" data-level="3.4.2" data-path="onetable_verbs.html"><a href="onetable_verbs.html#指定した列の抽出select-select"><i class="fa fa-check"></i><b>3.4.2</b> 指定した列の抽出：<code>select()</code> #{select}</a></li>
+<li class="chapter" data-level="3.4.3" data-path="onetable_verbs.html"><a href="onetable_verbs.html#指定した列を昇順でソートarrange-arrange"><i class="fa fa-check"></i><b>3.4.3</b> 指定した列を昇順でソート：<code>arrange()</code> #{arrange}</a></li>
+<li class="chapter" data-level="3.4.4" data-path="onetable_verbs.html"><a href="onetable_verbs.html#mutate"><i class="fa fa-check"></i><b>3.4.4</b> 新しい列の作成：<code>mutate()</code></a></li>
+<li class="chapter" data-level="3.4.5" data-path="onetable_verbs.html"><a href="onetable_verbs.html#summarise"><i class="fa fa-check"></i><b>3.4.5</b> グループごとの要約：<code>group_by()</code>と<code>summarise()</code></a></li>
 </ul></li>
 <li class="chapter" data-level="3.5" data-path="pipe.html"><a href="pipe.html"><i class="fa fa-check"></i><b>3.5</b> パイプ</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="dplyr-tidyr-02.html"><a href="dplyr-tidyr-02.html"><i class="fa fa-check"></i><b>4</b> dplyr/tidyrを用いたデータの整理と変換(2)</a><ul>
-<li class="chapter" data-level="4.1" data-path="two-table-verbs.html"><a href="two-table-verbs.html"><i class="fa fa-check"></i><b>4.1</b> 2つのテーブルを結合するverb</a></li>
+<li class="chapter" data-level="4" data-path="dplyr_tidyr_02.html"><a href="dplyr_tidyr_02.html"><i class="fa fa-check"></i><b>4</b> dplyr/tidyrを用いたデータの整理と変換(2)</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="two_table_verbs.html"><a href="two_table_verbs.html"><i class="fa fa-check"></i><b>4.1</b> 2つのテーブルを結合するverb</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="dplyr-tidyr-03.html"><a href="dplyr-tidyr-03.html"><i class="fa fa-check"></i><b>5</b> dplyr/tidyrを用いたデータの整理と変換(3)</a><ul>
+<li class="chapter" data-level="5" data-path="dplyr_tidyr_03.html"><a href="dplyr_tidyr_03.html"><i class="fa fa-check"></i><b>5</b> dplyr/tidyrを用いたデータの整理と変換(3)</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="tidydata.html"><a href="tidydata.html"><i class="fa fa-check"></i><b>5.1</b> tidydataとは？</a></li>
-<li class="chapter" data-level="5.2" data-path="long-wide.html"><a href="long-wide.html"><i class="fa fa-check"></i><b>5.2</b> 縦長（long）データと横長（wide）データの相互変換</a><ul>
-<li class="chapter" data-level="5.2.1" data-path="long-wide.html"><a href="long-wide.html#pivot_longer関数を用いたwideからlongへの変換"><i class="fa fa-check"></i><b>5.2.1</b> <code>pivot_longer()</code>関数を用いたwideからlongへの変換</a></li>
-<li class="chapter" data-level="5.2.2" data-path="long-wide.html"><a href="long-wide.html#pivot_wider関数を用いたwideからlongへの変換"><i class="fa fa-check"></i><b>5.2.2</b> <code>pivot_wider()</code>関数を用いたwideからlongへの変換</a></li>
+<li class="chapter" data-level="5.2" data-path="long_wide.html"><a href="long_wide.html"><i class="fa fa-check"></i><b>5.2</b> 縦長（long）データと横長（wide）データの相互変換</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="long_wide.html"><a href="long_wide.html#pivot_longer関数を用いたwideからlongへの変換"><i class="fa fa-check"></i><b>5.2.1</b> <code>pivot_longer()</code>関数を用いたwideからlongへの変換</a></li>
+<li class="chapter" data-level="5.2.2" data-path="long_wide.html"><a href="long_wide.html#pivot_wider関数を用いたwideからlongへの変換"><i class="fa fa-check"></i><b>5.2.2</b> <code>pivot_wider()</code>関数を用いたwideからlongへの変換</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="unite-and-separate.html"><a href="unite-and-separate.html"><i class="fa fa-check"></i><b>5.3</b> 列の分割と結合</a></li>
+<li class="chapter" data-level="5.3" data-path="unite_and_separate.html"><a href="unite_and_separate.html"><i class="fa fa-check"></i><b>5.3</b> 列の分割と結合</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="ggplot2-01.html"><a href="ggplot2-01.html"><i class="fa fa-check"></i><b>6</b> ggplot2によるデータの可視化（1）</a><ul>
-<li class="chapter" data-level="6.1" data-path="about-ggplot2.html"><a href="about-ggplot2.html"><i class="fa fa-check"></i><b>6.1</b> ggplot2パッケージについて</a></li>
-<li class="chapter" data-level="6.2" data-path="basics-ggplot2.html"><a href="basics-ggplot2.html"><i class="fa fa-check"></i><b>6.2</b> ggplot2における可視化の基本</a></li>
-<li class="chapter" data-level="6.3" data-path="ggplot-barplot.html"><a href="ggplot-barplot.html"><i class="fa fa-check"></i><b>6.3</b> 棒グラフ</a><ul>
-<li class="chapter" data-level="6.3.1" data-path="ggplot-barplot.html"><a href="ggplot-barplot.html#geom_position"><i class="fa fa-check"></i><b>6.3.1</b> 帯グラフと集合縦棒グラフ</a></li>
-<li class="chapter" data-level="6.3.2" data-path="ggplot-barplot.html"><a href="ggplot-barplot.html#order_factor"><i class="fa fa-check"></i><b>6.3.2</b> カテゴリ（因子型の水準）の並べ替え</a></li>
+<li class="chapter" data-level="6" data-path="ggplot2_01.html"><a href="ggplot2_01.html"><i class="fa fa-check"></i><b>6</b> ggplot2によるデータの可視化（1）</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="about_ggplot2.html"><a href="about_ggplot2.html"><i class="fa fa-check"></i><b>6.1</b> ggplot2パッケージについて</a></li>
+<li class="chapter" data-level="6.2" data-path="basics_ggplot2.html"><a href="basics_ggplot2.html"><i class="fa fa-check"></i><b>6.2</b> ggplot2における可視化の基本</a></li>
+<li class="chapter" data-level="6.3" data-path="ggplot_barplot.html"><a href="ggplot_barplot.html"><i class="fa fa-check"></i><b>6.3</b> 棒グラフ</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="ggplot_barplot.html"><a href="ggplot_barplot.html#geom_position"><i class="fa fa-check"></i><b>6.3.1</b> 帯グラフと集合縦棒グラフ</a></li>
+<li class="chapter" data-level="6.3.2" data-path="ggplot_barplot.html"><a href="ggplot_barplot.html#order_factor"><i class="fa fa-check"></i><b>6.3.2</b> カテゴリ（因子型の水準）の並べ替え</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="ggplot-hist-box.html"><a href="ggplot-hist-box.html"><i class="fa fa-check"></i><b>6.4</b> ヒストグラムと箱ひげ図</a></li>
-<li class="chapter" data-level="6.5" data-path="ggplot-line.html"><a href="ggplot-line.html"><i class="fa fa-check"></i><b>6.5</b> 折れ線グラフ</a><ul>
-<li class="chapter" data-level="6.5.1" data-path="ggplot-line.html"><a href="ggplot-line.html#ggplot_line_y1"><i class="fa fa-check"></i><b>6.5.1</b> x軸が経過時間、y軸が1つの変数</a></li>
-<li class="chapter" data-level="6.5.2" data-path="ggplot-line.html"><a href="ggplot-line.html#ggplot_line_y2"><i class="fa fa-check"></i><b>6.5.2</b> x軸が経過時間、y軸が2つ以上の変数</a></li>
-<li class="chapter" data-level="6.5.3" data-path="ggplot-line.html"><a href="ggplot-line.html#ggplot_line_xdate"><i class="fa fa-check"></i><b>6.5.3</b> x軸が日付、y軸が2つ以上の変数</a></li>
+<li class="chapter" data-level="6.4" data-path="ggplot_hist_box.html"><a href="ggplot_hist_box.html"><i class="fa fa-check"></i><b>6.4</b> ヒストグラムと箱ひげ図</a></li>
+<li class="chapter" data-level="6.5" data-path="ggplot_line.html"><a href="ggplot_line.html"><i class="fa fa-check"></i><b>6.5</b> 折れ線グラフ</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="ggplot_line.html"><a href="ggplot_line.html#ggplot_line_y1"><i class="fa fa-check"></i><b>6.5.1</b> x軸が経過時間、y軸が1つの変数</a></li>
+<li class="chapter" data-level="6.5.2" data-path="ggplot_line.html"><a href="ggplot_line.html#ggplot_line_y2"><i class="fa fa-check"></i><b>6.5.2</b> x軸が経過時間、y軸が2つ以上の変数</a></li>
+<li class="chapter" data-level="6.5.3" data-path="ggplot_line.html"><a href="ggplot_line.html#ggplot_line_xdate"><i class="fa fa-check"></i><b>6.5.3</b> x軸が日付、y軸が2つ以上の変数</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="ggplot2-02.html"><a href="ggplot2-02.html"><i class="fa fa-check"></i><b>7</b> ggplot2によるデータの可視化（2）</a><ul>
+<li class="chapter" data-level="7" data-path="ggplot2_02.html"><a href="ggplot2_02.html"><i class="fa fa-check"></i><b>7</b> ggplot2によるデータの可視化（2）</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="facet.html"><a href="facet.html"><i class="fa fa-check"></i><b>7.1</b> 層別</a></li>
-<li class="chapter" data-level="7.2" data-path="output.html"><a href="output.html"><i class="fa fa-check"></i><b>7.2</b> 出力の調整</a><ul>
+<li class="chapter" data-level="7.2" data-path="output.html"><a href="output.html"><i class="fa fa-check"></i><b>7.2</b> 出力の調整</a>
+<ul>
 <li class="chapter" data-level="7.2.1" data-path="output.html"><a href="output.html#テーマ"><i class="fa fa-check"></i><b>7.2.1</b> テーマ</a></li>
 <li class="chapter" data-level="7.2.2" data-path="output.html"><a href="output.html#軸ラベルタイトルなど"><i class="fa fa-check"></i><b>7.2.2</b> 軸ラベル、タイトルなど</a></li>
 <li class="chapter" data-level="7.2.3" data-path="output.html"><a href="output.html#フォントサイズの調整"><i class="fa fa-check"></i><b>7.2.3</b> フォントサイズの調整</a></li>
 <li class="chapter" data-level="7.2.4" data-path="output.html"><a href="output.html#advancedパワポにグラフをいい感じで貼り付ける"><i class="fa fa-check"></i><b>7.2.4</b> 【Advanced】パワポにグラフをいい感じで貼り付ける</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="api01.html"><a href="api01.html"><i class="fa fa-check"></i><b>8</b> Webからのデータ取得（1）「e-Stat API」</a><ul>
-<li class="chapter" data-level="8.1" data-path="estatapi.html"><a href="estatapi.html"><i class="fa fa-check"></i><b>8.1</b> e-Stat API</a><ul>
+<li class="chapter" data-level="8" data-path="api01.html"><a href="api01.html"><i class="fa fa-check"></i><b>8</b> Webからのデータ取得（1）「e-Stat API」</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="estatapi.html"><a href="estatapi.html"><i class="fa fa-check"></i><b>8.1</b> e-Stat API</a>
+<ul>
 <li class="chapter" data-level="8.1.1" data-path="estatapi.html"><a href="estatapi.html#統計表の検索"><i class="fa fa-check"></i><b>8.1.1</b> 統計表の検索</a></li>
 <li class="chapter" data-level="8.1.2" data-path="estatapi.html"><a href="estatapi.html#メタ情報の取得"><i class="fa fa-check"></i><b>8.1.2</b> メタ情報の取得</a></li>
 <li class="chapter" data-level="8.1.3" data-path="estatapi.html"><a href="estatapi.html#統計データの取得"><i class="fa fa-check"></i><b>8.1.3</b> 統計データの取得</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="aging-population.html"><a href="aging-population.html"><i class="fa fa-check"></i><b>8.2</b> 【例1】少子高齢化の可視化</a></li>
+<li class="chapter" data-level="8.2" data-path="aging_population.html"><a href="aging_population.html"><i class="fa fa-check"></i><b>8.2</b> 【例1】少子高齢化の可視化</a></li>
 <li class="chapter" data-level="8.3" data-path="recycle.html"><a href="recycle.html"><i class="fa fa-check"></i><b>8.3</b> 【例2】リサイクル率の推移の可視化</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="api02.html"><a href="api02.html"><i class="fa fa-check"></i><b>9</b> Webからのデータ取得（2）「World Bank API」</a></li>
@@ -245,26 +264,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="datatype" class="section level2">
+<div id="datatype" class="section level2" number="1.2">
 <h2><span class="header-section-number">1.2</span> データ型</h2>
-<div id="numeric_and_char" class="section level3">
+<div id="numeric_and_char" class="section level3" number="1.2.1">
 <h3><span class="header-section-number">1.2.1</span> 数値型と文字型</h3>
-<p>これまで扱ってきたベクトルに格納しているデータはすべて<strong>数値型</strong>（numeric）でした。Rでは文字列もデータとして扱うことができ、<strong>文字型</strong>（character）のデータと呼びます。文字型のデータはダブルクォート<code>"</code>で囲むことによって表現します。</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="datatype.html#cb50-1"></a>s &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Kasumi&quot;</span>, <span class="st">&quot;Nadeshiko&quot;</span>, <span class="st">&quot;Kashii&quot;</span>)</span>
-<span id="cb50-2"><a href="datatype.html#cb50-2"></a>s</span></code></pre></div>
+<p>これまで扱ってきたベクトルに格納しているデータはすべて<strong>整数型</strong>や<strong>実数型</strong>でした。Rでは文字列もデータとして扱うことができ、<strong>文字型</strong>（character）のデータと呼びます。文字型のデータはダブルクォート<code>"</code>で囲むことによって表現します。</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="datatype.html#cb58-1" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Kasumi&quot;</span>, <span class="st">&quot;Nadeshiko&quot;</span>, <span class="st">&quot;Kashii&quot;</span>)</span>
+<span id="cb58-2"><a href="datatype.html#cb58-2" aria-hidden="true" tabindex="-1"></a>s</span></code></pre></div>
 <pre><code>## [1] &quot;Kasumi&quot;    &quot;Nadeshiko&quot; &quot;Kashii&quot;</code></pre>
-<p><strong>ベクトルは、異なるデータ型を混在させることはできません。</strong>数値型と文字型が混在したベクトルを作成しようとすると、数値型が文字型に強制変換されます。</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="datatype.html#cb52-1"></a><span class="kw">c</span>(<span class="st">&quot;Happy&quot;</span>, <span class="st">&quot;New&quot;</span>, <span class="st">&quot;Year&quot;</span>, <span class="dv">2021</span>)</span></code></pre></div>
+<p><strong>アトミックベクトルは、単一のデータ型のみを格納します。</strong>数値型と文字型が混在したベクトルを作成しようとすると、数値型が文字型に強制変換されます。</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="datatype.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="st">&quot;Happy&quot;</span>, <span class="st">&quot;New&quot;</span>, <span class="st">&quot;Year&quot;</span>, <span class="dv">2021</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Happy&quot; &quot;New&quot;   &quot;Year&quot;  &quot;2021&quot;</code></pre>
-<p><code>class()</code>関数によってオブジェクトの型を確認することができます。</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="datatype.html#cb54-1"></a><span class="kw">class</span>(x)</span></code></pre></div>
+<p><code>typeof()</code>関数によってオブジェクトの型を確認してみます。</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="datatype.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(x)</span></code></pre></div>
 <pre><code>## [1] &quot;numeric&quot;</code></pre>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="datatype.html#cb56-1"></a><span class="kw">class</span>(s)</span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="datatype.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(s)</span></code></pre></div>
 <pre><code>## [1] &quot;character&quot;</code></pre>
 </div>
-<div id="factor" class="section level3">
+<div id="factor" class="section level3" number="1.2.2">
 <h3><span class="header-section-number">1.2.2</span> 因子型</h3>
-<p>統計データを扱うR言語独特のデータ型として、<strong>因子型（factor）</strong>があります。統計学においては、データをその性質から</p>
+<p>統計データを扱うR言語独特のクラス（データ構造を拡張したようなもの）として、<strong>因子型（factor）</strong>があります。統計学においては、データをその性質から</p>
 <ul>
 <li>名義尺度：分類コードやIDとして用いられる数値（血液型や性別など）</li>
 <li>順序尺度：名義尺度に順序に関する情報が追加された数値（成績など）</li>
@@ -272,61 +291,74 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>比例尺度：比の演算結果に意味がある数値（長さ重さなど、0が何もないを表すもの）</li>
 </ul>
 <p>の4種類に分類するという考え方が一般的です。名義尺度と順序尺度の値を持つ変数のことを<strong>質的変数</strong>と呼び、因子型は質的変数を扱うためのデータ型となっています。</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="datatype.html#cb58-1"></a><span class="co"># 数値型から因子型ベクトルを作成</span></span>
-<span id="cb58-2"><a href="datatype.html#cb58-2"></a>hakata &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
-<span id="cb58-3"><a href="datatype.html#cb58-3"></a>fhakata &lt;-<span class="st"> </span><span class="kw">factor</span>(hakata, <span class="dt">levels =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">3</span>)</span>
-<span id="cb58-4"><a href="datatype.html#cb58-4"></a>fhakata</span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="datatype.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 数値型から因子型ベクトルを作成</span></span>
+<span id="cb66-2"><a href="datatype.html#cb66-2" aria-hidden="true" tabindex="-1"></a>hakata <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb66-3"><a href="datatype.html#cb66-3" aria-hidden="true" tabindex="-1"></a>fhakata <span class="ot">&lt;-</span> <span class="fu">factor</span>(hakata, <span class="at">levels =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb66-4"><a href="datatype.html#cb66-4" aria-hidden="true" tabindex="-1"></a>fhakata</span></code></pre></div>
 <pre><code>## [1] 0 2 3 1 3 2 1 2
 ## Levels: 0 1 2 3</code></pre>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="datatype.html#cb60-1"></a><span class="kw">as.numeric</span>(fhakata)</span></code></pre></div>
-<pre><code>## [1] 1 3 4 2 4 3 2 3</code></pre>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="datatype.html#cb62-1"></a><span class="kw">as.numeric</span>(<span class="kw">as.character</span>(fhakata))</span></code></pre></div>
-<pre><code>## [1] 0 2 3 1 3 2 1 2</code></pre>
 <p>この例では、最初に数値型のベクトルを作成し、それを<code>factor()</code>関数で因子型のベクトルに変換しています。<code>factor()</code>関数の<code>levels</code>引数は、<strong>水準集合</strong>のベクトルを指定します。この場合、0という数値が1番目の水準に、1という数値が2番目の水準というように割り当てられることを意味します。</p>
-<p>因子型のベクトルの場合、内容を表示すると<code>Levels</code>の行のように水準集合が合わせて表示されるので、これでデータが因子型かどうかを見分けることができます。<code>as.numeric()</code>関数で因子型ベクトルを数値型ベクトルに変換すると、水準番号が出力されます。元のデータを出力する場合には、<code>as.character()</code>関数で一旦文字型ベクトルに変換してから、数値型ベクトルに変換します。</p>
+<p>因子型のベクトルの場合、内容を表示すると<code>Levels</code>の行のように水準集合が合わせて表示されるので、これでデータが因子型かどうかを見分けることができます。</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="datatype.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(fhakata)</span></code></pre></div>
+<pre><code>## $levels
+## [1] &quot;0&quot; &quot;1&quot; &quot;2&quot; &quot;3&quot;
+## 
+## $class
+## [1] &quot;factor&quot;</code></pre>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="datatype.html#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.numeric</span>(fhakata)</span></code></pre></div>
+<pre><code>## [1] 1 3 4 2 4 3 2 3</code></pre>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="datatype.html#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.numeric</span>(<span class="fu">as.character</span>(fhakata))</span></code></pre></div>
+<pre><code>## [1] 0 2 3 1 3 2 1 2</code></pre>
+<p><code>attributes()</code>関数を使うと、引数で指定されたオブジェクトの属性一覧を表示することができます。<code>fhakata</code>は<code>levels</code>と<code>class</code>の2つの属性を持っていることが確認できます。因子型の実体は、水準番号（1,2,3・・・）をベクトルの要素として持ち、水準番号に対応した水準集合を属性として持っているようなオブジェクトになります。</p>
+<p><code>as.numeric()</code>関数で因子型ベクトルを数値型ベクトルに変換すると、水準番号が出力されます。元のデータを出力する場合には、<code>as.character()</code>関数で一旦文字型ベクトルに変換してから、数値型ベクトルに変換します。</p>
 <p><code>levels</code>関数を使うと、水準集合を参照したり更新したりすることができます。</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="datatype.html#cb64-1"></a><span class="kw">levels</span>(fhakata)</span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="datatype.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(fhakata)</span></code></pre></div>
 <pre><code>## [1] &quot;0&quot; &quot;1&quot; &quot;2&quot; &quot;3&quot;</code></pre>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="datatype.html#cb66-1"></a><span class="kw">levels</span>(fhakata) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;天ぷら&quot;</span>, <span class="st">&quot;もつ鍋&quot;</span>, <span class="st">&quot;ラーメン&quot;</span>, <span class="st">&quot;ごまさば&quot;</span>)</span>
-<span id="cb66-2"><a href="datatype.html#cb66-2"></a>fhakata</span></code></pre></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="datatype.html#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(fhakata) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;天ぷら&quot;</span>, <span class="st">&quot;もつ鍋&quot;</span>, <span class="st">&quot;ラーメン&quot;</span>, <span class="st">&quot;ごまさば&quot;</span>)</span>
+<span id="cb76-2"><a href="datatype.html#cb76-2" aria-hidden="true" tabindex="-1"></a>fhakata</span></code></pre></div>
 <pre><code>## [1] 天ぷら   ラーメン ごまさば もつ鍋   ごまさば ラーメン もつ鍋   ラーメン
 ## Levels: 天ぷら もつ鍋 ラーメン ごまさば</code></pre>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="datatype.html#cb68-1"></a><span class="kw">as.numeric</span>(fhakata)</span></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="datatype.html#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.numeric</span>(fhakata)</span></code></pre></div>
 <pre><code>## [1] 1 3 4 2 4 3 2 3</code></pre>
 <p>質的変数のデータは、元々は文字列として記録されていることが多いかもしれません。文字型ベクトルを<code>factor()</code>関数で因子型に変換すると、出現した要素全てが水準集合に含まれるようになります。</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="datatype.html#cb70-1"></a>fhakata_char &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;天ぷら&quot;</span>, <span class="st">&quot;もつ鍋&quot;</span>, <span class="st">&quot;ラーメン&quot;</span>, <span class="st">&quot;ごまさば&quot;</span>, <span class="st">&quot;ラーメン&quot;</span>)</span>
-<span id="cb70-2"><a href="datatype.html#cb70-2"></a><span class="kw">factor</span>(fhakata_char)</span></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="datatype.html#cb80-1" aria-hidden="true" tabindex="-1"></a>fhakata_char <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;天ぷら&quot;</span>, <span class="st">&quot;もつ鍋&quot;</span>, <span class="st">&quot;ラーメン&quot;</span>, <span class="st">&quot;ごまさば&quot;</span>, <span class="st">&quot;ラーメン&quot;</span>)</span>
+<span id="cb80-2"><a href="datatype.html#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="fu">factor</span>(fhakata_char)</span></code></pre></div>
 <pre><code>## [1] 天ぷら   もつ鍋   ラーメン ごまさば ラーメン
 ## Levels: ごまさば もつ鍋 ラーメン 天ぷら</code></pre>
+<p>上で述べたように、因子型の実体は水準番号なので、<code>typeof()</code>関数で<code>fhakata</code>のデータ型を確認すると<code>integer</code>となります。一方、<code>class()</code>関数で<code>fhakata</code>のクラスを確認すると<code>factor</code>となります。</p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="datatype.html#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(fhakata)</span></code></pre></div>
+<pre><code>## [1] &quot;integer&quot;</code></pre>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="datatype.html#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(fhakata)</span></code></pre></div>
+<pre><code>## [1] &quot;factor&quot;</code></pre>
 </div>
-<div id="論理型" class="section level3">
+<div id="論理型" class="section level3" number="1.2.3">
 <h3><span class="header-section-number">1.2.3</span> 論理型</h3>
 <p><code>TRUE</code>と<code>FALSE</code>あるいはそれらの省略形として<code>T</code>と<code>F</code>は、<strong>論理型（logical）</strong>と呼ばれるデータ型の値であり、それぞれ真（True）と偽（False）を表現するために用いられます<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>。</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="datatype.html#cb72-1"></a>logical_sample &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, T, T, F, F)</span>
-<span id="cb72-2"><a href="datatype.html#cb72-2"></a>logical_sample</span></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="datatype.html#cb86-1" aria-hidden="true" tabindex="-1"></a>logical_sample <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, T, T, F, F)</span>
+<span id="cb86-2"><a href="datatype.html#cb86-2" aria-hidden="true" tabindex="-1"></a>logical_sample</span></code></pre></div>
 <pre><code>## [1]  TRUE FALSE  TRUE  TRUE FALSE FALSE</code></pre>
 </div>
-<div id="欠損値の表現について" class="section level3">
+<div id="欠損値の表現について" class="section level3" number="1.2.4">
 <h3><span class="header-section-number">1.2.4</span> 欠損値の表現について</h3>
 <p>実際に統計データを扱う際には、何らかの理由で一部のデータが観測されなかったり、個人情報保護の目的で一部のデータが提供されていなかったりすることがあります。このようなデータを表現するために、Rでは欠損値を意味する値<code>NA</code>が用いられます。</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="datatype.html#cb74-1"></a>x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="ot">NA</span>, <span class="dv">3</span>, <span class="dv">2</span>)</span>
-<span id="cb74-2"><a href="datatype.html#cb74-2"></a>x</span></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="datatype.html#cb88-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="cn">NA</span>, <span class="dv">3</span>, <span class="dv">2</span>)</span>
+<span id="cb88-2"><a href="datatype.html#cb88-2" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
 <pre><code>## [1]  2  5 10 NA  3  2</code></pre>
 <p><code>NA</code>を含んだベクトルに対して演算や集計をした場合は次のようになります。</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="datatype.html#cb76-1"></a>y &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">6</span></span>
-<span id="cb76-2"><a href="datatype.html#cb76-2"></a>x <span class="op">+</span><span class="st"> </span>y</span></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="datatype.html#cb90-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span></span>
+<span id="cb90-2"><a href="datatype.html#cb90-2" aria-hidden="true" tabindex="-1"></a>x <span class="sc">+</span> y</span></code></pre></div>
 <pre><code>## [1]  3  7 13 NA  8  8</code></pre>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="datatype.html#cb78-1"></a><span class="kw">sum</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="datatype.html#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(x)</span></code></pre></div>
 <pre><code>## [1] NA</code></pre>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="datatype.html#cb80-1"></a><span class="kw">mean</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="datatype.html#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span></code></pre></div>
 <pre><code>## [1] NA</code></pre>
 <p><code>sum()</code>関数や<code>mean()</code>関数で欠損値を無視して計算したい場合には、引数で<code>na.rm = TRUE</code>を指定します。</p>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="datatype.html#cb82-1"></a><span class="kw">sum</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="datatype.html#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## [1] 22</code></pre>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="datatype.html#cb84-1"></a><span class="kw">mean</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="datatype.html#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## [1] 4.4</code></pre>
 <p>因子型ベクトルを作成するとき、数値型のベクトルに水準集合に含まれない要素がある場合には、因子型ベクトルの中では欠損値として扱われます。</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="datatype.html#cb86-1"></a><span class="kw">factor</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">2</span>), <span class="dt">levels =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="datatype.html#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">factor</span>(<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">2</span>), <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span></code></pre></div>
 <pre><code>## [1] 2    3    &lt;NA&gt; 2   
 ## Levels: 1 2 3 4</code></pre>
 </div>
@@ -366,6 +398,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -386,6 +419,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "lunr",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

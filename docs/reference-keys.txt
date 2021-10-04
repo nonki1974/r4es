@@ -5,6 +5,7 @@ usefulfunctionforgeneratingvec
 operator_for_vec
 reference_for_element
 useful_function_for_vec
+attribute
 datatype
 numeric_and_char
 factor
