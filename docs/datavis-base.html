@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>2.2 データの簡単な可視化 | Rによるデータ解析入門</title>
   <meta name="description" content="2.2 データの簡単な可視化 | Rによるデータ解析入門" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="2.2 データの簡単な可視化 | Rによるデータ解析入門" />
   <meta property="og:type" content="book" />
@@ -32,7 +32,8 @@
   
 <link rel="prev" href="simple-summary.html"/>
 <link rel="next" href="dplyr-tidyr-01.html"/>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,34 +50,32 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.16/datatables.js"></script>
+<script src="libs/datatables-binding-0.18/datatables.js"></script>
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
-<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
 <link href="libs/dt-ext-fixedcolumns-1.10.20/css/fixedColumns.dataTables.min.css" rel="stylesheet" />
 <script src="libs/dt-ext-fixedcolumns-1.10.20/js/dataTables.fixedColumns.min.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -96,7 +95,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -129,6 +128,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 </head>
 
 <body>
@@ -141,15 +141,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Rの基礎（データ構造とデータ型）</a><ul>
-<li class="chapter" data-level="1.1" data-path="vector.html"><a href="vector.html"><i class="fa fa-check"></i><b>1.1</b> データ構造（1）ベクトル</a><ul>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Rの基礎（データ構造とデータ型）</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="vector.html"><a href="vector.html"><i class="fa fa-check"></i><b>1.1</b> データ構造（1）ベクトル</a>
+<ul>
 <li class="chapter" data-level="1.1.1" data-path="vector.html"><a href="vector.html#object_and_var"><i class="fa fa-check"></i><b>1.1.1</b> オブジェクトと変数</a></li>
 <li class="chapter" data-level="1.1.2" data-path="vector.html"><a href="vector.html#usefulfunctionforgeneratingvec"><i class="fa fa-check"></i><b>1.1.2</b> 便利なベクトル作成法</a></li>
 <li class="chapter" data-level="1.1.3" data-path="vector.html"><a href="vector.html#operator_for_vec"><i class="fa fa-check"></i><b>1.1.3</b> ベクトルの演算</a></li>
 <li class="chapter" data-level="1.1.4" data-path="vector.html"><a href="vector.html#reference_for_element"><i class="fa fa-check"></i><b>1.1.4</b> ベクトルの要素の参照</a></li>
 <li class="chapter" data-level="1.1.5" data-path="vector.html"><a href="vector.html#useful_function_for_vec"><i class="fa fa-check"></i><b>1.1.5</b> ベクトルに対する便利な関数</a></li>
+<li class="chapter" data-level="1.1.6" data-path="vector.html"><a href="vector.html#attribute"><i class="fa fa-check"></i><b>1.1.6</b> ベクトルの属性</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="datatype.html"><a href="datatype.html"><i class="fa fa-check"></i><b>1.2</b> データ型</a><ul>
+<li class="chapter" data-level="1.2" data-path="datatype.html"><a href="datatype.html"><i class="fa fa-check"></i><b>1.2</b> データ型</a>
+<ul>
 <li class="chapter" data-level="1.2.1" data-path="datatype.html"><a href="datatype.html#numeric_and_char"><i class="fa fa-check"></i><b>1.2.1</b> 数値型と文字型</a></li>
 <li class="chapter" data-level="1.2.2" data-path="datatype.html"><a href="datatype.html#factor"><i class="fa fa-check"></i><b>1.2.2</b> 因子型</a></li>
 <li class="chapter" data-level="1.2.3" data-path="datatype.html"><a href="datatype.html#論理型"><i class="fa fa-check"></i><b>1.2.3</b> 論理型</a></li>
@@ -157,13 +161,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="arrayandmatrix.html"><a href="arrayandmatrix.html"><i class="fa fa-check"></i><b>1.3</b> データ構造（2）配列と行列</a></li>
 <li class="chapter" data-level="1.4" data-path="list.html"><a href="list.html"><i class="fa fa-check"></i><b>1.4</b> データ構造（3）リスト</a></li>
-<li class="chapter" data-level="1.5" data-path="dataframe.html"><a href="dataframe.html"><i class="fa fa-check"></i><b>1.5</b> データ構造（4）データフレーム</a><ul>
+<li class="chapter" data-level="1.5" data-path="dataframe.html"><a href="dataframe.html"><i class="fa fa-check"></i><b>1.5</b> データ構造（4）データフレーム</a>
+<ul>
 <li class="chapter" data-level="1.5.1" data-path="dataframe.html"><a href="dataframe.html#readcsv"><i class="fa fa-check"></i><b>1.5.1</b> 外部データのデータフレームへのインポート</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="datavis-summary.html"><a href="datavis-summary.html"><i class="fa fa-check"></i><b>2</b> データの簡単な要約と可視化</a><ul>
+<li class="chapter" data-level="2" data-path="datavis-summary.html"><a href="datavis-summary.html"><i class="fa fa-check"></i><b>2</b> データの簡単な要約と可視化</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="simple-summary.html"><a href="simple-summary.html"><i class="fa fa-check"></i><b>2.1</b> データの簡単な要約</a></li>
-<li class="chapter" data-level="2.2" data-path="datavis-base.html"><a href="datavis-base.html"><i class="fa fa-check"></i><b>2.2</b> データの簡単な可視化</a><ul>
+<li class="chapter" data-level="2.2" data-path="datavis-base.html"><a href="datavis-base.html"><i class="fa fa-check"></i><b>2.2</b> データの簡単な可視化</a>
+<ul>
 <li class="chapter" data-level="2.2.1" data-path="datavis-base.html"><a href="datavis-base.html#barplot"><i class="fa fa-check"></i><b>2.2.1</b> 棒グラフ</a></li>
 <li class="chapter" data-level="2.2.2" data-path="datavis-base.html"><a href="datavis-base.html#histogram"><i class="fa fa-check"></i><b>2.2.2</b> ヒストグラム</a></li>
 <li class="chapter" data-level="2.2.3" data-path="datavis-base.html"><a href="datavis-base.html#boxplot"><i class="fa fa-check"></i><b>2.2.3</b> 箱ひげ図</a></li>
@@ -171,11 +178,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2.5" data-path="datavis-base.html"><a href="datavis-base.html#総称的関数"><i class="fa fa-check"></i><b>2.2.5</b> 総称的関数</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="dplyr-tidyr-01.html"><a href="dplyr-tidyr-01.html"><i class="fa fa-check"></i><b>3</b> dplyr/tidyrを用いたデータの整理と変換(1)</a><ul>
+<li class="chapter" data-level="3" data-path="dplyr-tidyr-01.html"><a href="dplyr-tidyr-01.html"><i class="fa fa-check"></i><b>3</b> dplyr/tidyrを用いたデータの整理と変換(1)</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="package.html"><a href="package.html"><i class="fa fa-check"></i><b>3.1</b> パッケージによる機能拡張</a></li>
 <li class="chapter" data-level="3.2" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>3.2</b> tidyverse</a></li>
 <li class="chapter" data-level="3.3" data-path="nycflights13.html"><a href="nycflights13.html"><i class="fa fa-check"></i><b>3.3</b> nycflights13</a></li>
-<li class="chapter" data-level="3.4" data-path="onetable-verbs.html"><a href="onetable-verbs.html"><i class="fa fa-check"></i><b>3.4</b> 1つのテーブルに対するverb</a><ul>
+<li class="chapter" data-level="3.4" data-path="onetable-verbs.html"><a href="onetable-verbs.html"><i class="fa fa-check"></i><b>3.4</b> 1つのテーブルに対するverb</a>
+<ul>
 <li class="chapter" data-level="3.4.1" data-path="onetable-verbs.html"><a href="onetable-verbs.html#filter"><i class="fa fa-check"></i><b>3.4.1</b> 値の条件による抽出：<code>filter()</code></a></li>
 <li class="chapter" data-level="3.4.2" data-path="onetable-verbs.html"><a href="onetable-verbs.html#指定した列の抽出select-select"><i class="fa fa-check"></i><b>3.4.2</b> 指定した列の抽出：<code>select()</code> #{select}</a></li>
 <li class="chapter" data-level="3.4.3" data-path="onetable-verbs.html"><a href="onetable-verbs.html#指定した列を昇順でソートarrange-arrange"><i class="fa fa-check"></i><b>3.4.3</b> 指定した列を昇順でソート：<code>arrange()</code> #{arrange}</a></li>
@@ -184,42 +193,52 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3.5" data-path="pipe.html"><a href="pipe.html"><i class="fa fa-check"></i><b>3.5</b> パイプ</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="dplyr-tidyr-02.html"><a href="dplyr-tidyr-02.html"><i class="fa fa-check"></i><b>4</b> dplyr/tidyrを用いたデータの整理と変換(2)</a><ul>
+<li class="chapter" data-level="4" data-path="dplyr-tidyr-02.html"><a href="dplyr-tidyr-02.html"><i class="fa fa-check"></i><b>4</b> dplyr/tidyrを用いたデータの整理と変換(2)</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="two-table-verbs.html"><a href="two-table-verbs.html"><i class="fa fa-check"></i><b>4.1</b> 2つのテーブルを結合するverb</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="dplyr-tidyr-03.html"><a href="dplyr-tidyr-03.html"><i class="fa fa-check"></i><b>5</b> dplyr/tidyrを用いたデータの整理と変換(3)</a><ul>
+<li class="chapter" data-level="5" data-path="dplyr-tidyr-03.html"><a href="dplyr-tidyr-03.html"><i class="fa fa-check"></i><b>5</b> dplyr/tidyrを用いたデータの整理と変換(3)</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="tidydata.html"><a href="tidydata.html"><i class="fa fa-check"></i><b>5.1</b> tidydataとは？</a></li>
-<li class="chapter" data-level="5.2" data-path="long-wide.html"><a href="long-wide.html"><i class="fa fa-check"></i><b>5.2</b> 縦長（long）データと横長（wide）データの相互変換</a><ul>
+<li class="chapter" data-level="5.2" data-path="long-wide.html"><a href="long-wide.html"><i class="fa fa-check"></i><b>5.2</b> 縦長（long）データと横長（wide）データの相互変換</a>
+<ul>
 <li class="chapter" data-level="5.2.1" data-path="long-wide.html"><a href="long-wide.html#pivot_longer関数を用いたwideからlongへの変換"><i class="fa fa-check"></i><b>5.2.1</b> <code>pivot_longer()</code>関数を用いたwideからlongへの変換</a></li>
 <li class="chapter" data-level="5.2.2" data-path="long-wide.html"><a href="long-wide.html#pivot_wider関数を用いたwideからlongへの変換"><i class="fa fa-check"></i><b>5.2.2</b> <code>pivot_wider()</code>関数を用いたwideからlongへの変換</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="unite-and-separate.html"><a href="unite-and-separate.html"><i class="fa fa-check"></i><b>5.3</b> 列の分割と結合</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="ggplot2-01.html"><a href="ggplot2-01.html"><i class="fa fa-check"></i><b>6</b> ggplot2によるデータの可視化（1）</a><ul>
+<li class="chapter" data-level="6" data-path="ggplot2-01.html"><a href="ggplot2-01.html"><i class="fa fa-check"></i><b>6</b> ggplot2によるデータの可視化（1）</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="about-ggplot2.html"><a href="about-ggplot2.html"><i class="fa fa-check"></i><b>6.1</b> ggplot2パッケージについて</a></li>
 <li class="chapter" data-level="6.2" data-path="basics-ggplot2.html"><a href="basics-ggplot2.html"><i class="fa fa-check"></i><b>6.2</b> ggplot2における可視化の基本</a></li>
-<li class="chapter" data-level="6.3" data-path="ggplot-barplot.html"><a href="ggplot-barplot.html"><i class="fa fa-check"></i><b>6.3</b> 棒グラフ</a><ul>
+<li class="chapter" data-level="6.3" data-path="ggplot-barplot.html"><a href="ggplot-barplot.html"><i class="fa fa-check"></i><b>6.3</b> 棒グラフ</a>
+<ul>
 <li class="chapter" data-level="6.3.1" data-path="ggplot-barplot.html"><a href="ggplot-barplot.html#geom_position"><i class="fa fa-check"></i><b>6.3.1</b> 帯グラフと集合縦棒グラフ</a></li>
 <li class="chapter" data-level="6.3.2" data-path="ggplot-barplot.html"><a href="ggplot-barplot.html#order_factor"><i class="fa fa-check"></i><b>6.3.2</b> カテゴリ（因子型の水準）の並べ替え</a></li>
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="ggplot-hist-box.html"><a href="ggplot-hist-box.html"><i class="fa fa-check"></i><b>6.4</b> ヒストグラムと箱ひげ図</a></li>
-<li class="chapter" data-level="6.5" data-path="ggplot-line.html"><a href="ggplot-line.html"><i class="fa fa-check"></i><b>6.5</b> 折れ線グラフ</a><ul>
+<li class="chapter" data-level="6.5" data-path="ggplot-line.html"><a href="ggplot-line.html"><i class="fa fa-check"></i><b>6.5</b> 折れ線グラフ</a>
+<ul>
 <li class="chapter" data-level="6.5.1" data-path="ggplot-line.html"><a href="ggplot-line.html#ggplot_line_y1"><i class="fa fa-check"></i><b>6.5.1</b> x軸が経過時間、y軸が1つの変数</a></li>
 <li class="chapter" data-level="6.5.2" data-path="ggplot-line.html"><a href="ggplot-line.html#ggplot_line_y2"><i class="fa fa-check"></i><b>6.5.2</b> x軸が経過時間、y軸が2つ以上の変数</a></li>
 <li class="chapter" data-level="6.5.3" data-path="ggplot-line.html"><a href="ggplot-line.html#ggplot_line_xdate"><i class="fa fa-check"></i><b>6.5.3</b> x軸が日付、y軸が2つ以上の変数</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="ggplot2-02.html"><a href="ggplot2-02.html"><i class="fa fa-check"></i><b>7</b> ggplot2によるデータの可視化（2）</a><ul>
+<li class="chapter" data-level="7" data-path="ggplot2-02.html"><a href="ggplot2-02.html"><i class="fa fa-check"></i><b>7</b> ggplot2によるデータの可視化（2）</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="facet.html"><a href="facet.html"><i class="fa fa-check"></i><b>7.1</b> 層別</a></li>
-<li class="chapter" data-level="7.2" data-path="output.html"><a href="output.html"><i class="fa fa-check"></i><b>7.2</b> 出力の調整</a><ul>
+<li class="chapter" data-level="7.2" data-path="output.html"><a href="output.html"><i class="fa fa-check"></i><b>7.2</b> 出力の調整</a>
+<ul>
 <li class="chapter" data-level="7.2.1" data-path="output.html"><a href="output.html#テーマ"><i class="fa fa-check"></i><b>7.2.1</b> テーマ</a></li>
 <li class="chapter" data-level="7.2.2" data-path="output.html"><a href="output.html#軸ラベルタイトルなど"><i class="fa fa-check"></i><b>7.2.2</b> 軸ラベル、タイトルなど</a></li>
 <li class="chapter" data-level="7.2.3" data-path="output.html"><a href="output.html#フォントサイズの調整"><i class="fa fa-check"></i><b>7.2.3</b> フォントサイズの調整</a></li>
 <li class="chapter" data-level="7.2.4" data-path="output.html"><a href="output.html#advancedパワポにグラフをいい感じで貼り付ける"><i class="fa fa-check"></i><b>7.2.4</b> 【Advanced】パワポにグラフをいい感じで貼り付ける</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="api01.html"><a href="api01.html"><i class="fa fa-check"></i><b>8</b> Webからのデータ取得（1）「e-Stat API」</a><ul>
-<li class="chapter" data-level="8.1" data-path="estatapi.html"><a href="estatapi.html"><i class="fa fa-check"></i><b>8.1</b> e-Stat API</a><ul>
+<li class="chapter" data-level="8" data-path="api01.html"><a href="api01.html"><i class="fa fa-check"></i><b>8</b> Webからのデータ取得（1）「e-Stat API」</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="estatapi.html"><a href="estatapi.html"><i class="fa fa-check"></i><b>8.1</b> e-Stat API</a>
+<ul>
 <li class="chapter" data-level="8.1.1" data-path="estatapi.html"><a href="estatapi.html#統計表の検索"><i class="fa fa-check"></i><b>8.1.1</b> 統計表の検索</a></li>
 <li class="chapter" data-level="8.1.2" data-path="estatapi.html"><a href="estatapi.html#メタ情報の取得"><i class="fa fa-check"></i><b>8.1.2</b> メタ情報の取得</a></li>
 <li class="chapter" data-level="8.1.3" data-path="estatapi.html"><a href="estatapi.html#統計データの取得"><i class="fa fa-check"></i><b>8.1.3</b> 統計データの取得</a></li>
@@ -245,12 +264,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="datavis_base" class="section level2">
+<div id="datavis_base" class="section level2" number="2.2">
 <h2><span class="header-section-number">2.2</span> データの簡単な可視化</h2>
 <p>まず、機械学習関連の情報やサンプルデータを提供している、<a href="http://archive.ics.uci.edu/ml/">UCI Machine Learning Repository</a>から、ある<a href="http://archive.ics.uci.edu/ml/datasets/Wholesale+customers">卸売業者の顧客データ</a>をダウンロードしてみましょう。ページを開いたら「Data Folder」のリンクをたどると、CSVファイルへのリンクがあるので、これをダウンロードしてください。ダウンロードしたファイルは作業ディレクトリ（プロジェクトフォルダの場所）に作成した「data」フォルダに保存しておいてください。</p>
 <p>CSVファイルを<code>read.csv()</code>関数でRにインポートします。</p>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="datavis-base.html#cb155-1"></a>ws_customer &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;./data/Wholesale customers data.csv&quot;</span>)</span>
-<span id="cb155-2"><a href="datavis-base.html#cb155-2"></a><span class="kw">head</span>(ws_customer)</span></code></pre></div>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="datavis-base.html#cb171-1" aria-hidden="true" tabindex="-1"></a>ws_customer <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;./data/Wholesale customers data.csv&quot;</span>)</span>
+<span id="cb171-2"><a href="datavis-base.html#cb171-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ws_customer)</span></code></pre></div>
 <pre><code>##   Channel Region Fresh Milk Grocery Frozen Detergents_Paper Delicassen
 ## 1       2      3 12669 9656    7561    214             2674       1338
 ## 2       2      3  7057 9810    9568   1762             3293       1776
@@ -259,7 +278,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5       2      3 22615 5410    7198   3915             1777       5185
 ## 6       2      3  9413 8259    5126    666             1795       1451</code></pre>
 <p><a href="http://archive.ics.uci.edu/ml/datasets/Wholesale+customers">卸売業者の顧客データ</a>のページにおけるAttribute Informationの項目を見てみると、<code>Channel</code>は<code>1</code>がホテル、レストランやカフェ、<code>2</code>が小売の販売チャンネルを意味しています。また、<code>Region</code>は<code>1</code>がリスボン、<code>2</code>がオポルト、<code>3</code>がその他の地域を表しているようです。これらは名義尺度の変数ですが、</p>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="datavis-base.html#cb157-1"></a><span class="kw">str</span>(ws_customer)</span></code></pre></div>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="datavis-base.html#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(ws_customer)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    440 obs. of  8 variables:
 ##  $ Channel         : int  2 2 2 1 2 2 2 2 1 2 ...
 ##  $ Region          : int  3 3 3 3 3 3 3 3 3 3 ...
@@ -270,10 +289,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  $ Detergents_Paper: int  2674 3293 3516 507 1777 1795 3140 3321 1716 7425 ...
 ##  $ Delicassen      : int  1338 1776 7844 1788 5185 1451 545 2566 750 2098 ...</code></pre>
 <p>で分かるように、数値型として取り込まれています。これを名義尺度として扱うために、因子型に変換しておきます。</p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="datavis-base.html#cb159-1"></a>ws_customer<span class="op">$</span>Channel &lt;-<span class="st"> </span><span class="kw">factor</span>(ws_customer<span class="op">$</span>Channel, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Horeca&quot;</span>, <span class="st">&quot;Retail&quot;</span>))</span>
-<span id="cb159-2"><a href="datavis-base.html#cb159-2"></a>ws_customer<span class="op">$</span>Region &lt;-<span class="st"> </span><span class="kw">factor</span>(ws_customer<span class="op">$</span>Region,</span>
-<span id="cb159-3"><a href="datavis-base.html#cb159-3"></a>                             <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Lisbon&quot;</span>, <span class="st">&quot;Oporto&quot;</span>, <span class="st">&quot;Other Region&quot;</span>))</span>
-<span id="cb159-4"><a href="datavis-base.html#cb159-4"></a><span class="kw">str</span>(ws_customer)</span></code></pre></div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="datavis-base.html#cb175-1" aria-hidden="true" tabindex="-1"></a>ws_customer<span class="sc">$</span>Channel <span class="ot">&lt;-</span> <span class="fu">factor</span>(ws_customer<span class="sc">$</span>Channel, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Horeca&quot;</span>, <span class="st">&quot;Retail&quot;</span>))</span>
+<span id="cb175-2"><a href="datavis-base.html#cb175-2" aria-hidden="true" tabindex="-1"></a>ws_customer<span class="sc">$</span>Region <span class="ot">&lt;-</span> <span class="fu">factor</span>(ws_customer<span class="sc">$</span>Region,</span>
+<span id="cb175-3"><a href="datavis-base.html#cb175-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Lisbon&quot;</span>, <span class="st">&quot;Oporto&quot;</span>, <span class="st">&quot;Other Region&quot;</span>))</span>
+<span id="cb175-4"><a href="datavis-base.html#cb175-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(ws_customer)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    440 obs. of  8 variables:
 ##  $ Channel         : Factor w/ 2 levels &quot;Horeca&quot;,&quot;Retail&quot;: 2 2 2 1 2 2 2 2 1 2 ...
 ##  $ Region          : Factor w/ 3 levels &quot;Lisbon&quot;,&quot;Oporto&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
@@ -284,7 +303,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  $ Detergents_Paper: int  2674 3293 3516 507 1777 1795 3140 3321 1716 7425 ...
 ##  $ Delicassen      : int  1338 1776 7844 1788 5185 1451 545 2566 750 2098 ...</code></pre>
 <p><code>summary()</code>関数を適用すると以下のようになります。</p>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="datavis-base.html#cb161-1"></a><span class="kw">summary</span>(ws_customer)</span></code></pre></div>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="datavis-base.html#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ws_customer)</span></code></pre></div>
 <pre><code>##    Channel             Region        Fresh             Milk      
 ##  Horeca:298   Lisbon      : 77   Min.   :     3   Min.   :   55  
 ##  Retail:142   Oporto      : 47   1st Qu.:  3128   1st Qu.: 1533  
@@ -299,47 +318,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  Mean   : 7951   Mean   : 3071.9   Mean   : 2881.5   Mean   : 1524.9  
 ##  3rd Qu.:10656   3rd Qu.: 3554.2   3rd Qu.: 3922.0   3rd Qu.: 1820.2  
 ##  Max.   :92780   Max.   :60869.0   Max.   :40827.0   Max.   :47943.0</code></pre>
-<div id="barplot" class="section level3">
+<div id="barplot" class="section level3" number="2.2.1">
 <h3><span class="header-section-number">2.2.1</span> 棒グラフ</h3>
 <p>棒グラフは名義尺度と比例尺度の組からなるデータを可視化するツールですが、ここでは、<code>Channel</code>（名義尺度）ごとの度数（比例尺度）を棒グラフにしてみます。</p>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="datavis-base.html#cb163-1"></a>channel_count &lt;-<span class="st"> </span><span class="kw">table</span>(ws_customer<span class="op">$</span>Channel)</span>
-<span id="cb163-2"><a href="datavis-base.html#cb163-2"></a>channel_count</span></code></pre></div>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="datavis-base.html#cb179-1" aria-hidden="true" tabindex="-1"></a>channel_count <span class="ot">&lt;-</span> <span class="fu">table</span>(ws_customer<span class="sc">$</span>Channel)</span>
+<span id="cb179-2"><a href="datavis-base.html#cb179-2" aria-hidden="true" tabindex="-1"></a>channel_count</span></code></pre></div>
 <pre><code>## 
 ## Horeca Retail 
 ##    298    142</code></pre>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="datavis-base.html#cb165-1"></a><span class="kw">barplot</span>(channel_count, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">300</span>), <span class="dt">ylab =</span> <span class="st">&quot;度数&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="datavis-base.html#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(channel_count, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">300</span>), <span class="at">ylab =</span> <span class="st">&quot;度数&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/barplot-1.png" width="672" /></p>
 </div>
-<div id="histogram" class="section level3">
+<div id="histogram" class="section level3" number="2.2.2">
 <h3><span class="header-section-number">2.2.2</span> ヒストグラム</h3>
 <p>量的変数の値の分布をみるには<strong>ヒストグラム</strong>を用います。ヒストグラムは、量的変数の範囲をいくつかの区間に分割し、区間ごとに描かれた棒の面積がその区間に含まれる値の個数に比例するようにしたものです。例えば、<code>Milk</code>のヒストグラムを描くには次のように<code>hist()</code>関数を用います。</p>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="datavis-base.html#cb166-1"></a><span class="kw">hist</span>(ws_customer<span class="op">$</span>Milk, <span class="dt">breaks =</span> <span class="dv">20</span>,</span>
-<span id="cb166-2"><a href="datavis-base.html#cb166-2"></a>     <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">80000</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">300</span>),</span>
-<span id="cb166-3"><a href="datavis-base.html#cb166-3"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Milk&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;度数&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="datavis-base.html#cb182-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(ws_customer<span class="sc">$</span>Milk, <span class="at">breaks =</span> <span class="dv">20</span>,</span>
+<span id="cb182-2"><a href="datavis-base.html#cb182-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">80000</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">300</span>),</span>
+<span id="cb182-3"><a href="datavis-base.html#cb182-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Milk&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;度数&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/hist-1.png" width="672" /></p>
 <p><code>break</code>引数は分割する区間の数を指定します。</p>
 </div>
-<div id="boxplot" class="section level3">
+<div id="boxplot" class="section level3" number="2.2.3">
 <h3><span class="header-section-number">2.2.3</span> 箱ひげ図</h3>
 <p>量的変数の値の分布を質的変数の水準ごとに比較する場合には<strong>箱ひげ図</strong>を用います。例えば、<code>Channel</code>ごとに<code>Milk</code>の分布を比較したい場合には、次のように<code>boxplot()</code>関数を用います。</p>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="datavis-base.html#cb167-1"></a><span class="kw">boxplot</span>(Milk <span class="op">~</span><span class="st"> </span>Channel, <span class="dt">data =</span> ws_customer, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">80000</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="datavis-base.html#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Milk <span class="sc">~</span> Channel, <span class="at">data =</span> ws_customer, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">80000</span>))</span></code></pre></div>
 <p><img src="_main_files/figure-html/boxplot-1.png" width="672" /></p>
 <p>箱ひげ図は、箱の3本の水平線が下から順に第1四分位数、第2四分位数（中央値）、第3四分位数となっています。ひげ（箱の中央から延びる垂直な線）の下限と上限はそれぞれ、第1 四分位数-1.5<span class="math inline">\(\times\)</span>四分位範囲から第3分位点+1.5<span class="math inline">\(\times\)</span>四分位範囲内のデータの最小値および最大値となっています。その範囲外のデータは<strong>外れ値</strong>としてプロットされています。箱ひげ図は外れ値をチェックするツールとしても有効です。</p>
 </div>
-<div id="scatterplot" class="section level3">
+<div id="scatterplot" class="section level3" number="2.2.4">
 <h3><span class="header-section-number">2.2.4</span> 散布図</h3>
 <p>2つの量的変数の値の組を座標平面上の点としてプロットしたものが<strong>散布図</strong>です。散布図を作成することで、2つの量的変数の関連性を見ることができます。例えば、<code>Grocery</code>（食料品）と<code>Detergents_Paper</code>（洗剤や紙製品）の散布図を描くには次のように<code>plot()</code>関数を用います。</p>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="datavis-base.html#cb168-1"></a><span class="kw">plot</span>(ws_customer<span class="op">$</span>Grocery, ws_customer<span class="op">$</span>Detergents_Paper,</span>
-<span id="cb168-2"><a href="datavis-base.html#cb168-2"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Grocery&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Detergents_Paper&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="datavis-base.html#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ws_customer<span class="sc">$</span>Grocery, ws_customer<span class="sc">$</span>Detergents_Paper,</span>
+<span id="cb184-2"><a href="datavis-base.html#cb184-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Grocery&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Detergents_Paper&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/scat-1.png" width="672" /></p>
 <p>同じデータフレーム内の変数で散布図を描画する場合は、以下のように記述することもできます。</p>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="datavis-base.html#cb169-1"></a><span class="kw">plot</span>(Grocery, Detergents_Paper, <span class="dt">data =</span> ws_customer,</span>
-<span id="cb169-2"><a href="datavis-base.html#cb169-2"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Grocery&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Detergents_Paper&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="datavis-base.html#cb185-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Grocery, Detergents_Paper, <span class="at">data =</span> ws_customer,</span>
+<span id="cb185-2"><a href="datavis-base.html#cb185-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Grocery&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Detergents_Paper&quot;</span>)</span></code></pre></div>
 </div>
-<div id="総称的関数" class="section level3">
+<div id="総称的関数" class="section level3" number="2.2.5">
 <h3><span class="header-section-number">2.2.5</span> 総称的関数</h3>
 <p>Rにおける関数のうち、<strong>総称関数</strong>（generic function）と呼ばれる関数は、引数の種類に応じて挙動が変わる性質を持ちます。例えば、<code>plot()</code>関数は、上のように2つのベクトルを引数として指定すれば、散布図を描画し、次のように、1つのベクトルを引数と指定すれば<strong>インデックスプロット</strong>と呼ばれる、横軸にベクトルの要素番号、縦軸にベクトルの要素の値をプロットしたものが出力される。</p>
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="datavis-base.html#cb170-1"></a><span class="kw">plot</span>(ws_customer<span class="op">$</span>Grocery, <span class="dt">ylab =</span> <span class="st">&quot;Grocery&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="datavis-base.html#cb186-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ws_customer<span class="sc">$</span>Grocery, <span class="at">ylab =</span> <span class="st">&quot;Grocery&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/indexplot-1.png" width="672" /></p>
 <p><code>summary()</code>関数も総称関数であり、データフレームを引数として指定した場合は、各変数の要約を出力しますが、分析結果のオブジェクトを引数として指定した場合には、分析結果の要約を出力します（これは後述）。</p>
 
@@ -375,6 +394,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {

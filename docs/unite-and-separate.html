@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5.3 列の分割と結合 | Rによるデータ解析入門</title>
   <meta name="description" content="5.3 列の分割と結合 | Rによるデータ解析入門" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5.3 列の分割と結合 | Rによるデータ解析入門" />
   <meta property="og:type" content="book" />
@@ -32,7 +32,8 @@
   
 <link rel="prev" href="long-wide.html"/>
 <link rel="next" href="ggplot2-01.html"/>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,34 +50,32 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.16/datatables.js"></script>
+<script src="libs/datatables-binding-0.18/datatables.js"></script>
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
-<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
 <link href="libs/dt-ext-fixedcolumns-1.10.20/css/fixedColumns.dataTables.min.css" rel="stylesheet" />
 <script src="libs/dt-ext-fixedcolumns-1.10.20/js/dataTables.fixedColumns.min.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -96,7 +95,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -129,6 +128,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 </head>
 
 <body>
@@ -141,15 +141,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Rの基礎（データ構造とデータ型）</a><ul>
-<li class="chapter" data-level="1.1" data-path="vector.html"><a href="vector.html"><i class="fa fa-check"></i><b>1.1</b> データ構造（1）ベクトル</a><ul>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Rの基礎（データ構造とデータ型）</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="vector.html"><a href="vector.html"><i class="fa fa-check"></i><b>1.1</b> データ構造（1）ベクトル</a>
+<ul>
 <li class="chapter" data-level="1.1.1" data-path="vector.html"><a href="vector.html#object_and_var"><i class="fa fa-check"></i><b>1.1.1</b> オブジェクトと変数</a></li>
 <li class="chapter" data-level="1.1.2" data-path="vector.html"><a href="vector.html#usefulfunctionforgeneratingvec"><i class="fa fa-check"></i><b>1.1.2</b> 便利なベクトル作成法</a></li>
 <li class="chapter" data-level="1.1.3" data-path="vector.html"><a href="vector.html#operator_for_vec"><i class="fa fa-check"></i><b>1.1.3</b> ベクトルの演算</a></li>
 <li class="chapter" data-level="1.1.4" data-path="vector.html"><a href="vector.html#reference_for_element"><i class="fa fa-check"></i><b>1.1.4</b> ベクトルの要素の参照</a></li>
 <li class="chapter" data-level="1.1.5" data-path="vector.html"><a href="vector.html#useful_function_for_vec"><i class="fa fa-check"></i><b>1.1.5</b> ベクトルに対する便利な関数</a></li>
+<li class="chapter" data-level="1.1.6" data-path="vector.html"><a href="vector.html#attribute"><i class="fa fa-check"></i><b>1.1.6</b> ベクトルの属性</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="datatype.html"><a href="datatype.html"><i class="fa fa-check"></i><b>1.2</b> データ型</a><ul>
+<li class="chapter" data-level="1.2" data-path="datatype.html"><a href="datatype.html"><i class="fa fa-check"></i><b>1.2</b> データ型</a>
+<ul>
 <li class="chapter" data-level="1.2.1" data-path="datatype.html"><a href="datatype.html#numeric_and_char"><i class="fa fa-check"></i><b>1.2.1</b> 数値型と文字型</a></li>
 <li class="chapter" data-level="1.2.2" data-path="datatype.html"><a href="datatype.html#factor"><i class="fa fa-check"></i><b>1.2.2</b> 因子型</a></li>
 <li class="chapter" data-level="1.2.3" data-path="datatype.html"><a href="datatype.html#論理型"><i class="fa fa-check"></i><b>1.2.3</b> 論理型</a></li>
@@ -157,13 +161,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="1.3" data-path="arrayandmatrix.html"><a href="arrayandmatrix.html"><i class="fa fa-check"></i><b>1.3</b> データ構造（2）配列と行列</a></li>
 <li class="chapter" data-level="1.4" data-path="list.html"><a href="list.html"><i class="fa fa-check"></i><b>1.4</b> データ構造（3）リスト</a></li>
-<li class="chapter" data-level="1.5" data-path="dataframe.html"><a href="dataframe.html"><i class="fa fa-check"></i><b>1.5</b> データ構造（4）データフレーム</a><ul>
+<li class="chapter" data-level="1.5" data-path="dataframe.html"><a href="dataframe.html"><i class="fa fa-check"></i><b>1.5</b> データ構造（4）データフレーム</a>
+<ul>
 <li class="chapter" data-level="1.5.1" data-path="dataframe.html"><a href="dataframe.html#readcsv"><i class="fa fa-check"></i><b>1.5.1</b> 外部データのデータフレームへのインポート</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="datavis-summary.html"><a href="datavis-summary.html"><i class="fa fa-check"></i><b>2</b> データの簡単な要約と可視化</a><ul>
+<li class="chapter" data-level="2" data-path="datavis-summary.html"><a href="datavis-summary.html"><i class="fa fa-check"></i><b>2</b> データの簡単な要約と可視化</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="simple-summary.html"><a href="simple-summary.html"><i class="fa fa-check"></i><b>2.1</b> データの簡単な要約</a></li>
-<li class="chapter" data-level="2.2" data-path="datavis-base.html"><a href="datavis-base.html"><i class="fa fa-check"></i><b>2.2</b> データの簡単な可視化</a><ul>
+<li class="chapter" data-level="2.2" data-path="datavis-base.html"><a href="datavis-base.html"><i class="fa fa-check"></i><b>2.2</b> データの簡単な可視化</a>
+<ul>
 <li class="chapter" data-level="2.2.1" data-path="datavis-base.html"><a href="datavis-base.html#barplot"><i class="fa fa-check"></i><b>2.2.1</b> 棒グラフ</a></li>
 <li class="chapter" data-level="2.2.2" data-path="datavis-base.html"><a href="datavis-base.html#histogram"><i class="fa fa-check"></i><b>2.2.2</b> ヒストグラム</a></li>
 <li class="chapter" data-level="2.2.3" data-path="datavis-base.html"><a href="datavis-base.html#boxplot"><i class="fa fa-check"></i><b>2.2.3</b> 箱ひげ図</a></li>
@@ -171,11 +178,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2.5" data-path="datavis-base.html"><a href="datavis-base.html#総称的関数"><i class="fa fa-check"></i><b>2.2.5</b> 総称的関数</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="dplyr-tidyr-01.html"><a href="dplyr-tidyr-01.html"><i class="fa fa-check"></i><b>3</b> dplyr/tidyrを用いたデータの整理と変換(1)</a><ul>
+<li class="chapter" data-level="3" data-path="dplyr-tidyr-01.html"><a href="dplyr-tidyr-01.html"><i class="fa fa-check"></i><b>3</b> dplyr/tidyrを用いたデータの整理と変換(1)</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="package.html"><a href="package.html"><i class="fa fa-check"></i><b>3.1</b> パッケージによる機能拡張</a></li>
 <li class="chapter" data-level="3.2" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>3.2</b> tidyverse</a></li>
 <li class="chapter" data-level="3.3" data-path="nycflights13.html"><a href="nycflights13.html"><i class="fa fa-check"></i><b>3.3</b> nycflights13</a></li>
-<li class="chapter" data-level="3.4" data-path="onetable-verbs.html"><a href="onetable-verbs.html"><i class="fa fa-check"></i><b>3.4</b> 1つのテーブルに対するverb</a><ul>
+<li class="chapter" data-level="3.4" data-path="onetable-verbs.html"><a href="onetable-verbs.html"><i class="fa fa-check"></i><b>3.4</b> 1つのテーブルに対するverb</a>
+<ul>
 <li class="chapter" data-level="3.4.1" data-path="onetable-verbs.html"><a href="onetable-verbs.html#filter"><i class="fa fa-check"></i><b>3.4.1</b> 値の条件による抽出：<code>filter()</code></a></li>
 <li class="chapter" data-level="3.4.2" data-path="onetable-verbs.html"><a href="onetable-verbs.html#指定した列の抽出select-select"><i class="fa fa-check"></i><b>3.4.2</b> 指定した列の抽出：<code>select()</code> #{select}</a></li>
 <li class="chapter" data-level="3.4.3" data-path="onetable-verbs.html"><a href="onetable-verbs.html#指定した列を昇順でソートarrange-arrange"><i class="fa fa-check"></i><b>3.4.3</b> 指定した列を昇順でソート：<code>arrange()</code> #{arrange}</a></li>
@@ -184,42 +193,52 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3.5" data-path="pipe.html"><a href="pipe.html"><i class="fa fa-check"></i><b>3.5</b> パイプ</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="dplyr-tidyr-02.html"><a href="dplyr-tidyr-02.html"><i class="fa fa-check"></i><b>4</b> dplyr/tidyrを用いたデータの整理と変換(2)</a><ul>
+<li class="chapter" data-level="4" data-path="dplyr-tidyr-02.html"><a href="dplyr-tidyr-02.html"><i class="fa fa-check"></i><b>4</b> dplyr/tidyrを用いたデータの整理と変換(2)</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="two-table-verbs.html"><a href="two-table-verbs.html"><i class="fa fa-check"></i><b>4.1</b> 2つのテーブルを結合するverb</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="dplyr-tidyr-03.html"><a href="dplyr-tidyr-03.html"><i class="fa fa-check"></i><b>5</b> dplyr/tidyrを用いたデータの整理と変換(3)</a><ul>
+<li class="chapter" data-level="5" data-path="dplyr-tidyr-03.html"><a href="dplyr-tidyr-03.html"><i class="fa fa-check"></i><b>5</b> dplyr/tidyrを用いたデータの整理と変換(3)</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="tidydata.html"><a href="tidydata.html"><i class="fa fa-check"></i><b>5.1</b> tidydataとは？</a></li>
-<li class="chapter" data-level="5.2" data-path="long-wide.html"><a href="long-wide.html"><i class="fa fa-check"></i><b>5.2</b> 縦長（long）データと横長（wide）データの相互変換</a><ul>
+<li class="chapter" data-level="5.2" data-path="long-wide.html"><a href="long-wide.html"><i class="fa fa-check"></i><b>5.2</b> 縦長（long）データと横長（wide）データの相互変換</a>
+<ul>
 <li class="chapter" data-level="5.2.1" data-path="long-wide.html"><a href="long-wide.html#pivot_longer関数を用いたwideからlongへの変換"><i class="fa fa-check"></i><b>5.2.1</b> <code>pivot_longer()</code>関数を用いたwideからlongへの変換</a></li>
 <li class="chapter" data-level="5.2.2" data-path="long-wide.html"><a href="long-wide.html#pivot_wider関数を用いたwideからlongへの変換"><i class="fa fa-check"></i><b>5.2.2</b> <code>pivot_wider()</code>関数を用いたwideからlongへの変換</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="unite-and-separate.html"><a href="unite-and-separate.html"><i class="fa fa-check"></i><b>5.3</b> 列の分割と結合</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="ggplot2-01.html"><a href="ggplot2-01.html"><i class="fa fa-check"></i><b>6</b> ggplot2によるデータの可視化（1）</a><ul>
+<li class="chapter" data-level="6" data-path="ggplot2-01.html"><a href="ggplot2-01.html"><i class="fa fa-check"></i><b>6</b> ggplot2によるデータの可視化（1）</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="about-ggplot2.html"><a href="about-ggplot2.html"><i class="fa fa-check"></i><b>6.1</b> ggplot2パッケージについて</a></li>
 <li class="chapter" data-level="6.2" data-path="basics-ggplot2.html"><a href="basics-ggplot2.html"><i class="fa fa-check"></i><b>6.2</b> ggplot2における可視化の基本</a></li>
-<li class="chapter" data-level="6.3" data-path="ggplot-barplot.html"><a href="ggplot-barplot.html"><i class="fa fa-check"></i><b>6.3</b> 棒グラフ</a><ul>
+<li class="chapter" data-level="6.3" data-path="ggplot-barplot.html"><a href="ggplot-barplot.html"><i class="fa fa-check"></i><b>6.3</b> 棒グラフ</a>
+<ul>
 <li class="chapter" data-level="6.3.1" data-path="ggplot-barplot.html"><a href="ggplot-barplot.html#geom_position"><i class="fa fa-check"></i><b>6.3.1</b> 帯グラフと集合縦棒グラフ</a></li>
 <li class="chapter" data-level="6.3.2" data-path="ggplot-barplot.html"><a href="ggplot-barplot.html#order_factor"><i class="fa fa-check"></i><b>6.3.2</b> カテゴリ（因子型の水準）の並べ替え</a></li>
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="ggplot-hist-box.html"><a href="ggplot-hist-box.html"><i class="fa fa-check"></i><b>6.4</b> ヒストグラムと箱ひげ図</a></li>
-<li class="chapter" data-level="6.5" data-path="ggplot-line.html"><a href="ggplot-line.html"><i class="fa fa-check"></i><b>6.5</b> 折れ線グラフ</a><ul>
+<li class="chapter" data-level="6.5" data-path="ggplot-line.html"><a href="ggplot-line.html"><i class="fa fa-check"></i><b>6.5</b> 折れ線グラフ</a>
+<ul>
 <li class="chapter" data-level="6.5.1" data-path="ggplot-line.html"><a href="ggplot-line.html#ggplot_line_y1"><i class="fa fa-check"></i><b>6.5.1</b> x軸が経過時間、y軸が1つの変数</a></li>
 <li class="chapter" data-level="6.5.2" data-path="ggplot-line.html"><a href="ggplot-line.html#ggplot_line_y2"><i class="fa fa-check"></i><b>6.5.2</b> x軸が経過時間、y軸が2つ以上の変数</a></li>
 <li class="chapter" data-level="6.5.3" data-path="ggplot-line.html"><a href="ggplot-line.html#ggplot_line_xdate"><i class="fa fa-check"></i><b>6.5.3</b> x軸が日付、y軸が2つ以上の変数</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="ggplot2-02.html"><a href="ggplot2-02.html"><i class="fa fa-check"></i><b>7</b> ggplot2によるデータの可視化（2）</a><ul>
+<li class="chapter" data-level="7" data-path="ggplot2-02.html"><a href="ggplot2-02.html"><i class="fa fa-check"></i><b>7</b> ggplot2によるデータの可視化（2）</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="facet.html"><a href="facet.html"><i class="fa fa-check"></i><b>7.1</b> 層別</a></li>
-<li class="chapter" data-level="7.2" data-path="output.html"><a href="output.html"><i class="fa fa-check"></i><b>7.2</b> 出力の調整</a><ul>
+<li class="chapter" data-level="7.2" data-path="output.html"><a href="output.html"><i class="fa fa-check"></i><b>7.2</b> 出力の調整</a>
+<ul>
 <li class="chapter" data-level="7.2.1" data-path="output.html"><a href="output.html#テーマ"><i class="fa fa-check"></i><b>7.2.1</b> テーマ</a></li>
 <li class="chapter" data-level="7.2.2" data-path="output.html"><a href="output.html#軸ラベルタイトルなど"><i class="fa fa-check"></i><b>7.2.2</b> 軸ラベル、タイトルなど</a></li>
 <li class="chapter" data-level="7.2.3" data-path="output.html"><a href="output.html#フォントサイズの調整"><i class="fa fa-check"></i><b>7.2.3</b> フォントサイズの調整</a></li>
 <li class="chapter" data-level="7.2.4" data-path="output.html"><a href="output.html#advancedパワポにグラフをいい感じで貼り付ける"><i class="fa fa-check"></i><b>7.2.4</b> 【Advanced】パワポにグラフをいい感じで貼り付ける</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="api01.html"><a href="api01.html"><i class="fa fa-check"></i><b>8</b> Webからのデータ取得（1）「e-Stat API」</a><ul>
-<li class="chapter" data-level="8.1" data-path="estatapi.html"><a href="estatapi.html"><i class="fa fa-check"></i><b>8.1</b> e-Stat API</a><ul>
+<li class="chapter" data-level="8" data-path="api01.html"><a href="api01.html"><i class="fa fa-check"></i><b>8</b> Webからのデータ取得（1）「e-Stat API」</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="estatapi.html"><a href="estatapi.html"><i class="fa fa-check"></i><b>8.1</b> e-Stat API</a>
+<ul>
 <li class="chapter" data-level="8.1.1" data-path="estatapi.html"><a href="estatapi.html#統計表の検索"><i class="fa fa-check"></i><b>8.1.1</b> 統計表の検索</a></li>
 <li class="chapter" data-level="8.1.2" data-path="estatapi.html"><a href="estatapi.html#メタ情報の取得"><i class="fa fa-check"></i><b>8.1.2</b> メタ情報の取得</a></li>
 <li class="chapter" data-level="8.1.3" data-path="estatapi.html"><a href="estatapi.html#統計データの取得"><i class="fa fa-check"></i><b>8.1.3</b> 統計データの取得</a></li>
@@ -245,10 +264,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="unite_and_separate" class="section level2">
+<div id="unite_and_separate" class="section level2" number="5.3">
 <h2><span class="header-section-number">5.3</span> 列の分割と結合</h2>
 <p><code>table3</code>は<code>rate</code>の列に複数の変数（<code>population</code>と<code>cases</code>）の情報が文字列として格納されており、tidyではありません。このようにひとつの列に含まれている文字列を、複数の列に分割したい場合は、<code>separate()</code>関数を用います。<code>separate()</code>関数は、<strong>dplyr</strong>のverbと同様に、第1引数はデータフレームで、出力もデータフレームです。第1引数以外で必要な引数としては，分割元の変数を指定する<code>col</code>と分割した後に設定する変数名のベクトル<code>into</code>となります。<code>table3</code>の場合、<code>col</code>に<code>rate</code>、<code>into</code>に<code>c("cases", "population")</code>を指定します。</p>
-<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="unite-and-separate.html#cb245-1"></a>table3</span></code></pre></div>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="unite-and-separate.html#cb261-1" aria-hidden="true" tabindex="-1"></a>table3</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ##   country      year rate             
 ##   &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;            
@@ -258,8 +277,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4 Brazil       2000 80488/174504898  
 ## 5 China        1999 212258/1272915272
 ## 6 China        2000 213766/1280428583</code></pre>
-<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="unite-and-separate.html#cb247-1"></a>table3 <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb247-2"><a href="unite-and-separate.html#cb247-2"></a><span class="st">  </span><span class="kw">separate</span>(rate, <span class="kw">c</span>(<span class="st">&quot;cases&quot;</span>, <span class="st">&quot;population&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="unite-and-separate.html#cb263-1" aria-hidden="true" tabindex="-1"></a>table3 <span class="sc">%&gt;%</span> </span>
+<span id="cb263-2"><a href="unite-and-separate.html#cb263-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(rate, <span class="fu">c</span>(<span class="st">&quot;cases&quot;</span>, <span class="st">&quot;population&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 4
 ##   country      year cases  population
 ##   &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;     
@@ -270,8 +289,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5 China        1999 212258 1272915272
 ## 6 China        2000 213766 1280428583</code></pre>
 <p>これでもOKですが、分割された後の変数が文字列になっているので、数字のみの文字列であれば、<code>convert</code>引数を<code>TRUE</code>に設定すると、数値に変換してくれます。</p>
-<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="unite-and-separate.html#cb249-1"></a>table3 <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb249-2"><a href="unite-and-separate.html#cb249-2"></a><span class="st">  </span><span class="kw">separate</span>(rate, <span class="kw">c</span>(<span class="st">&quot;cases&quot;</span>, <span class="st">&quot;population&quot;</span>), <span class="dt">convert =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="unite-and-separate.html#cb265-1" aria-hidden="true" tabindex="-1"></a>table3 <span class="sc">%&gt;%</span> </span>
+<span id="cb265-2"><a href="unite-and-separate.html#cb265-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(rate, <span class="fu">c</span>(<span class="st">&quot;cases&quot;</span>, <span class="st">&quot;population&quot;</span>), <span class="at">convert =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 4
 ##   country      year  cases population
 ##   &lt;chr&gt;       &lt;int&gt;  &lt;int&gt;      &lt;int&gt;
@@ -282,14 +301,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5 China        1999 212258 1272915272
 ## 6 China        2000 213766 1280428583</code></pre>
 <p>また、区切り文字については、デフォルトでは数値以外の文字となっていますが、指定したい場合は、<code>sep</code>引数を指定します。（<code>table3</code>の場合は指定しなくてもOKです。）</p>
-<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="unite-and-separate.html#cb251-1"></a>table3 <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb251-2"><a href="unite-and-separate.html#cb251-2"></a><span class="st">  </span><span class="kw">separate</span>(rate, <span class="kw">c</span>(<span class="st">&quot;cases&quot;</span>, <span class="st">&quot;population&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="unite-and-separate.html#cb267-1" aria-hidden="true" tabindex="-1"></a>table3 <span class="sc">%&gt;%</span> </span>
+<span id="cb267-2"><a href="unite-and-separate.html#cb267-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(rate, <span class="fu">c</span>(<span class="st">&quot;cases&quot;</span>, <span class="st">&quot;population&quot;</span>), <span class="at">sep =</span> <span class="st">&quot;/&quot;</span>)</span></code></pre></div>
 <p><code>separate()</code>関数とは反対に、複数の変数をひとつの列に結合したい場合は、<code>unite()</code>関数を用います。ここでは、<code>unite()</code>関数の動作確認のために、<code>table3</code>の<code>year</code>を先頭2桁の<code>century</code>と後ろ2桁の<code>year</code>に分割をしてから、再度結合することを考えます。<code>sep</code>引数に数値を与えると、その数値の桁数分で分割されます。</p>
-<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="unite-and-separate.html#cb252-1"></a>table5 &lt;-<span class="st"> </span>table3 <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb252-2"><a href="unite-and-separate.html#cb252-2"></a><span class="st">  </span><span class="kw">separate</span>(year, <span class="kw">c</span>(<span class="st">&quot;century&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="dt">sep =</span> <span class="dv">2</span>))</span></code></pre></div>
-<pre><code>## Warning: Expected 3 pieces. Missing pieces filled with `NA` in 6 rows [1, 2, 3,
-## 4, 5, 6].</code></pre>
-<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="unite-and-separate.html#cb254-1"></a>table5</span></code></pre></div>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="unite-and-separate.html#cb268-1" aria-hidden="true" tabindex="-1"></a>table5 <span class="ot">&lt;-</span> table3 <span class="sc">%&gt;%</span> </span>
+<span id="cb268-2"><a href="unite-and-separate.html#cb268-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(year, <span class="fu">c</span>(<span class="st">&quot;century&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="at">sep =</span> <span class="dv">2</span>))</span></code></pre></div>
+<pre><code>## Warning: Expected 3 pieces. Missing pieces filled with `NA` in 6 rows [1, 2, 3, 4,
+## 5, 6].</code></pre>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="unite-and-separate.html#cb270-1" aria-hidden="true" tabindex="-1"></a>table5</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 5
 ##   country     century year  `2`   rate             
 ##   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;            
@@ -300,8 +319,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5 China       1999    &lt;NA&gt;  &lt;NA&gt;  212258/1272915272
 ## 6 China       2000    &lt;NA&gt;  &lt;NA&gt;  213766/1280428583</code></pre>
 <p><code>century</code>と<code>year</code>の列を<code>unite()</code>関数で結合して、改めて<code>year</code>列とします。<code>unite()</code>関数も<strong>dplyr</strong>のverbと同様に、第1引数はデータフレームで、出力もデータフレームです。第1引数以外で必要な引数としては，結合後の変数名<code>col</code>と、<code>select()</code>と同様に指定された結合対象の変数名となります。</p>
-<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="unite-and-separate.html#cb256-1"></a>table5 <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb256-2"><a href="unite-and-separate.html#cb256-2"></a><span class="st">  </span><span class="kw">unite</span>(<span class="dt">col =</span> new, century, year)</span></code></pre></div>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="unite-and-separate.html#cb272-1" aria-hidden="true" tabindex="-1"></a>table5 <span class="sc">%&gt;%</span> </span>
+<span id="cb272-2"><a href="unite-and-separate.html#cb272-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="at">col =</span> new, century, year)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 4
 ##   country     new     `2`   rate             
 ##   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;            
@@ -312,8 +331,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5 China       1999_NA &lt;NA&gt;  212258/1272915272
 ## 6 China       2000_NA &lt;NA&gt;  213766/1280428583</code></pre>
 <p>このように、デフォルトではアンダースコア<code>_</code>によって結合されますが、結合文字を指定したい場合は<code>sep</code>変数を指定します（以下の例は空の文字列）。</p>
-<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="unite-and-separate.html#cb258-1"></a>table5 <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb258-2"><a href="unite-and-separate.html#cb258-2"></a><span class="st">  </span><span class="kw">unite</span>(<span class="dt">col =</span> new, century, year, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="unite-and-separate.html#cb274-1" aria-hidden="true" tabindex="-1"></a>table5 <span class="sc">%&gt;%</span> </span>
+<span id="cb274-2"><a href="unite-and-separate.html#cb274-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="at">col =</span> new, century, year, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 4
 ##   country     new    `2`   rate             
 ##   &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;            
@@ -355,6 +374,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {

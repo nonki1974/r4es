@@ -181,8 +181,8 @@ c("Happy", "New", "Year", 2021)
 `typeof()`関数によってオブジェクトの型を確認してみます。
 
 ```{r}
-class(x)
-class(s)
+typeof(x)
+typeof(s)
 ```
 
 ### 因子型 {#factor}
