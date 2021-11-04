@@ -68,6 +68,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -203,7 +204,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2" data-path="long_wide.html"><a href="long_wide.html"><i class="fa fa-check"></i><b>5.2</b> 縦長（long）データと横長（wide）データの相互変換</a>
 <ul>
 <li class="chapter" data-level="5.2.1" data-path="long_wide.html"><a href="long_wide.html#pivot_longer関数を用いたwideからlongへの変換"><i class="fa fa-check"></i><b>5.2.1</b> <code>pivot_longer()</code>関数を用いたwideからlongへの変換</a></li>
-<li class="chapter" data-level="5.2.2" data-path="long_wide.html"><a href="long_wide.html#pivot_wider関数を用いたwideからlongへの変換"><i class="fa fa-check"></i><b>5.2.2</b> <code>pivot_wider()</code>関数を用いたwideからlongへの変換</a></li>
+<li class="chapter" data-level="5.2.2" data-path="long_wide.html"><a href="long_wide.html#pivot_wider関数を用いたlongからwideへの変換"><i class="fa fa-check"></i><b>5.2.2</b> <code>pivot_wider()</code>関数を用いたlongからwideへの変換</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="unite_and_separate.html"><a href="unite_and_separate.html"><i class="fa fa-check"></i><b>5.3</b> 列の分割と結合</a></li>
 </ul></li>
@@ -266,7 +267,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="about_ggplot2" class="section level2" number="6.1">
 <h2><span class="header-section-number">6.1</span> ggplot2パッケージについて</h2>
-<p><strong>ggplot2</strong>パッケージは、Wilkinson(2005)による“Grammar of Graphics”の理論に基づいてデータを可視化する機能を提供します。パッケージの開発者は<strong>dplyr</strong>パッケージと同じHadley Wickhamです。<strong>ggplot2</strong>は、可視化のための一貫した文法を提供するだけでなく、グラフの出力が洗練されていることから、多くの支持を集めています。</p>
+<p><strong>ggplot2</strong>パッケージは、Wilkinson(2005)による”Grammar of Graphics”の理論に基づいてデータを可視化する機能を提供します。パッケージの開発者は<strong>dplyr</strong>パッケージと同じHadley Wickhamです。<strong>ggplot2</strong>は、可視化のための一貫した文法を提供するだけでなく、グラフの出力が洗練されていることから、多くの支持を集めています。</p>
 <p>ggplot2はtidyverseに含まれているので、tidyverseが利用可能な状態であればggplot2の関数は利用できます。このテキストでは、ggplot2の2020年10月時点での最新版3.2.2の利用を前提に説明します。</p>
 </div>
             </section>

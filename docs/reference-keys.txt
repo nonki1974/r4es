@@ -40,7 +40,7 @@ dplyr_tidyr_03
 tidydata
 long_wide
 pivot_longer関数を用いたwideからlongへの変換
-pivot_wider関数を用いたwideからlongへの変換
+pivot_wider関数を用いたlongからwideへの変換
 unite_and_separate
 ggplot2_01
 about_ggplot2

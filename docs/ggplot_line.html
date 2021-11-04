@@ -68,6 +68,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -203,7 +204,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2" data-path="long_wide.html"><a href="long_wide.html"><i class="fa fa-check"></i><b>5.2</b> 縦長（long）データと横長（wide）データの相互変換</a>
 <ul>
 <li class="chapter" data-level="5.2.1" data-path="long_wide.html"><a href="long_wide.html#pivot_longer関数を用いたwideからlongへの変換"><i class="fa fa-check"></i><b>5.2.1</b> <code>pivot_longer()</code>関数を用いたwideからlongへの変換</a></li>
-<li class="chapter" data-level="5.2.2" data-path="long_wide.html"><a href="long_wide.html#pivot_wider関数を用いたwideからlongへの変換"><i class="fa fa-check"></i><b>5.2.2</b> <code>pivot_wider()</code>関数を用いたwideからlongへの変換</a></li>
+<li class="chapter" data-level="5.2.2" data-path="long_wide.html"><a href="long_wide.html#pivot_wider関数を用いたlongからwideへの変換"><i class="fa fa-check"></i><b>5.2.2</b> <code>pivot_wider()</code>関数を用いたlongからwideへの変換</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="unite_and_separate.html"><a href="unite_and_separate.html"><i class="fa fa-check"></i><b>5.3</b> 列の分割と結合</a></li>
 </ul></li>
@@ -272,17 +273,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>この場合が折れ線グラフの基本となります。折れ線グラフは<code>geom_line()</code>関数で描画します。</p>
 <div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="ggplot_line.html#cb293-1" aria-hidden="true" tabindex="-1"></a>df_time <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">t =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">y =</span> <span class="fu">rnorm</span>(<span class="dv">10</span>))</span>
 <span id="cb293-2"><a href="ggplot_line.html#cb293-2" aria-hidden="true" tabindex="-1"></a>df_time</span></code></pre></div>
-<pre><code>##     t           y
-## 1   1 -0.16488769
-## 2   2 -2.26038448
-## 3   3 -1.72940951
-## 4   4  0.89961840
-## 5   5 -0.43982055
-## 6   6  0.07584151
-## 7   7  0.88668831
-## 8   8 -0.25404164
-## 9   9 -0.40049808
-## 10 10  0.51245342</code></pre>
+<pre><code>##     t             y
+## 1   1 -0.8968998610
+## 2   2 -1.0694899753
+## 3   3  0.4596132904
+## 4   4  0.1653248194
+## 5   5 -0.3925920830
+## 6   6 -0.9209876060
+## 7   7 -1.4697084233
+## 8   8 -0.3373396796
+## 9   9  0.0008732472
+## 10 10  1.1997828657</code></pre>
 <div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="ggplot_line.html#cb295-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_time, <span class="fu">aes</span>(t, y)) <span class="sc">+</span></span>
 <span id="cb295-2"><a href="ggplot_line.html#cb295-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-122-1.png" width="672" /></p>
@@ -303,17 +304,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="ggplot_line.html#cb297-1" aria-hidden="true" tabindex="-1"></a>df_time <span class="ot">&lt;-</span> df_time <span class="sc">%&gt;%</span> </span>
 <span id="cb297-2"><a href="ggplot_line.html#cb297-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">z =</span> <span class="fu">rnorm</span>(<span class="dv">10</span>))</span>
 <span id="cb297-3"><a href="ggplot_line.html#cb297-3" aria-hidden="true" tabindex="-1"></a>df_time</span></code></pre></div>
-<pre><code>##     t           y          z
-## 1   1 -0.16488769 -0.8135859
-## 2   2 -2.26038448 -1.2997451
-## 3   3 -1.72940951  0.5540771
-## 4   4  0.89961840 -3.2955886
-## 5   5 -0.43982055 -0.2201709
-## 6   6  0.07584151  1.0377372
-## 7   7  0.88668831  0.4824903
-## 8   8 -0.25404164  1.6187520
-## 9   9 -0.40049808  0.7599614
-## 10 10  0.51245342 -0.4630562</code></pre>
+<pre><code>##     t             y           z
+## 1   1 -0.8968998610  0.40969334
+## 2   2 -1.0694899753 -0.20176394
+## 3   3  0.4596132904 -0.06905431
+## 4   4  0.1653248194 -1.89876327
+## 5   5 -0.3925920830 -0.95484888
+## 6   6 -0.9209876060 -0.52545503
+## 7   7 -1.4697084233 -0.02130674
+## 8   8 -0.3373396796 -0.34564186
+## 9   9  0.0008732472  0.33471754
+## 10 10  1.1997828657 -0.15127031</code></pre>
 <p>変数が異なる列に格納されている（横長データ）の場合、一旦縦長に変形して、列名となっていた変数を<code>group</code>に指定します。</p>
 <div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="ggplot_line.html#cb299-1" aria-hidden="true" tabindex="-1"></a>df_time <span class="sc">%&gt;%</span> </span>
 <span id="cb299-2"><a href="ggplot_line.html#cb299-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>t, <span class="at">names_to =</span> <span class="st">&quot;var&quot;</span>, <span class="at">values_to =</span><span class="st">&quot;value&quot;</span>) <span class="sc">%&gt;%</span> </span>

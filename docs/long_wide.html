@@ -68,6 +68,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -203,7 +204,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2" data-path="long_wide.html"><a href="long_wide.html"><i class="fa fa-check"></i><b>5.2</b> 縦長（long）データと横長（wide）データの相互変換</a>
 <ul>
 <li class="chapter" data-level="5.2.1" data-path="long_wide.html"><a href="long_wide.html#pivot_longer関数を用いたwideからlongへの変換"><i class="fa fa-check"></i><b>5.2.1</b> <code>pivot_longer()</code>関数を用いたwideからlongへの変換</a></li>
-<li class="chapter" data-level="5.2.2" data-path="long_wide.html"><a href="long_wide.html#pivot_wider関数を用いたwideからlongへの変換"><i class="fa fa-check"></i><b>5.2.2</b> <code>pivot_wider()</code>関数を用いたwideからlongへの変換</a></li>
+<li class="chapter" data-level="5.2.2" data-path="long_wide.html"><a href="long_wide.html#pivot_wider関数を用いたlongからwideへの変換"><i class="fa fa-check"></i><b>5.2.2</b> <code>pivot_wider()</code>関数を用いたlongからwideへの変換</a></li>
 </ul></li>
 <li class="chapter" data-level="5.3" data-path="unite_and_separate.html"><a href="unite_and_separate.html"><i class="fa fa-check"></i><b>5.3</b> 列の分割と結合</a></li>
 </ul></li>
@@ -311,9 +312,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 6 China       2000  213766</code></pre>
 <p>観測値が列名となっている列の一覧は、<code>c(</code>1999<code>,</code>2000<code>)</code>のような形式でもいいですが、ここでは<code>country</code>以外のすべての列ということで、<code>-country</code>としています。また、<code>names_to</code>と<code>values_to</code>は、新たに設定する変数名であり、<code>table4a</code>に含まれる列名ではありませんので、ダブルクォートをつけて文字列として指定する必要があります。</p>
 </div>
-<div id="pivot_wider関数を用いたwideからlongへの変換" class="section level3" number="5.2.2">
-<h3><span class="header-section-number">5.2.2</span> <code>pivot_wider()</code>関数を用いたwideからlongへの変換</h3>
-<p><code>table2</code>は1つの観測（各国の1年分の観測）が2行にまたがっています。これはtidydataの1行が1観測という原則を満たしておらず、tidydataではありません。これをtidydataにするためには、<code>count</code>列を広げて<code>key</code>列の値を変数名とした新たな列を作成する必要があります。</p>
+<div id="pivot_wider関数を用いたlongからwideへの変換" class="section level3" number="5.2.2">
+<h3><span class="header-section-number">5.2.2</span> <code>pivot_wider()</code>関数を用いたlongからwideへの変換</h3>
+<p><code>table2</code>は1つの観測（各国の1年分の観測）が2行にまたがっています。これはtidydataの1行が1観測という原則を満たしておらず、tidydataではありません。これをtidydataにするためには、<code>value</code>列を広げて<code>key</code>列の値を変数名とした新たな列を作成する必要があります。</p>
 <div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="long_wide.html#cb258-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(table2)</span></code></pre></div>
 <table>
 <thead>
@@ -400,7 +401,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>これは、前のセクションにおける<code>pivot_longer()</code>と逆の操作に相当し、long形式からwide形式への変換となります。これを行うのが<code>pivot_wider()</code>関数です。</p>
-<p><code>pivot_wider()</code>関数も<code>pivot_longer()</code>関数と同様にパイプ処理の中で利用できます。<code>names_from</code>引数に変数名を含む列（ここでは<code>key</code>）、<code>values_from</code>引数にそれらの変数名に対応した値が格納されている列（ここでは<code>count</code>）を指定します。これらは、データフレーム内の変数名ですので、ダブルクォートはつけません。<code>table2</code>に対しては例えば以下のようにします。</p>
+<p><code>pivot_wider()</code>関数も<code>pivot_longer()</code>関数と同様にパイプ処理の中で利用できます。<code>names_from</code>引数に変数名を含む列（ここでは<code>key</code>）、<code>values_from</code>引数にそれらの変数名に対応した値が格納されている列（ここでは<code>value</code>）を指定します。これらは、データフレーム内の変数名ですので、ダブルクォートはつけません。<code>table2</code>に対しては例えば以下のようにします。</p>
 <div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="long_wide.html#cb259-1" aria-hidden="true" tabindex="-1"></a>table2 <span class="sc">%&gt;%</span> </span>
 <span id="cb259-2"><a href="long_wide.html#cb259-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> key, <span class="at">values_from =</span> value)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 4
